@@ -7,6 +7,7 @@
     - REST APIs
     - OAuth 2.0 (JWT Bearer)
     - Microsoft Entra ID (SSO)
+    - AI Agents & Tool Orchestration
     - MuleSoft (iPaaS)
     - DataWeave
     - External Client Apps
@@ -64,10 +65,12 @@
     en: Languages & Frameworks
     tr: Diller ve Çatılar
   items:
-    - Apex
     - JavaScript (ESNext / TypeScript)
     - Python
+    - React & Next.js
+    - Swift (iOS)
     - Dart (Flutter)
+    - Apex
     - SQL
     - HTML5 & Modern CSS
 

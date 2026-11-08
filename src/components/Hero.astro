@@ -145,24 +145,19 @@ const formattedHeadline = rawHeadline.replace(
         ))}
       </div>
 
-      <!-- Career Progression Path -->
-      <div class="career-path-container">
-        <span class="career-path-title">{t('hero.careerPath.label')}</span>
-        <div class="slds-path" role="list">
-          {profile.careerPath.map((step, idx) => {
-            const isCurrent = idx === profile.careerPath.length - 1;
-            return (
-              <div
-                class:list={[
-                  'slds-path-step',
-                  { 'step-current': isCurrent, 'step-complete': !isCurrent },
-                ]}
-                role="listitem"
-              >
-                <span class="step-label">{step[lang]}</span>
+      <!-- Engineering Capabilities & Focus Areas -->
+      <div class="focus-areas-container">
+        <span class="focus-areas-title">{t('hero.focus.label')}</span>
+        <div class="focus-grid" role="list">
+          {profile.focusAreas.map((area) => (
+            <div class="focus-card" role="listitem">
+              <div class="focus-pill">
+                <span class="focus-indicator" aria-hidden="true"></span>
+                <span class="focus-name">{area.label[lang]}</span>
               </div>
-            );
-          })}
+              {area.desc && <span class="focus-desc">{area.desc[lang]}</span>}
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -352,61 +347,76 @@ const formattedHeadline = rawHeadline.replace(
   }
 
   /* Career Progression Path (SLDS Path Chevron component) */
-  .career-path-container {
-    padding-top: 1rem;
+  /* Engineering Capabilities & Focus Areas */
+  .focus-areas-container {
+    padding-top: 1.15rem;
     border-top: 1px solid var(--border-color);
   }
 
-  .career-path-title {
+  .focus-areas-title {
     display: block;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--text-muted);
-    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+    color: var(--brand-color);
+    margin-bottom: 0.75rem;
   }
 
-  .slds-path {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
+  .focus-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
   }
 
-  @media (min-width: 500px) {
-    .slds-path {
-      flex-direction: row;
-      align-items: stretch;
-      gap: 0.25rem;
+  @media (min-width: 520px) {
+    .focus-grid {
+      grid-template-columns: 1fr 1fr;
     }
   }
 
-  .slds-path-step {
-    flex: 1;
+  .focus-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.55rem 0.75rem;
+    border-radius: var(--slds-g-radius-2);
+    background: var(--bg-surface-subtle);
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+  }
+
+  .focus-card:hover {
+    border-color: var(--brand-color);
+    background: var(--bg-surface);
+    transform: translateY(-1px);
+  }
+
+  .focus-pill {
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 0.4rem 0.6rem;
-    font-size: 0.75rem;
+    gap: 0.4rem;
+  }
+
+  .focus-indicator {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--brand-color);
+    flex-shrink: 0;
+  }
+
+  .focus-name {
+    font-size: 0.8125rem;
     font-weight: 600;
-    text-align: center;
-    border-radius: var(--slds-g-radius-1);
-    background: var(--bg-surface-subtle);
-    color: var(--text-secondary);
-    border: 1px solid var(--border-color);
-    transition: all 0.15s ease;
+    color: var(--text-primary);
+    line-height: 1.3;
   }
 
-  .step-complete {
-    background: rgba(4, 132, 75, 0.08);
-    color: #04844b;
-    border-color: rgba(4, 132, 75, 0.2);
-  }
-
-  .step-current {
-    background: var(--brand-color);
-    color: var(--brand-contrast);
-    border-color: var(--brand-color);
-    box-shadow: 0 1px 3px rgba(1, 118, 211, 0.3);
+  .focus-desc {
+    font-size: 0.6875rem;
+    color: var(--text-muted);
+    line-height: 1.35;
+    padding-left: 0.75rem;
   }
 </style>

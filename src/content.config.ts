@@ -43,13 +43,31 @@ const profile = defineCollection({
       linkedin: z.url(),
       github: z.url().optional(),
       trailhead: z.url().optional(),
+      americasoftware: z.url().optional(),
+      runapy: z.url().optional(),
     }),
     about: z.object({ en: z.array(z.string()).min(1), tr: z.array(z.string()).min(1) }),
     languages: z.array(z.object({ name: localized, level: localized })),
     /** Salesforce-style “record” card shown in the hero. */
     recordFields: z.array(z.object({ label: localized, value: localized })),
-    /** Career path shown as an SLDS Path. The last step is treated as the current one. */
-    careerPath: z.array(localized).min(1),
+    /** Core engineering capabilities and focus areas (replaces rigid career path). */
+    focusAreas: z.array(z.object({ label: localized, desc: localized.optional() })).min(1),
+    /** Hobby & side software projects (e.g. mobile apps, independent tools). */
+    sideProjects: z
+      .object({
+        title: localized,
+        description: localized,
+        items: z.array(
+          z.object({
+            name: z.string(),
+            url: z.url(),
+            badge: localized,
+            description: localized,
+            tags: z.array(z.string()),
+          }),
+        ),
+      })
+      .optional(),
     stats: z.array(z.object({ value: z.string(), label: localized })).max(4),
     seo: z.object({ description: localized }),
   }),

@@ -22,7 +22,12 @@ export const ui = {
     'hero.cta.contact': 'Get in touch',
     'hero.cta.work': 'View Case Studies',
     'hero.record.title': 'FULL STACK ARCHITECTURE · HIGHLIGHTS',
-    'hero.careerPath.label': 'Career Path',
+    'hero.focus.label': 'Engineering Capabilities & Focus',
+
+    // Side Projects / Hobby
+    'about.sideProjects.title': 'Side Projects & Mobile Apps',
+    'about.sideProjects.badge': 'Hobby & Indie Builder',
+    'about.sideProjects.visit': 'Visit',
 
     // Section Titles & Subtitles
     'section.experience.eyebrow': '01 · Experience',
@@ -93,7 +98,12 @@ export const ui = {
     'hero.cta.contact': 'İletişime Geç',
     'hero.cta.work': 'Projeleri İncele',
     'hero.record.title': 'FULL STACK MİMARİ · AYRINTILAR',
-    'hero.careerPath.label': 'Kariyer Yolu',
+    'hero.focus.label': 'Mühendislik Yetkinlikleri & Odak Alanları',
+
+    // Side Projects / Hobby
+    'about.sideProjects.title': 'Yan Projeler & Mobil Uygulamalar',
+    'about.sideProjects.badge': 'Hobi & Bağımsız Geliştirici',
+    'about.sideProjects.visit': 'İncele',
 
     // Section Titles & Subtitles
     'section.experience.eyebrow': '01 · Deneyim',

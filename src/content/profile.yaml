@@ -42,6 +42,8 @@ main:
   links:
     linkedin: https://www.linkedin.com/in/meric-asaner/
     github: https://github.com/masaner
+    americasoftware: https://americasoftware.dev
+    runapy: https://runapyhub.com
     # trailhead: https://www.salesforce.com/trailblazer/your-id
 
   about:
@@ -60,6 +62,10 @@ main:
         Whether designing greenfield web platforms or untangling legacy enterprise architectures, I care
         about building maintainable systems that scale smoothly, respect strict compliance standards,
         and remain an absolute joy for other engineers to extend.
+      - >-
+        On the side, I explore mobile application architecture and indie product building as an active
+        hobby under my personal software studio, Americasoftware. I recently designed and shipped
+        Runapy, an iOS mobile application and community platform for running clubs.
     tr:
       - >-
         Modern web teknolojilerini karmaşık kurumsal backend sistemleriyle buluşturan bir full stack
@@ -76,6 +82,10 @@ main:
         İster sıfırdan yeni bir web platformu inşa etmek olsun, ister karmaşık kurumsal mimarileri
         dönüştürmek; ölçeklenebilir, regülasyonlara uyumlu ve diğer mühendislerin üzerinde keyifle
         geliştirebileceği sistemler kurmaya odaklanırım.
+      - >-
+        Kurumsal mühendisliğin yanı sıra, kişisel yazılım stüdyom Americasoftware çatısı altında bir hobi
+        olarak mobil uygulama mimarisi ve bağımsız ürün geliştirme çalışmaları yürütüyorum. Yakın zamanda
+        koşu kulüpleri için bir iOS mobil uygulaması ve topluluk platformu olan Runapy'yi tasarlayıp yayına aldım.
 
   languages:
     - name: { en: Turkish, tr: Türkçe }
@@ -100,11 +110,80 @@ main:
         en: Microsoft Azure · MongoDB · PostgreSQL · Redis
         tr: Microsoft Azure · MongoDB · PostgreSQL · Redis
 
-  # Progression path showing full stack mastery with enterprise integration expertise.
-  careerPath:
-    - { en: Full Stack Developer, tr: Full Stack Geliştirici }
-    - { en: Enterprise & Integrations Specialist, tr: Kurumsal & Entegrasyon Uzmanı }
-    - { en: Senior Full Stack Engineer, tr: Kıdemli Full Stack Mühendisi }
+  # Core focus areas highlighting versatility across Forward Deployed engineering, AI Agents, and full-stack systems.
+  focusAreas:
+    - label:
+        en: Forward Deployed & Client Engineering
+        tr: Forward Deployed & Müşteri Odaklı Çözümler
+      desc:
+        en: High-impact client architecture, rapid zero-to-production delivery, integration bridges
+        tr: Müşteri odaklı kritik mimariler, sıfırdan canlıya hızlı teslimat, entegrasyon köprüleri
+    - label:
+        en: AI Agents & Autonomous Pipelines
+        tr: Yapay Zekâ Ajanları & Otonom Hatlar
+      desc:
+        en: Agentic workflows, tool use, LLM orchestration, async background pipelines
+        tr: Ajan iş akışları, araç kullanımı, LLM orkestrasyonu, asenkron arkaplan hatları
+    - label:
+        en: Full Stack Web & Cloud Systems
+        tr: Full Stack Web & Bulut Sistemleri
+      desc:
+        en: TypeScript, Python, Node.js, Next.js, Azure, PostgreSQL, scalable microservices
+        tr: TypeScript, Python, Node.js, Next.js, Azure, PostgreSQL, ölçeklenebilir mikroservisler
+    - label:
+        en: Enterprise Integrations & APIs
+        tr: Kurumsal Entegrasyonlar & API'ler
+      desc:
+        en: OAuth 2.0, REST/GraphQL APIs, Salesforce Platform, MuleSoft, Data Cloud
+        tr: OAuth 2.0, REST/GraphQL API, Salesforce Platformu, MuleSoft, Data Cloud
+
+  # Hobby & side projects showcasing independent mobile app & product engineering.
+  sideProjects:
+    title:
+      en: Side Projects & Mobile Applications (Hobby)
+      tr: Yan Projeler & Mobil Uygulamalar (Hobi)
+    description:
+      en: >-
+        Outside of my professional enterprise engineering work, I build mobile applications and indie
+        software products as an active passion hobby.
+      tr: >-
+        Kurumsal mühendislik kariyerimin yanı sıra, boş zamanlarımda bir hobi olarak mobil uygulamalar
+        ve bağımsız yazılım ürünleri geliştiriyorum.
+    items:
+      - name: Runapy
+        url: https://runapyhub.com
+        badge:
+          en: iOS Mobile App · Hobby Project
+          tr: iOS Mobil Uygulama · Hobi Projesi
+        description:
+          en: >-
+            My first mobile app — an all-in-one running club management platform and companion iOS
+            application featuring smart pace groups, verified QR check-ins, runner reels, and community events.
+          tr: >-
+            İlk mobil uygulamam — koşu kulüpleri için akıllı tempo grupları, doğrulanmış QR katılımı,
+            koşucu fotoğraf akışları ve topluluk etkinlikleri sunan hepsi bir arada yönetim platformu ve iOS uygulaması.
+        tags:
+          - iOS (Swift)
+          - Mobile Architecture
+          - Next.js
+          - Cloud APIs
+      - name: Americasoftware
+        url: https://americasoftware.dev
+        badge:
+          en: Personal Software Studio
+          tr: Kişisel Yazılım Stüdyosu
+        description:
+          en: >-
+            My independent digital workshop and showcase where I experiment with modern frameworks,
+            build custom microservices, and deploy side applications and developer utilities.
+          tr: >-
+            Modern teknolojileri deneyimlediğim, özel mikroservisler kurguladığım, hobi amaçlı mobil ve web
+            uygulamalarını sergilediğim kişisel geliştirici alanım.
+        tags:
+          - Indie Building
+          - Mobile & Web Apps
+          - Microservices
+          - Full Stack
 
   # Up to 4 headline numbers. {years} is computed automatically.
   stats:
