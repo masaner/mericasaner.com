@@ -38,7 +38,7 @@ const profile = defineCollection({
     careerStart: yearMonth,
     /** Optional file name inside `src/assets/` (e.g. "profile.jpg"). Falls back to initials. */
     photo: z.string().optional(),
-    cv: z.object({ en: z.string(), tr: z.string() }),
+    cv: z.object({ en: z.string(), tr: z.string() }).optional(),
     links: z.object({
       linkedin: z.url(),
       github: z.url().optional(),

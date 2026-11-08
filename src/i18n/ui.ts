@@ -20,8 +20,8 @@ export const ui = {
     // Hero & Badges
     'hero.badge.open': 'Open to opportunities',
     'hero.cta.contact': 'Get in touch',
-    'hero.cta.cv': 'Download Resume',
-    'hero.record.title': 'SALESFORCE DEVELOPER · RECORD HIGHLIGHTS',
+    'hero.cta.work': 'View Case Studies',
+    'hero.record.title': 'FULL STACK ARCHITECTURE · HIGHLIGHTS',
     'hero.careerPath.label': 'Career Path',
 
     // Section Titles & Subtitles
@@ -91,8 +91,8 @@ export const ui = {
     // Hero & Badges
     'hero.badge.open': 'Yeni fırsatlara açık',
     'hero.cta.contact': 'İletişime Geç',
-    'hero.cta.cv': 'Özgeçmişi İndir',
-    'hero.record.title': 'SALESFORCE DEVELOPER · KAYIT AYRINTILARI',
+    'hero.cta.work': 'Projeleri İncele',
+    'hero.record.title': 'FULL STACK MİMARİ · AYRINTILAR',
     'hero.careerPath.label': 'Kariyer Yolu',
 
     // Section Titles & Subtitles

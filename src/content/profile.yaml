@@ -39,11 +39,6 @@ main:
   # Drop a square photo into src/assets/ and put its file name here, e.g. profile.jpg
   # photo: profile.jpg
 
-  # Put the PDFs into public/cv/. If a file is missing, the button is hidden automatically.
-  cv:
-    en: /cv/Meric-Asaner-CV-EN.pdf
-    tr: /cv/Meric-Asaner-CV-TR.pdf
-
   links:
     linkedin: https://www.linkedin.com/in/meric-asaner/
     github: https://github.com/masaner
