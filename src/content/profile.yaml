@@ -8,24 +8,24 @@ main:
   initials: MA
 
   title:
-    en: Senior Salesforce Developer & Integration Engineer
-    tr: Kıdemli Salesforce Geliştirici ve Entegrasyon Mühendisi
+    en: Senior Full Stack Engineer & Integration Architect
+    tr: Kıdemli Full Stack Yazılım Mühendisi & Entegrasyon Mimarı
 
   # Wrap the highlighted words in *asterisks*.
   headline:
-    en: I connect Salesforce to *everything else.*
-    tr: Salesforce'u *her şeyle* konuşturuyorum.
+    en: Building scalable full-stack applications & *enterprise integrations.*
+    tr: Ölçeklenebilir full stack uygulamalar ve *kurumsal entegrasyonlar.*
 
   # {years} is replaced automatically with your years of experience (from careerStart).
   lede:
     en: >-
-      {years}+ years architecting scalable CRM solutions, high-throughput REST APIs and automated
-      data pipelines across Sales, Service and Experience Cloud — for teams in Germany,
-      Switzerland, the Netherlands and Türkiye.
+      {years}+ years engineering robust web applications, high-throughput REST APIs, and automated
+      data pipelines across modern cloud environments (TypeScript, Python, Azure) with deep enterprise
+      CRM & Salesforce ecosystem expertise.
     tr: >-
-      Sales, Service ve Experience Cloud üzerinde ölçeklenebilir CRM çözümleri, yüksek hacimli REST
-      API'ler ve otomatik veri hatları kurgulayarak geçen {years}+ yıl — Almanya, İsviçre, Hollanda
-      ve Türkiye'deki ekiplerle.
+      Modern bulut ortamlarında (TypeScript, Python, Azure) güçlü web uygulamaları, yüksek hacimli
+      REST API'ler ve veri hatları kurgulayarak geçen {years}+ yıl — derin kurumsal CRM ve Salesforce
+      ekosistemi uzmanlığıyla bir arada.
 
   location:
     en: Istanbul, Türkiye
@@ -52,28 +52,35 @@ main:
   about:
     en:
       - >-
-        I'm a Salesforce developer who lives where CRM meets everything around it. My work sits at
-        the integration layer: OAuth 2.0 and Microsoft Entra ID authentication, External Client
-        Apps, webhooks, REST APIs and the data pipelines that keep systems in sync.
+        I'm a full stack software engineer who bridges modern web technologies with complex
+        enterprise backends. While my technical toolkit spans TypeScript, Python, Node.js, relational
+        and document databases, I bring a unique superpower: deep expertise inside the Salesforce
+        ecosystem and the mission-critical integration layers connecting it to external clouds.
       - >-
-        On the platform itself I build modular Lightning Web Components, orchestrate chained Batch
-        Apex, and care a lot about maintainability — Selector patterns, mock-driven unit tests and
-        CI/CD with Salesforce DX and GitHub Actions.
+        From architecting OAuth 2.0 and Microsoft Entra ID authentication to building high-performance
+        reactive interfaces (React, Next.js, Lightning Web Components) and orchestrating chained
+        asynchronous data pipelines, I focus on clean code, test-driven reliability (mock-driven unit
+        tests, Selector patterns), and continuous delivery.
       - >-
-        What I enjoy most is translating messy business requirements into technical architectures
-        that are reliable, compliant and easy for the next developer to understand.
+        Whether designing greenfield web platforms or untangling legacy enterprise architectures, I care
+        about building maintainable systems that scale smoothly, respect strict compliance standards,
+        and remain an absolute joy for other engineers to extend.
     tr:
       - >-
-        CRM'in etrafındaki her şeyle buluştuğu noktada çalışan bir Salesforce geliştiricisiyim.
-        Odak noktam entegrasyon katmanı: OAuth 2.0 ve Microsoft Entra ID kimlik doğrulaması,
-        External Client App'ler, webhook'lar, REST API'ler ve sistemleri senkron tutan veri hatları.
+        Modern web teknolojilerini karmaşık kurumsal backend sistemleriyle buluşturan bir full stack
+        yazılım mühendisiyim. Teknik araç setim TypeScript, Python, Node.js, ilişkisel ve doküman
+        veritabanlarını kapsarken, kurumsal dünyada fark yaratan bir avantaja da sahibim: Salesforce
+        ekosisteminde ve onu harici bulut sistemlerine bağlayan kritik entegrasyon katmanlarında derin
+        tecrübe.
       - >-
-        Platform tarafında modüler Lightning Web Component'ler geliştiriyor, zincirlenmiş Batch Apex
-        süreçleri kurguluyorum. Sürdürülebilirlik benim için önemli: Selector pattern, mock tabanlı
-        birim testleri, Salesforce DX ve GitHub Actions ile CI/CD.
+        OAuth 2.0 ve Microsoft Entra ID kimlik doğrulamasından yüksek performanslı reaktif arayüzlere
+        (React, Next.js, Lightning Web Components) ve zincirlenmiş asenkron veri hatlarına kadar odak
+        noktam; temiz kod, test odaklı güvenilirlik (mock tabanlı birim testleri, Selector kalıpları)
+        ve sürekli dağıtımdır (CI/CD).
       - >-
-        En çok keyif aldığım şey, karmaşık iş gereksinimlerini güvenilir, regülasyonlara uyumlu ve
-        bir sonraki geliştiricinin kolayca anlayabileceği teknik mimarilere dönüştürmek.
+        İster sıfırdan yeni bir web platformu inşa etmek olsun, ister karmaşık kurumsal mimarileri
+        dönüştürmek; ölçeklenebilir, regülasyonlara uyumlu ve diğer mühendislerin üzerinde keyifle
+        geliştirebileceği sistemler kurmaya odaklanırım.
 
   languages:
     - name: { en: Turkish, tr: Türkçe }
@@ -81,45 +88,53 @@ main:
     - name: { en: English, tr: İngilizce }
       level: { en: Native, tr: Ana dil seviyesinde }
 
-  # The Salesforce-style record card in the hero section.
+  # Core architecture highlights card in the hero section.
   recordFields:
-    - label: { en: Focus, tr: Odak }
-      value: { en: Integrations & APIs, tr: Entegrasyon ve API'ler }
-    - label: { en: Clouds, tr: Cloud'lar }
-      value: { en: Sales · Service · Experience · Data, tr: Sales · Service · Experience · Data }
-    - label: { en: Certified, tr: Sertifikalar }
+    - label: { en: Core Stack, tr: Temel Teknoloji }
+      value: { en: TypeScript · Python · Node.js · SQL, tr: TypeScript · Python · Node.js · SQL }
+    - label: { en: Architecture, tr: Mimari }
       value:
-        en: MuleSoft Integration Foundations · Platform Developer I
-        tr: MuleSoft Integration Foundations · Platform Developer I
-    - label: { en: Based in, tr: Konum }
-      value: { en: Istanbul · works remote, tr: İstanbul · uzaktan çalışır }
+        en: Full Stack Apps · REST APIs · Microservices
+        tr: Full Stack Uygulamalar · REST API · Mikroservisler
+    - label: { en: Enterprise CRM, tr: Kurumsal CRM }
+      value:
+        en: Salesforce Platform · MuleSoft · Data Cloud
+        tr: Salesforce Platformu · MuleSoft · Data Cloud
+    - label: { en: Cloud & DB, tr: Bulut ve Veritabanı }
+      value:
+        en: Microsoft Azure · MongoDB · PostgreSQL · Redis
+        tr: Microsoft Azure · MongoDB · PostgreSQL · Redis
 
-  # Shown as an SLDS "Path". The last step is highlighted as current.
+  # Progression path showing full stack mastery with enterprise integration expertise.
   careerPath:
     - { en: Full Stack Developer, tr: Full Stack Geliştirici }
-    - { en: Salesforce Developer, tr: Salesforce Geliştirici }
-    - { en: Senior Salesforce Developer, tr: Kıdemli Salesforce Geliştirici }
+    - { en: Enterprise & Integrations Specialist, tr: Kurumsal & Entegrasyon Uzmanı }
+    - { en: Senior Full Stack Engineer, tr: Kıdemli Full Stack Mühendisi }
 
   # Up to 4 headline numbers. {years} is computed automatically.
   stats:
     - value: '{years}+'
-      label: { en: years building on Salesforce, tr: yıllık Salesforce deneyimi }
+      label: { en: years engineering scalable software, tr: yıllık ölçeklenebilir yazılım deneyimi }
     - value: 1.6M+
       label:
-        en: production records stress-tested before a release
-        tr: canlı kayıt üzerinde sürüm öncesi stres testi
+        en: production records stress-tested & optimized
+        tr: canlı kayıt üzerinde stres testi ve optimizasyon
     - value: 950+
       label:
-        en: users migrated to GDPR-compliant WhatsApp messaging
-        tr: kullanıcı GDPR uyumlu WhatsApp iletişimine taşındı
+        en: users migrated to real-time communication APIs
+        tr: kullanıcı gerçek zamanlı iletişim API'lerine taşındı
     - value: '4'
-      label: { en: countries' teams shipped with, tr: farklı ülkede ekiplerle teslimat }
+      label:
+        en: countries' engineering teams shipped with
+        tr: farklı ülkede mühendislik ekipleriyle teslimat
 
   seo:
     description:
       en: >-
-        Meriç Alper Aşaner is a Senior Salesforce Developer & Integration Engineer specialising in
-        REST APIs, OAuth 2.0, Microsoft Entra ID, Lightning Web Components, Batch Apex and CI/CD.
+        Meriç Alper Aşaner is a Senior Full Stack Software Engineer & Integration Architect
+        specializing in TypeScript, Python, REST APIs, cloud databases, OAuth 2.0, and enterprise
+        platforms including Salesforce.
       tr: >-
-        Meriç Alper Aşaner; REST API, OAuth 2.0, Microsoft Entra ID, Lightning Web Components, Batch
-        Apex ve CI/CD konularında uzman Kıdemli Salesforce Geliştirici ve Entegrasyon Mühendisidir.
+        Meriç Alper Aşaner; TypeScript, Python, REST API, bulut veritabanları, OAuth 2.0 ve Salesforce
+        dahil kurumsal platformlar konularında uzman Kıdemli Full Stack Yazılım Mühendisi ve Entegrasyon
+        Mimarısıdır.

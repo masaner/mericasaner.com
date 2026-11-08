@@ -28,24 +28,25 @@ export const ui = {
     'section.experience.eyebrow': '01 · Experience',
     'section.experience.title': 'Career & Impact',
     'section.experience.sub':
-      'Architecting resilient Salesforce solutions, enterprise APIs, and automations across high-growth European tech.',
+      'Architecting resilient full-stack systems, enterprise APIs, and scalable automations across high-growth European tech.',
     'section.projects.eyebrow': '02 · Selected Work',
     'section.projects.title': 'Featured Case Studies',
     'section.projects.sub':
-      'Deep dives into integration architecture, platform optimization, and measurable engineering outcomes.',
+      'Deep dives into full-stack architecture, platform optimization, and measurable engineering outcomes.',
     'section.certifications.eyebrow': '03 · Credentials',
     'section.certifications.title': 'Licenses & Certifications',
     'section.certifications.sub':
-      'Salesforce verified credentials and continuous engineering training.',
+      'Verified platform credentials and continuous software engineering specializations.',
     'section.skills.eyebrow': '04 · Stack',
     'section.skills.title': 'Technical Skills & Ecosystem',
-    'section.skills.sub': 'Tools, clouds, patterns, and technologies I work with daily.',
+    'section.skills.sub':
+      'Full-stack tools, languages, cloud platforms, and enterprise systems I work with daily.',
     'section.about.eyebrow': '05 · Profile',
     'section.about.title': 'About Me',
     'section.contact.eyebrow': '06 · Connect',
     'section.contact.title': 'Let’s build something reliable together.',
     'section.contact.sub':
-      'Whether you are looking for a Senior Salesforce Developer, have an integration challenge, or want to discuss CRM architecture.',
+      'Whether you are looking for a Senior Full Stack Engineer, have an integration challenge, or want to discuss scalable architecture.',
 
     // Common labels
     'common.present': 'Present',
@@ -98,25 +99,25 @@ export const ui = {
     'section.experience.eyebrow': '01 · Deneyim',
     'section.experience.title': 'Kariyer ve Başarılar',
     'section.experience.sub':
-      'Avrupa ve Türkiye odaklı teknoloji ekiplerinde dayanıklı Salesforce çözümleri, kurumsal API ve otomasyon mimarileri.',
+      'Avrupa ve Türkiye odaklı teknoloji ekiplerinde dayanıklı full stack sistemler, kurumsal API ve otomasyon mimarileri.',
     'section.projects.eyebrow': '02 · Seçilmiş İşler',
     'section.projects.title': 'Örnek Vaka Analizleri',
     'section.projects.sub':
-      'Entegrasyon mimarisi, platform optimizasyonu ve somut mühendislik çıktıları üzerine detaylı çalışmalar.',
+      'Full stack mimari, platform optimizasyonu ve somut mühendislik çıktıları üzerine detaylı çalışmalar.',
     'section.certifications.eyebrow': '03 · Yetkinlikler',
     'section.certifications.title': 'Lisanslar ve Sertifikalar',
     'section.certifications.sub':
-      'Salesforce doğrulanmış sertifikaları ve sürekli mühendislik eğitimleri.',
+      'Doğrulanmış platform sertifikaları ve sürekli yazılım mühendisliği uzmanlıkları.',
     'section.skills.eyebrow': '04 · Teknoloji Seti',
     'section.skills.title': 'Teknik Yetenekler ve Ekosistem',
     'section.skills.sub':
-      'Günlük çalışmalarımda kullandığım araçlar, bulutlar, tasarım kalıpları ve diller.',
+      'Günlük çalışmalarımda kullandığım full stack araçlar, diller, bulut platformları ve kurumsal sistemler.',
     'section.about.eyebrow': '05 · Profil',
     'section.about.title': 'Hakkımda',
     'section.contact.eyebrow': '06 · İletişim',
     'section.contact.title': 'Birlikte güvenilir sistemler kuralım.',
     'section.contact.sub':
-      'Kıdemli bir Salesforce geliştirici arayışındaysanız, entegrasyon projeniz varsa ya da CRM mimarisi üzerine konuşmak isterseniz bana her zaman ulaşabilirsiniz.',
+      'Kıdemli bir Full Stack yazılım mühendisi arayışındaysanız, entegrasyon projeniz varsa ya da ölçeklenebilir sistem mimarisi üzerine konuşmak isterseniz bana her zaman ulaşabilirsiniz.',
 
     // Common labels
     'common.present': 'Günümüz',
