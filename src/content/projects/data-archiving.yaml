@@ -1,0 +1,42 @@
+title:
+  en: Automated MongoDB CRM Data-Archiving & DevOps Engine
+  tr: Otomatik MongoDB CRM Veri Arşivleme ve DevOps Altyapısı
+org: Corendon
+period: 2023 — 2024
+order: 3
+featured:
+  en: Eliminated recurring storage overage fees & instituted SFDX CI/CD
+  tr: Depolama aşım maliyetlerini sonlandırdı ve SFDX CI/CD standardı kurdu
+challenge:
+  en: >-
+    Rapidly accumulating flight and passenger CRM records threatened platform storage limits,
+    causing recurring high-tier licensing costs. In addition, manual deployment procedures caused
+    release friction and extended sprint cycles.
+  tr: >-
+    Hızla biriken uçuş ve yolcu CRM kayıtları platform depolama sınırlarını zorlayarak tekrarlayan
+    yüksek ek depolama maliyetlerine neden oluyordu. Ayrıca manuel dağıtım süreçleri sürüm
+    sürtünmelerine ve uzayan sprint döngülerine yol açıyordu.
+contribution:
+  en: >-
+    Engineered an automated data-archiving pipeline that offloaded historical CRM records into
+    external MongoDB collections while preserving fast lookup references in Salesforce. Built the
+    company's first standardized SFDX + GitHub Actions CI/CD pipeline and an AI Einstein Chatbot
+    for automated passenger inquiry triage.
+  tr: >-
+    Geçmiş CRM kayıtlarını Salesforce içindeki hızlı arama referanslarını koruyarak harici MongoDB
+    koleksiyonlarına aktaran otomatik bir veri arşivleme hattı geliştirdim. Şirketin ilk standart
+    SFDX + GitHub Actions CI/CD hattını ve yolcu taleplerini otomatik önceliklendiren yapay zekâ
+    destekli Einstein Chatbot uygulamasını kurdum.
+outcome:
+  en: >-
+    Substantially slashed Salesforce data storage consumption, permanently preventing license
+    overage costs, and reduced release deployment times across sprint cadences.
+  tr: >-
+    Salesforce veri depolama tüketimini ciddi oranda düşürerek ek lisans maliyetlerinin önüne geçti
+    ve sprint döngülerinde sürüm dağıtım sürelerini hissedilir biçimde kısalttı.
+tags:
+  - MongoDB
+  - Salesforce DX
+  - GitHub Actions CI/CD
+  - Einstein Bots
+  - Data Archiving

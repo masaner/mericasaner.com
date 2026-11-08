@@ -1,0 +1,31 @@
+company: Midsoft
+role:
+  en: Junior Full Stack Developer
+  tr: Junior Full Stack Geliştirici
+employment: full-time
+start: 2021-07
+end: 2021-10
+location:
+  en: Eskişehir, Türkiye (on-site)
+  tr: Eskişehir, Türkiye (ofisten)
+context:
+  en: Software house.
+  tr: Yazılım evi.
+highlights:
+  - en: >-
+      Developed a change-tracking and compliance audit-logging system for manufacturing facilities to
+      ensure operational traceability.
+    tr: >-
+      Üretim tesisleri için operasyonel izlenebilirliği sağlayan bir değişiklik takibi ve uyumluluk
+      denetim kaydı sistemi geliştirdim.
+  - en: >-
+      Created an automated PDF-generation tool that streamlined technical document production
+      workflows.
+    tr: >-
+      Teknik doküman üretim süreçlerini hızlandıran otomatik bir PDF oluşturma aracı geliştirdim.
+  - en: Built and maintained relational databases, web applications and server infrastructure.
+    tr: İlişkisel veritabanları, web uygulamaları ve sunucu altyapısı kurup sürdürdüm.
+tags:
+  - SQL
+  - JavaScript
+  - Web Apps

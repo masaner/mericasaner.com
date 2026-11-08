@@ -1,0 +1,42 @@
+title:
+  en: Satellite Telemetry & Bandwidth Capacity Dashboard
+  tr: Uydu Telemetri ve Bant Genişliği Kapasite Paneli
+org: Azercosmos (via Ritmus)
+period: 2022 — 2023
+order: 2
+featured:
+  en: Replaced manual PowerPoint reporting with real-time LWC + Chart.js
+  tr: Manuel PowerPoint raporlamasını gerçek zamanlı LWC + Chart.js ile değiştirdi
+challenge:
+  en: >-
+    Azercosmos engineers and account managers tracked satellite transponder bandwidth, channel
+    frequencies, and commercial service contracts through cumbersome, manually compiled PowerPoint
+    decks that caused reporting lags and data sync errors.
+  tr: >-
+    Azercosmos mühendisleri ve müşteri yöneticileri, uydu transponder bant genişliğini, kanal
+    frekanslarını ve ticari sözleşmeleri manuel hazırlanan PowerPoint sunumlarıyla takip ediyordu; bu
+    da raporlama gecikmelerine ve veri senkronizasyon hatalarına yol açıyordu.
+contribution:
+  en: >-
+    Architected an end-to-end telemetry dashboard using Lightning Web Components and Chart.js.
+    Designed a resilient data-processing pipeline powered by chained Batch Apex and Custom Metadata
+    Types to calculate frequency utilization, handle high-volume data streams, and update analytics
+    asynchronously.
+  tr: >-
+    Lightning Web Components ve Chart.js kullanarak uçtan uca bir telemetri paneli tasarladım.
+    Frekans kullanım oranlarını hesaplamak, yüksek hacimli veri akışlarını işlemek ve analitiği
+    asenkron güncellemek için zincirlenmiş Batch Apex ve Custom Metadata Type'lar üzerine kurulu
+    dayanıklı bir veri işleme hattı kurguladım.
+outcome:
+  en: >-
+    Completely eliminated manual report generation, providing leadership with real-time visibility
+    into transponder capacity and customer contract statuses directly inside Salesforce.
+  tr: >-
+    Manuel rapor üretimini tamamen ortadan kaldırarak yönetime transponder kapasitesi ve müşteri
+    sözleşme durumları hakkında Salesforce içinden anlık ve güvenilir görünürlük sağladı.
+tags:
+  - Lightning Web Components
+  - Chained Batch Apex
+  - Chart.js
+  - Custom Metadata
+  - Telemetry

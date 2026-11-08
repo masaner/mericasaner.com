@@ -1,0 +1,138 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  profile: CollectionEntry<'profile'>['data'];
+  lang: Lang;
+}
+
+const { profile, lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section id="about" class="section">
+  <div class="container">
+    <div class="about-card card">
+      <div class="about-header">
+        <span class="eyebrow">{t('section.about.eyebrow')}</span>
+        <h2>{t('section.about.title')}</h2>
+      </div>
+
+      <div class="about-content">
+        <div class="about-text">
+          {profile.about[lang].map((p) => (
+            <p class="about-paragraph">{p}</p>
+          ))}
+        </div>
+
+        <div class="about-sidebar">
+          <!-- Languages Spoken -->
+          <div class="sidebar-box">
+            <h3 class="sidebar-title">{lang === 'tr' ? 'Diller' : 'Languages'}</h3>
+            <ul class="sidebar-list">
+              {profile.languages.map((l) => (
+                <li class="sidebar-list-item">
+                  <span class="item-name">{l.name[lang]}</span>
+                  <span class="badge">{l.level[lang]}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Location & Base -->
+          <div class="sidebar-box">
+            <h3 class="sidebar-title">{lang === 'tr' ? 'Çalışma Modeli' : 'Location & Work'}</h3>
+            <p class="sidebar-text">
+              {profile.location[lang]} ·{' '}
+              {lang === 'tr' ? 'Tamamen uzaktan (Remote)' : 'Available Remote worldwide'}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-card {
+    padding: clamp(1.75rem, 4vw, 3rem);
+    border-radius: var(--slds-g-radius-4);
+  }
+
+  .about-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .about-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  @media (min-width: 800px) {
+    .about-content {
+      grid-template-columns: 1.6fr 1fr;
+    }
+  }
+
+  .about-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+  }
+
+  .about-paragraph {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+
+  .about-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .sidebar-box {
+    padding: 1.25rem;
+    background: var(--bg-surface-subtle);
+    border: 1px solid var(--border-color);
+    border-radius: var(--slds-g-radius-3);
+  }
+
+  .sidebar-title {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand-color);
+    margin-bottom: 0.75rem;
+  }
+
+  .sidebar-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .sidebar-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.9375rem;
+  }
+
+  .item-name {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .sidebar-text {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+</style>

@@ -1,0 +1,75 @@
+---
+import { getLocalizedPath } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+
+interface Props {
+  currentLang: Lang;
+  currentPath?: string;
+}
+
+const { currentLang, currentPath = Astro.url.pathname } = Astro.props;
+
+const enPath = getLocalizedPath(currentPath, 'en');
+const trPath = getLocalizedPath(currentPath, 'tr');
+---
+
+<div class="lang-switch" role="group" aria-label="Language selection">
+  <a
+    href={enPath}
+    class:list={['lang-link', { active: currentLang === 'en' }]}
+    aria-current={currentLang === 'en' ? 'page' : undefined}
+    hreflang="en"
+    title="Switch to English"
+  >
+    EN
+  </a>
+  <span class="lang-divider" aria-hidden="true">
+    /
+  </span>
+  <a
+    href={trPath}
+    class:list={['lang-link', { active: currentLang === 'tr' }]}
+    aria-current={currentLang === 'tr' ? 'page' : undefined}
+    hreflang="tr"
+    title="Türkçe'ye geç"
+  >
+    TR
+  </a>
+</div>
+
+<style>
+  .lang-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0.6rem;
+    background: var(--bg-surface-subtle);
+    border: 1px solid var(--border-color);
+    border-radius: var(--slds-g-radius-pill);
+  }
+
+  .lang-link {
+    color: var(--text-muted);
+    padding: 0.2rem 0.35rem;
+    border-radius: var(--slds-g-radius-1);
+    transition: color 0.15s ease;
+  }
+
+  .lang-link:hover {
+    color: var(--text-primary);
+  }
+
+  .lang-link.active {
+    color: var(--brand-color);
+    font-weight: 700;
+  }
+
+  .lang-divider {
+    color: var(--border-color-strong);
+    user-select: none;
+    font-size: 0.75rem;
+  }
+</style>

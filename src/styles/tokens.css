@@ -1,0 +1,196 @@
+/**
+ * SLDS 2.0 / Salesforce Cosmos Inspired Design Tokens & Styling Hooks
+ *
+ * Implements modern CSS color-scheme theming with light-dark() and custom properties.
+ * Adheres to WCAG AA / AAA contrast ratios across Light and Dark surfaces.
+ */
+
+:root {
+  /* Browser Engine Color Scheme declaration */
+  color-scheme: light dark;
+
+  /* Fonts */
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji';
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+    monospace;
+
+  /* Base Spacing Scale (4px base) */
+  --slds-g-spacing-1: 0.25rem; /* 4px */
+  --slds-g-spacing-2: 0.5rem; /* 8px */
+  --slds-g-spacing-3: 0.75rem; /* 12px */
+  --slds-g-spacing-4: 1rem; /* 16px */
+  --slds-g-spacing-5: 1.25rem; /* 20px */
+  --slds-g-spacing-6: 1.5rem; /* 24px */
+  --slds-g-spacing-8: 2rem; /* 32px */
+  --slds-g-spacing-10: 2.5rem; /* 40px */
+  --slds-g-spacing-12: 3rem; /* 48px */
+  --slds-g-spacing-16: 4rem; /* 64px */
+  --slds-g-spacing-20: 5rem; /* 80px */
+
+  /* Radius Scale */
+  --slds-g-radius-1: 4px;
+  --slds-g-radius-2: 8px;
+  --slds-g-radius-3: 12px;
+  --slds-g-radius-4: 16px;
+  --slds-g-radius-5: 24px;
+  --slds-g-radius-pill: 9999px;
+
+  /* Salesforce Brand Accents */
+  --color-salesforce-blue: #0176d3;
+  --color-salesforce-blue-hover: #014486;
+  --color-salesforce-sky: #1ab9ff;
+  --color-salesforce-deep: #032d60;
+  --color-salesforce-teal: #04844b;
+  --color-salesforce-purple: #7f26c6;
+
+  /* Raw Neutral Palettes */
+  /* Light palette */
+  --raw-bg-light: #f3f3f3;
+  --raw-surface-light: #ffffff;
+  --raw-surface-raised-light: #ffffff;
+  --raw-surface-subtle-light: #f8fafc;
+  --raw-border-light: #e5e7eb;
+  --raw-border-strong-light: #cbd5e1;
+  --raw-text-primary-light: #091a2b;
+  --raw-text-secondary-light: #475569;
+  --raw-text-muted-light: #64748b;
+  --raw-brand-light: #0176d3;
+  --raw-brand-hover-light: #014486;
+  --raw-brand-contrast-light: #ffffff;
+  --raw-badge-bg-light: #e0f2fe;
+  --raw-badge-text-light: #0369a1;
+
+  /* Dark palette (Cosmos Dark Theme) */
+  --raw-bg-dark: #0b111a;
+  --raw-surface-dark: #111a26;
+  --raw-surface-raised-dark: #172435;
+  --raw-surface-subtle-dark: #0e1622;
+  --raw-border-dark: #223247;
+  --raw-border-strong-dark: #334a66;
+  --raw-text-primary-dark: #f0f4f9;
+  --raw-text-secondary-dark: #9bb0c8;
+  --raw-text-muted-dark: #6e849f;
+  --raw-brand-dark: #38bdf8;
+  --raw-brand-hover-dark: #7dd3fc;
+  --raw-brand-contrast-dark: #041322;
+  --raw-badge-bg-dark: rgba(56, 189, 248, 0.15);
+  --raw-badge-text-dark: #7dd3fc;
+
+  /* Active Tokens via light-dark() with media-query fallbacks */
+  --bg-app: var(--raw-bg-light);
+  --bg-surface: var(--raw-surface-light);
+  --bg-surface-raised: var(--raw-surface-raised-light);
+  --bg-surface-subtle: var(--raw-surface-subtle-light);
+  --border-color: var(--raw-border-light);
+  --border-color-strong: var(--raw-border-strong-light);
+  --text-primary: var(--raw-text-primary-light);
+  --text-secondary: var(--raw-text-secondary-light);
+  --text-muted: var(--raw-text-muted-light);
+  --brand-color: var(--raw-brand-light);
+  --brand-hover: var(--raw-brand-hover-light);
+  --brand-contrast: var(--raw-brand-contrast-light);
+  --badge-bg: var(--raw-badge-bg-light);
+  --badge-text: var(--raw-badge-text-light);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.09), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+
+  /* Layout Constraints */
+  --content-max-width: 1080px;
+  --header-height: 4rem;
+}
+
+/* Fallback for system dark mode when light-dark is resolving or in dark OS */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-app: var(--raw-bg-dark);
+    --bg-surface: var(--raw-surface-dark);
+    --bg-surface-raised: var(--raw-surface-raised-dark);
+    --bg-surface-subtle: var(--raw-surface-subtle-dark);
+    --border-color: var(--raw-border-dark);
+    --border-color-strong: var(--raw-border-strong-dark);
+    --text-primary: var(--raw-text-primary-dark);
+    --text-secondary: var(--raw-text-secondary-dark);
+    --text-muted: var(--raw-text-muted-dark);
+    --brand-color: var(--raw-brand-dark);
+    --brand-hover: var(--raw-brand-hover-dark);
+    --brand-contrast: var(--raw-brand-contrast-dark);
+    --badge-bg: var(--raw-badge-bg-dark);
+    --badge-text: var(--raw-badge-text-dark);
+    --shadow-card: 0 2px 8px 0 rgba(0, 0, 0, 0.35);
+  }
+}
+
+/* Modern light-dark() function support */
+@supports (color: light-dark(white, black)) {
+  :root {
+    --bg-app: light-dark(var(--raw-bg-light), var(--raw-bg-dark));
+    --bg-surface: light-dark(var(--raw-surface-light), var(--raw-surface-dark));
+    --bg-surface-raised: light-dark(
+      var(--raw-surface-raised-light),
+      var(--raw-surface-raised-dark)
+    );
+    --bg-surface-subtle: light-dark(
+      var(--raw-surface-subtle-light),
+      var(--raw-surface-subtle-dark)
+    );
+    --border-color: light-dark(var(--raw-border-light), var(--raw-border-dark));
+    --border-color-strong: light-dark(
+      var(--raw-border-strong-light),
+      var(--raw-border-strong-dark)
+    );
+    --text-primary: light-dark(var(--raw-text-primary-light), var(--raw-text-primary-dark));
+    --text-secondary: light-dark(var(--raw-text-secondary-light), var(--raw-text-secondary-dark));
+    --text-muted: light-dark(var(--raw-text-muted-light), var(--raw-text-muted-dark));
+    --brand-color: light-dark(var(--raw-brand-light), var(--raw-brand-dark));
+    --brand-hover: light-dark(var(--raw-brand-hover-light), var(--raw-brand-hover-dark));
+    --brand-contrast: light-dark(var(--raw-brand-contrast-light), var(--raw-brand-contrast-dark));
+    --badge-bg: light-dark(var(--raw-badge-bg-light), var(--raw-badge-bg-dark));
+    --badge-text: light-dark(var(--raw-badge-text-light), var(--raw-badge-text-dark));
+  }
+}
+
+/* Reflect manual override in <meta name="color-scheme"> back to CSS as mandated by modern web guidance */
+:root:has(> head > meta[name='color-scheme'][content='dark']) {
+  color-scheme: dark;
+  --bg-app: var(--raw-bg-dark);
+  --bg-surface: var(--raw-surface-dark);
+  --bg-surface-raised: var(--raw-surface-raised-dark);
+  --bg-surface-subtle: var(--raw-surface-subtle-dark);
+  --border-color: var(--raw-border-dark);
+  --border-color-strong: var(--raw-border-strong-dark);
+  --text-primary: var(--raw-text-primary-dark);
+  --text-secondary: var(--raw-text-secondary-dark);
+  --text-muted: var(--raw-text-muted-dark);
+  --brand-color: var(--raw-brand-dark);
+  --brand-hover: var(--raw-brand-hover-dark);
+  --brand-contrast: var(--raw-brand-contrast-dark);
+  --badge-bg: var(--raw-badge-bg-dark);
+  --badge-text: var(--raw-badge-text-dark);
+  --shadow-card: 0 2px 8px 0 rgba(0, 0, 0, 0.35);
+}
+
+:root:has(> head > meta[name='color-scheme'][content='light']) {
+  color-scheme: light;
+  --bg-app: var(--raw-bg-light);
+  --bg-surface: var(--raw-surface-light);
+  --bg-surface-raised: var(--raw-surface-raised-light);
+  --bg-surface-subtle: var(--raw-surface-subtle-light);
+  --border-color: var(--raw-border-light);
+  --border-color-strong: var(--raw-border-strong-light);
+  --text-primary: var(--raw-text-primary-light);
+  --text-secondary: var(--raw-text-secondary-light);
+  --text-muted: var(--raw-text-muted-light);
+  --brand-color: var(--raw-brand-light);
+  --brand-hover: var(--raw-brand-hover-light);
+  --brand-contrast: var(--raw-brand-contrast-light);
+  --badge-bg: var(--raw-badge-bg-light);
+  --badge-text: var(--raw-badge-text-light);
+  --shadow-card: 0 2px 4px 0 rgba(0, 0, 0, 0.04);
+}

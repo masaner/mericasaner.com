@@ -1,0 +1,79 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { useTranslations } from '@/i18n/utils';
+
+const lang = 'en';
+const t = useTranslations(lang);
+---
+
+<BaseLayout title={t('404.title')} description={t('404.sub')} lang={lang}>
+  <div class="container error-container">
+    <div class="error-card card">
+      <div class="error-badge">
+        <span class="status-dot"></span>
+        <span>STATUS: 404_NOT_FOUND</span>
+      </div>
+      <h1 class="error-heading">{t('404.heading')}</h1>
+      <p class="error-desc">{t('404.sub')}</p>
+      <div class="error-actions">
+        <a href="/" class="btn btn-primary">
+          {t('404.backHome')}
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .error-container {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-block: 4rem;
+  }
+
+  .error-card {
+    max-width: 540px;
+    width: 100%;
+    padding: 2.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    border-radius: var(--slds-g-radius-4);
+  }
+
+  .error-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    padding: 0.25rem 0.65rem;
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    border-radius: var(--slds-g-radius-pill);
+    border: 1px solid var(--border-color);
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ef4444;
+  }
+
+  .error-heading {
+    font-size: 1.75rem;
+  }
+
+  .error-desc {
+    color: var(--text-secondary);
+  }
+
+  .error-actions {
+    margin-top: 1rem;
+  }
+</style>

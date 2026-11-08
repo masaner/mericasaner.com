@@ -1,0 +1,47 @@
+company: Properti
+role:
+  en: Senior Salesforce Developer
+  tr: Kıdemli Salesforce Geliştirici
+employment: contract
+start: 2024-08
+end: 2025-03
+location:
+  en: Switzerland (remote)
+  tr: İsviçre (uzaktan)
+context:
+  en: Real estate technology.
+  tr: Gayrimenkul teknolojileri.
+highlights:
+  - en: >-
+      Engineered a high-performance broker analytics dashboard leveraging Custom Metadata Types,
+      server-side caching and optimised SOQL to eliminate latency and deliver real-time,
+      user-specific insights.
+    tr: >-
+      Custom Metadata Type'lar, sunucu tarafı önbellekleme ve optimize SOQL sorgularıyla gecikmeyi
+      ortadan kaldıran, kullanıcıya özel gerçek zamanlı içgörüler sunan yüksek performanslı bir
+      broker analitik paneli geliştirdim.
+  - en: >-
+      Delivered a gamified broker promotion-incentive solution using Custom Metadata Types and
+      Lightning Web Components on Experience Cloud, driving broker adoption toward quarterly sales
+      targets.
+    tr: >-
+      Experience Cloud üzerinde Custom Metadata Type'lar ve Lightning Web Component'lerle, brokerları
+      çeyreklik satış hedeflerine yönlendiren oyunlaştırılmış bir teşvik çözümü geliştirdim.
+  - en: >-
+      Designed and integrated secure REST API endpoints connecting core Salesforce CRM pipelines with
+      external real estate platforms.
+    tr: >-
+      Temel Salesforce CRM süreçlerini harici gayrimenkul platformlarına bağlayan güvenli REST API uç
+      noktaları tasarlayıp entegre ettim.
+  - en: >-
+      Developed and maintained custom Salesforce applications powering core brokerage operations,
+      automating multi-step CRM workflows for greater process efficiency.
+    tr: >-
+      Temel brokerlık operasyonlarını yürüten özel Salesforce uygulamaları geliştirip sürdürdüm; çok
+      adımlı CRM iş akışlarını otomatikleştirerek süreç verimliliğini artırdım.
+tags:
+  - Lightning Web Components
+  - Experience Cloud
+  - Custom Metadata
+  - SOQL
+  - REST APIs

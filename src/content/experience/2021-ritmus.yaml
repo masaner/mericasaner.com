@@ -1,0 +1,66 @@
+company: Ritmus
+role:
+  en: Salesforce Developer
+  tr: Salesforce Geliştirici
+employment: full-time
+start: 2021-10
+end: 2023-10
+location:
+  en: Istanbul, Türkiye
+  tr: İstanbul, Türkiye
+context:
+  en: Salesforce consultancy — multi-cloud client projects.
+  tr: Salesforce danışmanlığı — çoklu cloud müşteri projeleri.
+highlights:
+  - en: >-
+      Engineered an interactive telemetry and capacity dashboard for Azercosmos visualising satellite
+      transponder bandwidth, channel capacity and service contracts — replacing manual PowerPoint
+      reporting with an LWC + Chart.js UI powered by chained Batch Apex and Custom Metadata
+      orchestration.
+    tr: >-
+      Azercosmos için uydu transponder bant genişliğini, kanal kapasitesini ve hizmet sözleşmelerini
+      görselleştiren interaktif bir telemetri ve kapasite paneli geliştirdim; manuel PowerPoint
+      raporlamasını, zincirlenmiş Batch Apex ve Custom Metadata ile beslenen LWC + Chart.js arayüzüyle
+      değiştirdim.
+  - en: >-
+      Architected an omnichannel campaign automation solution for Bizim Toptan, building an
+      interactive LWC audience-filtering engine and custom REST API pipelines to dynamically segment
+      customers and dispatch targeted SMS campaigns.
+    tr: >-
+      Bizim Toptan için çok kanallı bir kampanya otomasyon çözümü kurguladım; müşterileri dinamik
+      olarak segmentlere ayırıp hedefli SMS kampanyaları gönderen interaktif bir LWC kitle filtreleme
+      motoru ve özel REST API hatları geliştirdim.
+  - en: >-
+      Developed full-stack Heroku (Node.js/PostgreSQL) and Flutter (Dart) mobile applications
+      integrated with Salesforce via custom Apex REST services — featured on the official Salesforce
+      Developers YouTube channel.
+    tr: >-
+      Özel Apex REST servisleriyle Salesforce'a entegre full-stack Heroku (Node.js/PostgreSQL) ve
+      Flutter (Dart) mobil uygulamaları geliştirdim — resmi Salesforce Developers YouTube kanalında
+      yer aldı.
+  - en: >-
+      Developed real-time callout monitoring and telemetry dashboards tracking outbound API dispatch
+      queues, delivery rates and webhook statuses for customer communications.
+    tr: >-
+      Müşteri iletişimi için giden API kuyruklarını, teslim oranlarını ve webhook durumlarını izleyen
+      gerçek zamanlı callout izleme ve telemetri panelleri geliştirdim.
+  - en: >-
+      Delivered multi-cloud marketing intelligence and analytics integrations using Marketing Cloud
+      Intelligence (Datorama), Data Cloud and Google Analytics.
+    tr: >-
+      Marketing Cloud Intelligence (Datorama), Data Cloud ve Google Analytics ile çoklu cloud
+      pazarlama zekâsı ve analitik entegrasyonları teslim ettim.
+  - en: >-
+      Designed enterprise REST APIs and mentored junior developers through architectural design,
+      implementation and clean-code Apex reviews.
+    tr: >-
+      Kurumsal REST API'ler tasarladım; mimari tasarım, geliştirme ve temiz kod odaklı Apex
+      incelemeleriyle junior geliştiricilere mentorluk yaptım.
+tags:
+  - Lightning Web Components
+  - Batch Apex
+  - Chart.js
+  - Heroku
+  - Flutter
+  - Data Cloud
+  - Datorama

@@ -1,0 +1,47 @@
+title:
+  en: Enterprise WhatsApp Business API Rollout & Azure SSO
+  tr: Kurumsal WhatsApp Business API Entegrasyonu ve Azure SSO
+org: Enpal
+period: '2025 — 2026'
+order: 1
+featured:
+  en: 950+ users migrated · GDPR compliant B2C messaging at scale
+  tr: 950+ kullanıcı taşındı · Ölçekte GDPR uyumlu B2C mesajlaşma
+challenge:
+  en: >-
+    Enpal needed to transition customer acquisition messaging to a compliant, high-throughput B2C
+    communication channel while maintaining strict EU GDPR data residency, preventing race
+    conditions on incoming webhooks, and seamlessly connecting a custom Azure web app via Microsoft
+    Entra ID.
+  tr: >-
+    Enpal'in müşteri kazanımı mesajlaşmasını, katı AB GDPR veri koruma standartlarına uygun, yüksek
+    hacimli bir B2C kanalına taşıması gerekiyordu. Aynı zamanda gelen webhook'larda yarış durumlarını
+    (race condition) önlemek ve Microsoft Entra ID ile özel bir Azure web uygulamasını bağlamak
+    gerekiyordu.
+contribution:
+  en: >-
+    Led the technical architecture of the WhatsApp Business API solution (via Lime Connect).
+    Implemented OAuth authentication, secure webhook listener endpoints with transactional retry
+    logic, Salesforce External Client Apps, and automated A/B sandbox data-seeding pipelines.
+    Stress-tested logic against 1.6M+ production records.
+  tr: >-
+    WhatsApp Business API çözümünün (Lime Connect) teknik mimarisini yönettim. OAuth kimlik
+    doğrulaması, işlemsel yeniden deneme mantığına sahip güvenli webhook uç noktaları, Salesforce
+    External Client App'leri ve otomatik A/B sandbox veri tohumlama hatları kurdum. Canlıdaki 1,6M+
+    kayıt üzerinde stres testleri gerçekleştirdim.
+outcome:
+  en: >-
+    Migrated 950+ users with zero downtime, eliminated false-positive customer warnings, reduced PR
+    review cycles through Bruno API suites & automated AI guardrails, and lowered Apex CI/CD test
+    execution from minutes to seconds.
+  tr: >-
+    950'den fazla kullanıcıyı sıfır kesintiyle taşıdık; hatalı müşteri uyarılarını sıfırladık, Bruno
+    API test paketleri ve yapay zekâ denetimleriyle PR döngülerini kısalttık ve Apex CI/CD test
+    sürelerini dakikalardan saniyelere indirdik.
+tags:
+  - WhatsApp Business API
+  - Microsoft Entra ID
+  - OAuth 2.0
+  - External Client Apps
+  - Apex
+  - Azure

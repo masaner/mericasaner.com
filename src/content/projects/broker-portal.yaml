@@ -1,0 +1,41 @@
+title:
+  en: High-Performance Broker Analytics & Gamification Portal
+  tr: Yüksek Performanslı Broker Analitik ve Oyunlaştırma Portalı
+org: Properti
+period: 2024 — 2025
+order: 4
+featured:
+  en: Experience Cloud portal driving real-time broker adoption
+  tr: Gerçek zamanlı broker katılımını artıran Experience Cloud portalı
+challenge:
+  en: >-
+    Real estate brokers faced sluggish dashboard loads and disjointed incentives, hindering daily
+    adoption and visibility into performance targets across Switzerland's regional brokerage
+    networks.
+  tr: >-
+    Gayrimenkul brokerları yavaş yüklenen paneller ve dağınık teşvik sistemleri nedeniyle çeyreklik
+    hedeflerini takip etmekte zorlanıyor, bu da platform benimsenmesini olumsuz etkiliyordu.
+contribution:
+  en: >-
+    Engineered an interactive analytics dashboard and gamified promotion-incentive component suite
+    on Experience Cloud. Utilized Custom Metadata Types, server-side caching, and laser-optimized
+    SOQL to deliver instant, broker-specific KPIs, while integrating secure REST APIs with external
+    real estate platforms.
+  tr: >-
+    Experience Cloud üzerinde interaktif bir analitik paneli ve oyunlaştırılmış teşvik bileşen seti
+    geliştirdim. Anlık ve broker'a özel KPI'lar sunmak için Custom Metadata Type'lar, sunucu tarafı
+    önbellekleme ve optimize SOQL sorguları kullandım; ayrıca harici emlak platformlarıyla güvenli
+    REST API entegrasyonu kurdum.
+outcome:
+  en: >-
+    Eliminated query latency, accelerated broker engagement toward sales quotas, and automated
+    multi-step CRM operations with high reliability.
+  tr: >-
+    Sorgu gecikmelerini sıfırladı, satış kotalarına yönelik broker katılımını artırdı ve çok adımlı
+    CRM operasyonlarını yüksek güvenilirlikle otomatikleştirdi.
+tags:
+  - Lightning Web Components
+  - Experience Cloud
+  - Custom Metadata Types
+  - SOQL Optimization
+  - REST APIs

@@ -1,0 +1,23 @@
+- id: mulesoft-integration-foundations
+  name: Salesforce Certified MuleSoft Integration Foundations
+  issuer: Salesforce
+  kind: certification
+  date: 2024-06
+
+- id: platform-developer-1
+  name: Salesforce Certified Platform Developer I
+  issuer: Salesforce
+  kind: certification
+  date: 2023-11
+
+- id: cicd-part-1
+  name: Salesforce CI/CD Part 1 — Fundamentals of SFDX and Git
+  issuer: Salesforce
+  kind: course
+  date: 2024-01
+
+- id: cicd-part-2
+  name: Salesforce CI/CD Part 2 — Continuous Integration with GitHub Actions
+  issuer: Salesforce
+  kind: course
+  date: 2024-02

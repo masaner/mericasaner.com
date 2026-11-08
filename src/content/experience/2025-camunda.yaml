@@ -1,0 +1,32 @@
+company: Camunda Services GmbH
+url: https://camunda.com
+role:
+  en: Senior Salesforce Developer
+  tr: Kıdemli Salesforce Geliştirici
+employment: contract
+start: 2025-08
+end: 2025-12
+location:
+  en: Berlin, Germany (remote)
+  tr: Berlin, Almanya (uzaktan)
+context:
+  en: Process orchestration software.
+  tr: Süreç orkestrasyon yazılımı.
+highlights:
+  - en: >-
+      Stabilised and maintained mission-critical enterprise system integrations, ensuring reliable,
+      zero-downtime data synchronisation across core business platforms.
+    tr: >-
+      Kritik kurumsal sistem entegrasyonlarını stabilize edip sürdürdüm; temel iş platformları
+      arasında kesintisiz ve güvenilir veri senkronizasyonu sağladım.
+  - en: >-
+      Delivered architectural enhancements, bug remediation and schema maintenance for Salesforce
+      applications within a high-security virtual-machine development environment.
+    tr: >-
+      Yüksek güvenlikli sanal makine geliştirme ortamında Salesforce uygulamaları için mimari
+      iyileştirmeler, hata düzeltmeleri ve şema bakımı gerçekleştirdim.
+tags:
+  - Integrations
+  - Apex
+  - Data Sync
+  - Salesforce DX

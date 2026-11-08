@@ -1,0 +1,83 @@
+- id: integration-apis
+  order: 1
+  group:
+    en: Integration & APIs
+    tr: Entegrasyon ve API'ler
+  items:
+    - REST APIs
+    - OAuth 2.0 (JWT Bearer)
+    - Microsoft Entra ID (SSO)
+    - MuleSoft (iPaaS)
+    - DataWeave
+    - External Client Apps
+    - Webhooks & Events
+    - WhatsApp Business API (Lime Connect)
+    - API Testing (Bruno)
+    - GDPR Compliance
+
+- id: salesforce-platform
+  order: 2
+  group:
+    en: Salesforce Platform
+    tr: Salesforce Platformu
+  items:
+    - Apex (Enterprise Patterns)
+    - Chained Batch Apex
+    - Lightning Web Components (LWC)
+    - Custom Metadata Types
+    - SOQL / SOSL Optimization
+    - Flows & Process Automation
+    - Einstein Chatbot
+    - Salesforce DX (SFDX)
+
+- id: cloud-databases
+  order: 3
+  group:
+    en: Cloud & Databases
+    tr: Bulut ve Veritabanları
+  items:
+    - Sales Cloud
+    - Service Cloud
+    - Experience Cloud
+    - Data Cloud
+    - Microsoft Azure
+    - MongoDB
+    - PostgreSQL
+    - Heroku
+
+- id: devops-quality
+  order: 4
+  group:
+    en: DevOps & Engineering Quality
+    tr: DevOps ve Mühendislik Kalitesi
+  items:
+    - Git & GitHub Actions
+    - SFDX CI/CD Pipelines
+    - Selector & Service Layers
+    - Mock-Driven Unit Tests
+    - Automated Data-Seeding
+    - Scratch Orgs & Sandboxes
+
+- id: languages-frameworks
+  order: 5
+  group:
+    en: Languages & Frameworks
+    tr: Diller ve Çatılar
+  items:
+    - Apex
+    - JavaScript (ESNext / TypeScript)
+    - Python
+    - Dart (Flutter)
+    - SQL
+    - HTML5 & Modern CSS
+
+- id: analytics-bi
+  order: 6
+  group:
+    en: Analytics & BI
+    tr: Analitik ve BI
+  items:
+    - Marketing Cloud Intelligence (Datorama)
+    - Tableau
+    - Google Analytics
+    - Chart.js

@@ -1,0 +1,182 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div class="theme-toggle" role="group" aria-label={t('common.themeToggle')}>
+  <button
+    id="theme-btn-system"
+    class="theme-btn"
+    type="button"
+    data-theme="system"
+    title={t('common.systemTheme')}
+    aria-label={t('common.systemTheme')}
+  >
+    <svg
+      aria-hidden="true"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+      <line x1="8" y1="21" x2="16" y2="21"></line>
+      <line x1="12" y1="17" x2="12" y2="21"></line>
+    </svg>
+  </button>
+  <button
+    id="theme-btn-light"
+    class="theme-btn"
+    type="button"
+    data-theme="light"
+    title={t('common.lightTheme')}
+    aria-label={t('common.lightTheme')}
+  >
+    <svg
+      aria-hidden="true"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </button>
+  <button
+    id="theme-btn-dark"
+    class="theme-btn"
+    type="button"
+    data-theme="dark"
+    title={t('common.darkTheme')}
+    aria-label={t('common.darkTheme')}
+  >
+    <svg
+      aria-hidden="true"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  </button>
+</div>
+
+<style>
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    background: var(--bg-surface-subtle);
+    border: 1px solid var(--border-color);
+    border-radius: var(--slds-g-radius-pill);
+    padding: 2px;
+    gap: 2px;
+  }
+
+  .theme-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    min-height: 32px;
+    min-width: 32px;
+    padding: 0;
+    border-radius: var(--slds-g-radius-pill);
+    color: var(--text-muted);
+    transition: all 0.15s ease;
+  }
+
+  .theme-btn:hover {
+    color: var(--text-primary);
+  }
+
+  .theme-btn[aria-pressed='true'] {
+    background: var(--bg-surface-raised);
+    color: var(--brand-color);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  }
+</style>
+
+<script>
+  function setupThemeToggle() {
+    const meta = document.querySelector('meta[name="color-scheme"]');
+    const buttons = document.querySelectorAll<HTMLButtonElement>('.theme-btn');
+    if (!meta) return;
+
+    function getCurrentSetting(): 'system' | 'light' | 'dark' {
+      try {
+        const stored = localStorage.getItem('color-scheme');
+        if (stored === 'light' || stored === 'dark') return stored;
+      } catch (e) {}
+      return 'system';
+    }
+
+    function applyTheme(theme: 'system' | 'light' | 'dark') {
+      try {
+        if (theme === 'system') {
+          localStorage.removeItem('color-scheme');
+          meta!.setAttribute('content', 'light dark');
+        } else {
+          localStorage.setItem('color-scheme', theme);
+          meta!.setAttribute('content', theme);
+        }
+      } catch (e) {}
+
+      buttons.forEach((btn) => {
+        const btnTheme = btn.getAttribute('data-theme');
+        btn.setAttribute('aria-pressed', btnTheme === theme ? 'true' : 'false');
+      });
+    }
+
+    // Set initial active button
+    applyTheme(getCurrentSetting());
+
+    // Click handlers
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const targetTheme = btn.getAttribute('data-theme') as 'system' | 'light' | 'dark';
+        applyTheme(targetTheme);
+      });
+    });
+
+    // Sync across tabs
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'color-scheme') {
+        applyTheme(getCurrentSetting());
+      }
+    });
+  }
+
+  // Run on first load
+  setupThemeToggle();
+  // Support Astro view transitions if enabled later
+  document.addEventListener('astro:page-load', setupThemeToggle);
+</script>

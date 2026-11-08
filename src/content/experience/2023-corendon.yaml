@@ -1,0 +1,52 @@
+company: Corendon
+role:
+  en: Salesforce Developer
+  tr: Salesforce Geliştirici
+employment: full-time
+start: 2023-10
+end: 2024-04
+location:
+  en: Netherlands / Türkiye
+  tr: Hollanda / Türkiye
+context:
+  en: Airline & travel group.
+  tr: Havayolu ve seyahat grubu.
+highlights:
+  - en: >-
+      Architected an automated MongoDB data-archiving pipeline offloading legacy CRM records,
+      significantly reducing Salesforce storage consumption and avoiding recurring storage overage
+      costs.
+    tr: >-
+      Eski CRM kayıtlarını MongoDB'ye aktaran otomatik bir arşivleme hattı kurguladım; Salesforce
+      depolama kullanımını önemli ölçüde azaltıp tekrarlayan depolama aşım maliyetlerinin önüne
+      geçtim.
+  - en: >-
+      Established the organisation's foundational Salesforce DevOps release processes (SFDX, GitHub
+      Actions CI/CD), accelerating sprint deployment cycles and release governance.
+    tr: >-
+      Şirketin temel Salesforce DevOps sürüm süreçlerini (SFDX, GitHub Actions CI/CD) kurarak sprint
+      dağıtım döngülerini ve sürüm yönetişimini hızlandırdım.
+  - en: >-
+      Led the implementation of an AI-powered Einstein Chatbot to automate customer inquiry triage and
+      reduce live support queue volume.
+    tr: >-
+      Müşteri taleplerinin ön değerlendirmesini otomatikleştiren ve canlı destek kuyruğunu azaltan
+      yapay zekâ destekli Einstein Chatbot uygulamasını yönettim.
+  - en: >-
+      Engineered a custom campaign management framework on custom objects, delivering full marketing
+      campaign capabilities without auxiliary Marketing Cloud licensing costs.
+    tr: >-
+      Özel nesneler üzerinde bir kampanya yönetim altyapısı geliştirerek ek Marketing Cloud lisans
+      maliyeti olmadan eksiksiz pazarlama kampanyası kabiliyeti sağladım.
+  - en: >-
+      Built a targeted notification system delivering segmented operational announcements to distinct
+      internal user groups.
+    tr: >-
+      Farklı iç kullanıcı gruplarına segmentlere ayrılmış operasyonel duyurular ileten hedefli bir
+      bildirim sistemi geliştirdim.
+tags:
+  - MongoDB
+  - Salesforce DX
+  - GitHub Actions
+  - Einstein Bots
+  - Apex

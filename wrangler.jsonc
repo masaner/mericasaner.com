@@ -1,0 +1,18 @@
+{
+  // Cloudflare Workers (static assets only — no server code).
+  // Docs: https://developers.cloudflare.com/workers/static-assets/
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mericasaner",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash",
+  },
+  // Custom domains are attached to this Worker on deploy (DNS records are created automatically).
+  "routes": [
+    { "pattern": "mericasaner.com", "custom_domain": true },
+    { "pattern": "www.mericasaner.com", "custom_domain": true },
+  ],
+  "observability": { "enabled": true },
+}

@@ -1,0 +1,125 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# PROFILE — who you are. Every text has an English (en) and Turkish (tr) version.
+# After editing, run `npm run dev` to preview, then commit & push to publish.
+# ─────────────────────────────────────────────────────────────────────────────
+main:
+  name: Meriç Alper Aşaner
+  shortName: Meriç
+  initials: MA
+
+  title:
+    en: Senior Salesforce Developer & Integration Engineer
+    tr: Kıdemli Salesforce Geliştirici ve Entegrasyon Mühendisi
+
+  # Wrap the highlighted words in *asterisks*.
+  headline:
+    en: I connect Salesforce to *everything else.*
+    tr: Salesforce'u *her şeyle* konuşturuyorum.
+
+  # {years} is replaced automatically with your years of experience (from careerStart).
+  lede:
+    en: >-
+      {years}+ years architecting scalable CRM solutions, high-throughput REST APIs and automated
+      data pipelines across Sales, Service and Experience Cloud — for teams in Germany,
+      Switzerland, the Netherlands and Türkiye.
+    tr: >-
+      Sales, Service ve Experience Cloud üzerinde ölçeklenebilir CRM çözümleri, yüksek hacimli REST
+      API'ler ve otomatik veri hatları kurgulayarak geçen {years}+ yıl — Almanya, İsviçre, Hollanda
+      ve Türkiye'deki ekiplerle.
+
+  location:
+    en: Istanbul, Türkiye
+    tr: İstanbul, Türkiye
+  timezone: Europe/Istanbul
+
+  email: meric@mericasaner.com
+  openToWork: true
+  careerStart: 2021-07
+
+  # Drop a square photo into src/assets/ and put its file name here, e.g. profile.jpg
+  # photo: profile.jpg
+
+  # Put the PDFs into public/cv/. If a file is missing, the button is hidden automatically.
+  cv:
+    en: /cv/Meric-Asaner-CV-EN.pdf
+    tr: /cv/Meric-Asaner-CV-TR.pdf
+
+  links:
+    linkedin: https://www.linkedin.com/in/meric-asaner/
+    github: https://github.com/masaner
+    # trailhead: https://www.salesforce.com/trailblazer/your-id
+
+  about:
+    en:
+      - >-
+        I'm a Salesforce developer who lives where CRM meets everything around it. My work sits at
+        the integration layer: OAuth 2.0 and Microsoft Entra ID authentication, External Client
+        Apps, webhooks, REST APIs and the data pipelines that keep systems in sync.
+      - >-
+        On the platform itself I build modular Lightning Web Components, orchestrate chained Batch
+        Apex, and care a lot about maintainability — Selector patterns, mock-driven unit tests and
+        CI/CD with Salesforce DX and GitHub Actions.
+      - >-
+        What I enjoy most is translating messy business requirements into technical architectures
+        that are reliable, compliant and easy for the next developer to understand.
+    tr:
+      - >-
+        CRM'in etrafındaki her şeyle buluştuğu noktada çalışan bir Salesforce geliştiricisiyim.
+        Odak noktam entegrasyon katmanı: OAuth 2.0 ve Microsoft Entra ID kimlik doğrulaması,
+        External Client App'ler, webhook'lar, REST API'ler ve sistemleri senkron tutan veri hatları.
+      - >-
+        Platform tarafında modüler Lightning Web Component'ler geliştiriyor, zincirlenmiş Batch Apex
+        süreçleri kurguluyorum. Sürdürülebilirlik benim için önemli: Selector pattern, mock tabanlı
+        birim testleri, Salesforce DX ve GitHub Actions ile CI/CD.
+      - >-
+        En çok keyif aldığım şey, karmaşık iş gereksinimlerini güvenilir, regülasyonlara uyumlu ve
+        bir sonraki geliştiricinin kolayca anlayabileceği teknik mimarilere dönüştürmek.
+
+  languages:
+    - name: { en: Turkish, tr: Türkçe }
+      level: { en: Native, tr: Ana dil }
+    - name: { en: English, tr: İngilizce }
+      level: { en: Native, tr: Ana dil seviyesinde }
+
+  # The Salesforce-style record card in the hero section.
+  recordFields:
+    - label: { en: Focus, tr: Odak }
+      value: { en: Integrations & APIs, tr: Entegrasyon ve API'ler }
+    - label: { en: Clouds, tr: Cloud'lar }
+      value: { en: Sales · Service · Experience · Data, tr: Sales · Service · Experience · Data }
+    - label: { en: Certified, tr: Sertifikalar }
+      value:
+        en: MuleSoft Integration Foundations · Platform Developer I
+        tr: MuleSoft Integration Foundations · Platform Developer I
+    - label: { en: Based in, tr: Konum }
+      value: { en: Istanbul · works remote, tr: İstanbul · uzaktan çalışır }
+
+  # Shown as an SLDS "Path". The last step is highlighted as current.
+  careerPath:
+    - { en: Full Stack Developer, tr: Full Stack Geliştirici }
+    - { en: Salesforce Developer, tr: Salesforce Geliştirici }
+    - { en: Senior Salesforce Developer, tr: Kıdemli Salesforce Geliştirici }
+
+  # Up to 4 headline numbers. {years} is computed automatically.
+  stats:
+    - value: '{years}+'
+      label: { en: years building on Salesforce, tr: yıllık Salesforce deneyimi }
+    - value: 1.6M+
+      label:
+        en: production records stress-tested before a release
+        tr: canlı kayıt üzerinde sürüm öncesi stres testi
+    - value: 950+
+      label:
+        en: users migrated to GDPR-compliant WhatsApp messaging
+        tr: kullanıcı GDPR uyumlu WhatsApp iletişimine taşındı
+    - value: '4'
+      label: { en: countries' teams shipped with, tr: farklı ülkede ekiplerle teslimat }
+
+  seo:
+    description:
+      en: >-
+        Meriç Alper Aşaner is a Senior Salesforce Developer & Integration Engineer specialising in
+        REST APIs, OAuth 2.0, Microsoft Entra ID, Lightning Web Components, Batch Apex and CI/CD.
+      tr: >-
+        Meriç Alper Aşaner; REST API, OAuth 2.0, Microsoft Entra ID, Lightning Web Components, Batch
+        Apex ve CI/CD konularında uzman Kıdemli Salesforce Geliştirici ve Entegrasyon Mühendisidir.

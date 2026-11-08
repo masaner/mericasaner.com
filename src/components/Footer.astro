@@ -1,0 +1,94 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="cosmos-accent-bar" aria-hidden="true"></div>
+  <div class="container footer-inner">
+    <div class="footer-left">
+      <p class="footer-copy">
+        © {currentYear} Meriç Alper Aşaner · {t('common.allRightsReserved')}
+      </p>
+      <p class="footer-built">{t('common.builtWith')}</p>
+    </div>
+
+    <div class="footer-right">
+      <a href="#top" class="back-to-top">
+        <span>{t('common.backToTop')}</span>
+        <svg
+          aria-hidden="true"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="12" y1="19" x2="12" y2="5"></line>
+          <polyline points="5 12 12 5 19 12"></polyline>
+        </svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border-color);
+    margin-top: auto;
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 2.25rem;
+    text-align: center;
+  }
+
+  @media (min-width: 640px) {
+    .footer-inner {
+      flex-direction: row;
+      text-align: left;
+    }
+  }
+
+  .footer-copy {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+  }
+
+  .footer-built {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+  }
+
+  .back-to-top {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: color 0.15s ease;
+  }
+
+  .back-to-top:hover {
+    color: var(--brand-color);
+  }
+</style>

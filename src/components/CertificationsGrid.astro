@@ -1,0 +1,191 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  certifications: CollectionEntry<'certifications'>[];
+  lang: Lang;
+}
+
+const { certifications, lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section id="certifications" class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">{t('section.certifications.eyebrow')}</span>
+      <h2>{t('section.certifications.title')}</h2>
+      <p class="section-sub">{t('section.certifications.sub')}</p>
+    </div>
+
+    <div class="cert-grid">
+      {certifications.map((item) => {
+        const d = item.data;
+        const isCert = d.kind === 'certification';
+        return (
+          <div class="cert-card card">
+            <div class="cert-icon-wrapper" aria-hidden="true">
+              {isCert ? (
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="cert-svg"
+                >
+                  <circle cx="12" cy="8" r="7"></circle>
+                  <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                </svg>
+              ) : (
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="course-svg"
+                >
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                  <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                </svg>
+              )}
+            </div>
+
+            <div class="cert-details">
+              <span class="cert-issuer">{d.issuer ?? 'Salesforce'}</span>
+              <h3 class="cert-name">{d.name}</h3>
+              <div class="cert-footer">
+                <span class="badge cert-kind-badge">
+                  {isCert
+                    ? lang === 'tr'
+                      ? 'Resmi Sertifika'
+                      : 'Certification'
+                    : lang === 'tr'
+                      ? 'Akredite Eğitim'
+                      : 'Specialization'}
+                </span>
+                {d.url && (
+                  <a
+                    href={d.url}
+                    class="cert-verify-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {t('common.viewCredential')}
+                    <svg
+                      aria-hidden="true"
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <line x1="7" y1="17" x2="17" y2="7"></line>
+                      <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cert-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .cert-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .cert-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding: 1.5rem;
+    border-radius: var(--slds-g-radius-3);
+  }
+
+  .cert-icon-wrapper {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--slds-g-radius-2);
+    background: var(--bg-surface-subtle);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--brand-color);
+  }
+
+  .cert-svg {
+    color: var(--brand-color);
+  }
+
+  .course-svg {
+    color: #04844b;
+  }
+
+  .cert-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    flex: 1;
+  }
+
+  .cert-issuer {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+  }
+
+  .cert-name {
+    font-size: 1.0625rem;
+    line-height: 1.4;
+    color: var(--text-primary);
+  }
+
+  .cert-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+  }
+
+  .cert-kind-badge {
+    font-size: 0.75rem;
+  }
+
+  .cert-verify-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+</style>

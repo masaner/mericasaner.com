@@ -1,0 +1,70 @@
+---
+import { calculateYears } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  profile: CollectionEntry<'profile'>['data'];
+  lang: Lang;
+}
+
+const { profile, lang } = Astro.props;
+const years = calculateYears(profile.careerStart);
+---
+
+<section class="stats-strip" aria-label="Key Figures">
+  <div class="container">
+    <div class="stats-grid">
+      {profile.stats.map((stat) => {
+        const val = stat.value.replace('{years}', String(years));
+        return (
+          <div class="stat-card">
+            <span class="stat-value">{val}</span>
+            <span class="stat-label">{stat.label[lang]}</span>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .stats-strip {
+    background: var(--bg-surface-subtle);
+    border-block: 1px solid var(--border-color);
+    padding-block: clamp(1.75rem, 3.5vw, 2.5rem);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .stats-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+  }
+
+  .stat-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .stat-value {
+    font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--brand-color);
+    letter-spacing: -0.02em;
+  }
+
+  .stat-label {
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: var(--text-secondary);
+  }
+</style>

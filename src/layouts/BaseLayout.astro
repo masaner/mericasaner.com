@@ -1,0 +1,121 @@
+---
+import '@/styles/tokens.css';
+import '@/styles/base.css';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import type { Lang } from '@/i18n/ui';
+import { getLocalizedPath } from '@/i18n/utils';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Lang;
+}
+
+const { title, description, lang } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://mericasaner.com');
+const enURL = new URL(
+  getLocalizedPath(Astro.url.pathname, 'en'),
+  Astro.site || 'https://mericasaner.com',
+);
+const trURL = new URL(
+  getLocalizedPath(Astro.url.pathname, 'tr'),
+  Astro.site || 'https://mericasaner.com',
+);
+
+const siteName = 'Meriç Alper Aşaner — Senior Salesforce Developer';
+
+// JSON-LD structured data for Google / recruiters
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Meriç Alper Aşaner',
+  jobTitle: 'Senior Salesforce Developer & Integration Engineer',
+  url: 'https://mericasaner.com',
+  email: 'mailto:meric@mericasaner.com',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Istanbul',
+    addressCountry: 'TR',
+  },
+  sameAs: ['https://www.linkedin.com/in/meric-asaner/', 'https://github.com/masaner'],
+  knowsAbout: [
+    'Salesforce',
+    'Apex',
+    'Lightning Web Components',
+    'MuleSoft',
+    'REST APIs',
+    'OAuth 2.0',
+    'Microsoft Entra ID',
+    'Salesforce DX',
+    'CI/CD',
+  ],
+};
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Opt into OS accessibility text scaling -->
+    <meta name="text-scale" content="scale" />
+
+    <!-- MANDATORY: Declare support for both light and dark themes -->
+    <meta name="color-scheme" content="light dark" />
+
+    <!-- FOUC prevention inline script directly after meta tag -->
+    <script is:inline>
+      try {
+        const stored = localStorage.getItem('color-scheme');
+        if (stored === 'light' || stored === 'dark') {
+          document.querySelector('meta[name="color-scheme"]').content = stored;
+        }
+      } catch (e) {}
+    </script>
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Meriç Alper Aşaner" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Canonical & Alternates -->
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="alternate" hreflang="en" href={enURL} />
+    <link rel="alternate" hreflang="tr" href={trURL} />
+    <link rel="alternate" hreflang="x-default" href={enURL} />
+
+    <!-- Open Graph / LinkedIn / Facebook -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:locale" content={lang === 'tr' ? 'tr_TR' : 'en_US'} />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+  </head>
+  <body id="top">
+    <a href="#main-content" class="skip-link">
+      {lang === 'tr' ? 'Ana içeriğe geç' : 'Skip to main content'}
+    </a>
+
+    <Header lang={lang} />
+
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <Footer lang={lang} />
+  </body>
+</html>

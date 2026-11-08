@@ -1,0 +1,39 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import StatsStrip from '@/components/StatsStrip.astro';
+import ExperienceTimeline from '@/components/ExperienceTimeline.astro';
+import ProjectsList from '@/components/ProjectsList.astro';
+import CertificationsGrid from '@/components/CertificationsGrid.astro';
+import SkillsGrid from '@/components/SkillsGrid.astro';
+import AboutSection from '@/components/AboutSection.astro';
+import ContactSection from '@/components/ContactSection.astro';
+import { getEntry, getCollection } from 'astro:content';
+
+const lang = 'en';
+
+const profileEntry = await getEntry('profile', 'main');
+if (!profileEntry) {
+  throw new Error('Profile entry "main" not found in src/content/profile.yaml');
+}
+const profile = profileEntry.data;
+
+const experiences = await getCollection('experience');
+const projects = await getCollection('projects');
+const certifications = await getCollection('certifications');
+const skills = await getCollection('skills');
+
+const title = `${profile.name} — ${profile.title[lang]}`;
+const description = profile.seo.description[lang];
+---
+
+<BaseLayout title={title} description={description} lang={lang}>
+  <Hero profile={profile} lang={lang} />
+  <StatsStrip profile={profile} lang={lang} />
+  <ExperienceTimeline experiences={experiences} lang={lang} />
+  <ProjectsList projects={projects} lang={lang} />
+  <CertificationsGrid certifications={certifications} lang={lang} />
+  <SkillsGrid skills={skills} lang={lang} />
+  <AboutSection profile={profile} lang={lang} />
+  <ContactSection profile={profile} lang={lang} />
+</BaseLayout>

@@ -1,0 +1,70 @@
+# One file per role. File name doesn't matter for ordering — roles are sorted by start date.
+company: Enpal
+url: https://www.enpal.de
+role:
+  en: Senior Salesforce Developer
+  tr: Kıdemli Salesforce Geliştirici
+employment: full-time
+start: 2025-12
+end: 2026-11
+location:
+  en: Berlin, Germany
+  tr: Berlin, Almanya
+context:
+  en: >-
+    Renewable energy (solar). Driving CRM and customer communication strategy within the Customer
+    Acquisition domain — scalable architecture, integrations and compliance.
+  tr: >-
+    Yenilenebilir enerji (güneş). Müşteri Kazanımı alanında CRM ve müşteri iletişimi stratejisini
+    yönetmek — ölçeklenebilir mimari, entegrasyonlar ve regülasyon uyumu.
+highlights:
+  - en: >-
+      Led the enterprise rollout of a GDPR-compliant WhatsApp Business API solution (via Lime
+      Connect) with OAuth authentication and webhook-based message handling, enabling compliant B2C
+      messaging at scale and migrating 950+ users.
+    tr: >-
+      GDPR uyumlu WhatsApp Business API çözümünün (Lime Connect) kurumsal yaygınlaştırmasını yönettim;
+      OAuth kimlik doğrulaması ve webhook tabanlı mesaj işleme ile ölçeklenebilir B2C iletişimini
+      mümkün kıldım ve 950+ kullanıcıyı taşıdım.
+  - en: >-
+      Co-architected backend integration endpoints for a custom Azure web application authenticated
+      via Microsoft Entra ID; engineered Salesforce External Client Apps, dedicated integration-user
+      security profiles and automated A/B environment configuration with data-seeding scripts across
+      multi-tier sandboxes.
+    tr: >-
+      Microsoft Entra ID ile kimlik doğrulayan özel bir Azure web uygulaması için backend entegrasyon
+      uç noktalarının mimarisine ortak oldum; Salesforce External Client App'leri, entegrasyon
+      kullanıcısına özel güvenlik profillerini ve çok katmanlı sandbox'larda veri yükleme scriptleriyle
+      otomatik A/B ortam yapılandırmasını kurguladım.
+  - en: >-
+      Prevented a critical pre-release defect by stress-testing business logic against 1.6M+
+      production records, redesigning case-detection algorithms and cutting false-positive customer
+      warnings to zero.
+    tr: >-
+      İş mantığını 1,6 milyonu aşkın canlı kayıt üzerinde stres testine sokarak sürüm öncesi kritik bir
+      hatayı önledim; vaka tespit algoritmalarını yeniden tasarlayıp hatalı müşteri uyarılarını sıfıra
+      indirdim.
+  - en: >-
+      Established team-wide Apex architecture and testing standards (Selector pattern, mock-driven
+      unit tests), slashing CI/CD test runtime from minutes to seconds across the codebase.
+    tr: >-
+      Ekip genelinde Apex mimari ve test standartlarını (Selector pattern, mock tabanlı birim testleri)
+      oluşturdum; kod tabanı genelinde CI/CD test süresini dakikalardan saniyelere indirdim.
+  - en: >-
+      Migrated cross-domain Salesforce API suites from Postman to Bruno, engineering OAuth 2.0 JWT
+      Bearer authentication with Custom Permission guardrails for dynamic user impersonation, and
+      deployed rule-based AI agent workflows to enforce programmatic standards and shorten PR review
+      cycles.
+    tr: >-
+      Alanlar arası Salesforce API paketlerini Postman'den Bruno'ya taşıdım; dinamik kullanıcı
+      taklidi için Custom Permission korumalı OAuth 2.0 JWT Bearer kimlik doğrulaması geliştirdim ve
+      kod standartlarını uygulayıp PR inceleme sürelerini kısaltan kural tabanlı yapay zekâ ajanı iş
+      akışları devreye aldım.
+tags:
+  - OAuth 2.0
+  - Microsoft Entra ID
+  - WhatsApp Business API
+  - External Client Apps
+  - Apex
+  - Bruno
+  - Azure
