@@ -27,7 +27,11 @@ const sorted = [...projects].sort((a, b) => a.data.order - b.data.order);
       {sorted.map((proj) => {
         const d = proj.data;
         return (
-          <article class="project-card card">
+          <article
+            class="project-card card"
+            data-track-hover={`project:${d.org}-${d.order}`}
+            data-track-context={`Case Study · ${d.title[lang]}`}
+          >
             <div class="project-header">
               <div class="project-meta">
                 <span class="project-org">{d.org}</span>

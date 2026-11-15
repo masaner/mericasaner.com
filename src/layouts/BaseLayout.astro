@@ -3,6 +3,7 @@ import '@/styles/tokens.css';
 import '@/styles/base.css';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
+import InteractionTracker from '@/components/InteractionTracker.astro';
 import type { Lang } from '@/i18n/ui';
 import { getLocalizedPath } from '@/i18n/utils';
 
@@ -148,5 +149,6 @@ const personSchema = {
     </main>
 
     <Footer lang={lang} />
+    <InteractionTracker />
   </body>
 </html>

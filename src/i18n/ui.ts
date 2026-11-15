@@ -15,6 +15,7 @@ export const ui = {
     'nav.skills': 'Skills',
     'nav.about': 'About',
     'nav.contact': 'Contact',
+    'nav.resume': 'Resume',
     'nav.blog': 'Blog',
     'nav.cv': 'Resume',
 
@@ -22,6 +23,8 @@ export const ui = {
     'hero.badge.open': 'Open to opportunities',
     'hero.cta.contact': 'Get in touch',
     'hero.cta.work': 'View Case Studies',
+    'hero.cta.resume': 'View Full Resume',
+    'hero.cta.blog': 'Engineering Blog',
     'hero.record.title': 'FULL STACK ARCHITECTURE · HIGHLIGHTS',
     'hero.focus.label': 'Engineering Capabilities & Focus',
 
@@ -98,6 +101,13 @@ export const ui = {
     'blog.copyFailed': 'Copy failed',
     'blog.empty': 'No articles published yet.',
     'blog.tableRegion': 'Article data table',
+
+    // Resume
+    'resume.eyebrow': 'Curriculum Vitae · Engineering Track Record',
+    'resume.title': 'Resume & Case Studies',
+    'resume.sub':
+      'Full-stack software engineering experience, enterprise Salesforce & MuleSoft architecture, featured case studies, and verified credentials.',
+    'resume.jumpLabel': 'Jump to section',
   },
   tr: {
     // Navigation
@@ -107,6 +117,7 @@ export const ui = {
     'nav.skills': 'Yetenekler',
     'nav.about': 'Hakkımda',
     'nav.contact': 'İletişim',
+    'nav.resume': 'Özgeçmiş',
     'nav.blog': 'Blog',
     'nav.cv': 'Özgeçmiş',
 
@@ -114,6 +125,8 @@ export const ui = {
     'hero.badge.open': 'Yeni fırsatlara açık',
     'hero.cta.contact': 'İletişime Geç',
     'hero.cta.work': 'Projeleri İncele',
+    'hero.cta.resume': 'Özgeçmişi İncele',
+    'hero.cta.blog': 'Mühendislik Blogu',
     'hero.record.title': 'FULL STACK MİMARİ · AYRINTILAR',
     'hero.focus.label': 'Mühendislik Yetkinlikleri & Odak Alanları',
 
@@ -190,6 +203,13 @@ export const ui = {
     'blog.copyFailed': 'Kopyalanamadı',
     'blog.empty': 'Henüz yayınlanmış yazı bulunmuyor.',
     'blog.tableRegion': 'Yazı veri tablosu',
+
+    // Resume
+    'resume.eyebrow': 'Özgeçmiş · Mühendislik Kariyeri',
+    'resume.title': 'Özgeçmiş ve Vaka Analizleri',
+    'resume.sub':
+      'Full-stack yazılım mühendisliği deneyimim, kurumsal Salesforce ve MuleSoft mimarileri, vaka analizleri ve doğrulanmış sertifikalarım.',
+    'resume.jumpLabel': 'Bölüme git',
   },
 } as const;
 

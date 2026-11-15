@@ -1,0 +1,15 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ResumeView from '@/components/ResumeView.astro';
+import { useTranslations } from '@/i18n/utils';
+
+const lang = 'en';
+const t = useTranslations(lang);
+
+const title = `${t('resume.title')} — Meriç Alper Aşaner`;
+const description = t('resume.sub');
+---
+
+<BaseLayout title={title} description={description} lang={lang}>
+  <ResumeView lang={lang} />
+</BaseLayout>

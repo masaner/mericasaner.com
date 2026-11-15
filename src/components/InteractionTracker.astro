@@ -1,0 +1,279 @@
+---
+const clarityId = import.meta.env.PUBLIC_CLARITY_ID;
+---
+
+{clarityId && <script is:inline define:vars={{ clarityId }}>
+  (function (c, l, a, r, i, t, y) {
+    c[a] =
+      c[a] ||
+      function () {
+        (c[a].q = c[a].q || []).push(arguments);
+      };
+    t = l.createElement(r);
+    t.async = 1;
+    t.src = 'https://www.clarity.ms/tag/' + i;
+    y = l.getElementsByTagName(r)[0];
+    y.parentNode.insertBefore(t, y);
+  })(window, document, 'clarity', 'script', clarityId);
+</script>}
+
+<script>
+  interface TelemetryEvent {
+    type:
+      'page_view' | 'section_view' | 'element_hover' | 'text_select' | 'text_copy' | 'cta_click';
+    path: string;
+    ts: number;
+    [key: string]: string | number | boolean | null | undefined;
+  }
+
+  declare global {
+    interface Window {
+      clarity?: (cmd: string, ...args: unknown[]) => void;
+      __maTelemetry?: {
+        getEvents: () => TelemetryEvent[];
+        flush: () => void;
+      };
+    }
+  }
+
+  const ENDPOINT = '/api/telemetry';
+  const HOVER_MIN_MS = 1000;
+  const SELECT_DEBOUNCE_MS = 600;
+  const FLUSH_INTERVAL_MS = 8000;
+
+  const queue: TelemetryEvent[] = [];
+  const allEvents: TelemetryEvent[] = [];
+  const seenSections = new Set<string>();
+  const hoverStarts = new WeakMap<Element, number>();
+
+  let lastSelectedText = '';
+  let selectTimer: ReturnType<typeof setTimeout> | undefined;
+  let trackerInitialized = false;
+
+  function resolveContext(node: Node | null): string {
+    const el = node instanceof Element ? node : node?.parentElement || null;
+    if (!el) return document.title;
+
+    const tracked = el.closest('[data-track-context]')?.getAttribute('data-track-context');
+    if (tracked) return tracked;
+
+    const section = el.closest('section[id], article.blog-post-section');
+    if (section) {
+      const heading = section.querySelector('h1, h2')?.textContent?.trim();
+      if (heading) return heading.slice(0, 100);
+      if (section.id) return `#${section.id}`;
+    }
+
+    return document.title;
+  }
+
+  function record(
+    type: TelemetryEvent['type'],
+    data: Record<string, string | number | boolean | null | undefined>,
+  ) {
+    const evt: TelemetryEvent = {
+      type,
+      path: location.pathname,
+      ts: Date.now(),
+      ...data,
+    };
+
+    queue.push(evt);
+    if (allEvents.length < 200) {
+      allEvents.push(evt);
+    }
+
+    if (typeof window.clarity === 'function') {
+      window.clarity(
+        'event',
+        `${type}:${String(data.target || data.section || data.source || '')}`,
+      );
+    }
+  }
+
+  function flush() {
+    if (queue.length === 0) return;
+    const batch = queue.splice(0, 25);
+    const body = JSON.stringify({ events: batch });
+
+    try {
+      if (typeof navigator.sendBeacon === 'function') {
+        const blob = new Blob([body], { type: 'application/json' });
+        if (navigator.sendBeacon(ENDPOINT, blob)) return;
+      }
+      fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body,
+        keepalive: true,
+      }).catch(() => {});
+    } catch {
+      // Ignore network/beacon errors in telemetry
+    }
+  }
+
+  function observeSections() {
+    if (!('IntersectionObserver' in window)) return;
+    const targets = document.querySelectorAll(
+      'section[id], article.blog-post-section, .hero-section, .resume-hero',
+    );
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const el = entry.target;
+          const key =
+            el.id ||
+            (el.classList.contains('hero-section')
+              ? 'hero'
+              : el.classList.contains('resume-hero')
+                ? 'resume-header'
+                : 'blog-post');
+          if (seenSections.has(key)) continue;
+          seenSections.add(key);
+          record('section_view', {
+            section: key,
+            title: el.querySelector('h1, h2')?.textContent?.trim()?.slice(0, 100) || key,
+          });
+        }
+      },
+      { threshold: 0.35 },
+    );
+
+    targets.forEach((el) => observer.observe(el));
+  }
+
+  function bindHoverTracking() {
+    document.querySelectorAll<HTMLElement>('[data-track-hover]').forEach((el) => {
+      if (el.dataset.trackBound === 'true') return;
+      el.dataset.trackBound = 'true';
+
+      el.addEventListener('pointerenter', (e) => {
+        if (e.pointerType === 'touch') return;
+        hoverStarts.set(el, performance.now());
+      });
+
+      el.addEventListener('pointerleave', (e) => {
+        if (e.pointerType === 'touch') return;
+        const start = hoverStarts.get(el);
+        if (start == null) return;
+        hoverStarts.delete(el);
+        const durationMs = Math.round(performance.now() - start);
+        if (durationMs < HOVER_MIN_MS) return;
+
+        record('element_hover', {
+          target: el.dataset.trackHover || 'unknown',
+          context: el.dataset.trackContext || resolveContext(el),
+          durationMs,
+        });
+      });
+    });
+  }
+
+  function setupInteractionListeners() {
+    if (trackerInitialized) return;
+    trackerInitialized = true;
+
+    document.addEventListener('selectionchange', () => {
+      if (selectTimer) clearTimeout(selectTimer);
+      selectTimer = setTimeout(() => {
+        const selection = window.getSelection();
+        const text = selection?.toString().trim() || '';
+        if (text.length < 6 || text.length > 300 || text === lastSelectedText) return;
+        lastSelectedText = text;
+        record('text_select', {
+          text: text.slice(0, 180),
+          length: text.length,
+          context: resolveContext(selection?.anchorNode || null),
+        });
+      }, SELECT_DEBOUNCE_MS);
+    });
+
+    document.addEventListener('copy', () => {
+      const selection = window.getSelection();
+      const text = selection?.toString().trim() || '';
+      if (!text) return;
+      record('text_copy', {
+        source: 'selection',
+        text: text.slice(0, 180),
+        length: text.length,
+        context: resolveContext(selection?.anchorNode || document.activeElement),
+      });
+    });
+
+    document.addEventListener('click', (event) => {
+      const el = event.target;
+      if (!(el instanceof Element)) return;
+
+      const codeCopyBtn = el.closest('button[command^="--copy"]');
+      if (codeCopyBtn) {
+        const targetId = codeCopyBtn.getAttribute('commandfor');
+        const target = targetId ? document.getElementById(targetId) : null;
+        const snippet = target?.innerText.trim() || '';
+        const lang =
+          codeCopyBtn.closest('.code-frame')?.querySelector('.code-lang')?.textContent?.trim() ||
+          'code';
+        record('text_copy', {
+          source: 'code_button',
+          language: lang,
+          text: snippet.slice(0, 180),
+          length: snippet.length,
+          context: resolveContext(codeCopyBtn),
+        });
+        return;
+      }
+
+      const emailCopyBtn = el.closest('#copy-email-btn');
+      if (emailCopyBtn) {
+        record('text_copy', {
+          source: 'email_button',
+          text: emailCopyBtn.getAttribute('data-email') || '',
+          context: 'Contact',
+        });
+        return;
+      }
+
+      const interactive = el.closest<HTMLElement>(
+        'a[href], button.btn, .nav-link, .mobile-nav-link, .jump-pill, .read-more-link, .side-project-card',
+      );
+      if (!interactive) return;
+
+      const href = interactive.getAttribute('href');
+      const label = (interactive.getAttribute('aria-label') || interactive.textContent || '')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, 80);
+
+      record('cta_click', {
+        label,
+        href: href || null,
+        context: resolveContext(interactive),
+      });
+    });
+
+    window.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') flush();
+    });
+    window.addEventListener('pagehide', flush);
+    setInterval(flush, FLUSH_INTERVAL_MS);
+  }
+
+  function initTracker() {
+    window.__maTelemetry = {
+      getEvents: () => [...allEvents],
+      flush,
+    };
+
+    record('page_view', {
+      lang: document.documentElement.lang || 'en',
+      referrer: document.referrer || null,
+    });
+
+    observeSections();
+    bindHoverTracking();
+    setupInteractionListeners();
+  }
+
+  initTracker();
+  document.addEventListener('astro:page-load', initTracker);
+</script>

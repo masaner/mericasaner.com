@@ -87,6 +87,8 @@ const t = useTranslations(lang);
                 rel="noopener noreferrer"
                 class="side-project-card"
                 aria-label={`${item.name} — ${item.badge[lang]}`}
+                data-track-hover={`side-project:${item.name}`}
+                data-track-context={`Side Project · ${item.name}`}
               >
                 <div class="side-project-top">
                   <div class="side-project-name-group">

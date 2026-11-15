@@ -25,7 +25,11 @@ const sorted = [...skills].sort((a, b) => a.data.order - b.data.order);
 
     <div class="skills-grid">
       {sorted.map((group) => (
-        <div class="skill-group-card card">
+        <div
+          class="skill-group-card card"
+          data-track-hover={`skill-group:${group.data.group.en}`}
+          data-track-context={`Skills · ${group.data.group[lang]}`}
+        >
           <h3 class="group-title">{group.data.group[lang]}</h3>
           <ul class="skill-pills">
             {group.data.items.map((item) => (

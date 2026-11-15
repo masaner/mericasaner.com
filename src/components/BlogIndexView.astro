@@ -36,7 +36,11 @@ const blogBasePath = lang === 'tr' ? '/tr/blog' : '/blog';
           const formattedDate = formatFullDate(post.data.date, lang);
 
           return (
-            <article class="blog-card card">
+            <article
+              class="blog-card card"
+              data-track-hover={`blog-card:${post.data.slug}`}
+              data-track-context={`Blog Card · ${post.data.title}`}
+            >
               <div class="blog-card-meta">
                 <div class="blog-card-meta-left">
                   <time datetime={post.data.date} class="blog-date">

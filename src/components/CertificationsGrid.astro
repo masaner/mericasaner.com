@@ -25,7 +25,11 @@ const t = useTranslations(lang);
         const d = item.data;
         const isCert = d.kind === 'certification';
         return (
-          <div class="cert-card card">
+          <div
+            class="cert-card card"
+            data-track-hover={`cert:${d.name}`}
+            data-track-context={`Certification · ${d.name}`}
+          >
             <div class="cert-icon-wrapper" aria-hidden="true">
               {isCert ? (
                 <svg

@@ -39,7 +39,12 @@ const sorted = [...experiences].sort((a, b) => b.data.start.localeCompare(a.data
               : t('common.fulltime');
 
         return (
-          <article class:list={['timeline-item card', { 'is-current': isCurrent }]} role="listitem">
+          <article
+            class:list={['timeline-item card', { 'is-current': isCurrent }]}
+            role="listitem"
+            data-track-hover={`experience:${d.company}`}
+            data-track-context={`Experience · ${d.role[lang]} @ ${d.company}`}
+          >
             <div class="timeline-meta">
               <span class="timeline-period">{periodStr}</span>
               <span class="timeline-location">{d.location[lang]}</span>
