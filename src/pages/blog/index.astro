@@ -1,0 +1,15 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import BlogIndexView from '@/components/BlogIndexView.astro';
+import { useTranslations } from '@/i18n/utils';
+
+const lang = 'en';
+const t = useTranslations(lang);
+
+const title = `${t('blog.eyebrow')} — Meriç Alper Aşaner`;
+const description = t('blog.sub');
+---
+
+<BaseLayout title={title} description={description} lang={lang}>
+  <BlogIndexView lang={lang} />
+</BaseLayout>

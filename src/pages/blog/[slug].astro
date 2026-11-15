@@ -1,0 +1,31 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import BlogPostView from '@/components/BlogPostView.astro';
+import { buildArticleJsonLd, getPublishedBlogPaths } from '@/utils/blog';
+
+export const getStaticPaths = getPublishedBlogPaths;
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const lang = 'en';
+
+const title = `${post.data.title} — Meriç Alper Aşaner`;
+const description = post.data.summary;
+const articleJsonLd = buildArticleJsonLd(post, lang, Astro.site);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  lang={lang}
+  ogType="article"
+  publishedTime={post.data.date}
+  tags={post.data.tags}
+  articleJsonLd={articleJsonLd}
+>
+  <BlogPostView post={post} lang={lang} />
+</BaseLayout>

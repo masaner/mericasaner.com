@@ -45,6 +45,7 @@ You do **not** need to touch Astro components, HTML, or CSS to keep your site up
 | **Bio, Title, Links, Stats** | [`src/content/profile.yaml`](src/content/profile.yaml)               | Update your title, headline, about paragraphs, record card, and social links.             |
 | **Work Experience**          | [`src/content/experience/`](src/content/experience/)                 | Add a new `.yaml` file for each new role. Roles are automatically sorted chronologically. |
 | **Case Studies**             | [`src/content/projects/`](src/content/projects/)                     | Add or edit projects (Challenge → Contribution → Outcome structure).                      |
+| **Engineering Blog**         | [`src/content/blog/`](src/content/blog/)                             | Drop Markdown/MDX deep-dive articles (`<slug>.md`) to publish at `/blog/<slug>`.          |
 | **Certifications**           | [`src/content/certifications.yaml`](src/content/certifications.yaml) | Add newly acquired Salesforce & MuleSoft credentials and verification URLs.               |
 | **Skills & Technologies**    | [`src/content/skills.yaml`](src/content/skills.yaml)                 | Add or reorder technologies and tools by domain.                                          |
 | **PDF Resumes**              | `public/cv/`                                                         | Drop new versions named `Meric-Asaner-CV-EN.pdf` and `Meric-Asaner-CV-TR.pdf`.            |

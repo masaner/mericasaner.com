@@ -15,6 +15,7 @@ export const ui = {
     'nav.skills': 'Skills',
     'nav.about': 'About',
     'nav.contact': 'Contact',
+    'nav.blog': 'Blog',
     'nav.cv': 'Resume',
 
     // Hero & Badges
@@ -82,6 +83,21 @@ export const ui = {
     '404.heading': 'Record not found in database',
     '404.sub': 'The URL you requested does not exist or has been archived.',
     '404.backHome': 'Return to Homepage',
+
+    // Blog
+    'blog.eyebrow': 'Engineering Blog',
+    'blog.title': 'Deep-Dive Engineering Articles',
+    'blog.sub':
+      'Architectural write-ups, open-source Salesforce & full-stack tools, and production lessons learned.',
+    'blog.readArticle': 'Read article',
+    'blog.readingTime': '{min} min read',
+    'blog.backToBlog': 'All articles',
+    'blog.viewSource': 'View Source on GitHub',
+    'blog.copyCode': 'Copy code',
+    'blog.copied': 'Copied',
+    'blog.copyFailed': 'Copy failed',
+    'blog.empty': 'No articles published yet.',
+    'blog.tableRegion': 'Article data table',
   },
   tr: {
     // Navigation
@@ -91,6 +107,7 @@ export const ui = {
     'nav.skills': 'Yetenekler',
     'nav.about': 'Hakkımda',
     'nav.contact': 'İletişim',
+    'nav.blog': 'Blog',
     'nav.cv': 'Özgeçmiş',
 
     // Hero & Badges
@@ -158,6 +175,21 @@ export const ui = {
     '404.heading': 'Veritabanında kayıt bulunamadı',
     '404.sub': 'İstediğiniz URL mevcut değil veya arşive kaldırılmış.',
     '404.backHome': 'Ana Sayfaya Dön',
+
+    // Blog
+    'blog.eyebrow': 'Mühendislik Blogu',
+    'blog.title': 'Teknik Mühendislik Yazıları',
+    'blog.sub':
+      'Açık kaynak Salesforce ve full-stack araçlar, sistem mimarisi incelemeleri ve üretim ortamı deneyimleri.',
+    'blog.readArticle': 'Yazıyı oku',
+    'blog.readingTime': '{min} dk okuma',
+    'blog.backToBlog': 'Tüm yazılar',
+    'blog.viewSource': 'GitHub’da Kaynak Kodunu İncele',
+    'blog.copyCode': 'Kodu kopyala',
+    'blog.copied': 'Kopyalandı',
+    'blog.copyFailed': 'Kopyalanamadı',
+    'blog.empty': 'Henüz yayınlanmış yazı bulunmuyor.',
+    'blog.tableRegion': 'Yazı veri tablosu',
   },
 } as const;
 

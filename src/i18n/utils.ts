@@ -36,6 +36,31 @@ export function formatYearMonth(
 }
 
 /**
+ * Formats an ISO date string (YYYY-MM-DD) safely without timezone shift.
+ */
+export function formatFullDate(isoDate: string, lang: Lang): string {
+  const [year, month, day] = isoDate.split('-');
+  const date = new Date(Number(year), Number(month) - 1, Number(day));
+  return date.toLocaleDateString(lang === 'tr' ? 'tr-TR' : 'en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+}
+
+/**
+ * Estimates reading time in minutes (at 200 WPM) from raw Markdown body text.
+ */
+export function calculateReadingTime(markdownBody: string | undefined): number {
+  if (!markdownBody) return 1;
+  const plainText = markdownBody
+    .replace(/```[\s\S]*?```/g, (block) => block.replace(/```[^\n]*/g, ''))
+    .replace(/[#>*_`~|\-[\]()]/g, ' ');
+  const words = plainText.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.ceil(words / 200));
+}
+
+/**
  * Helper to get clean path for alternate language
  */
 export function getLocalizedPath(currentPath: string, targetLang: Lang): string {

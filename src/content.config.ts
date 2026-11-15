@@ -19,6 +19,14 @@ const yearMonth = z
   .string()
   .regex(/^\d{4}-(0[1-9]|1[0-2])$/, 'Use the format YYYY-MM, e.g. 2025-12');
 
+/** ISO calendar date string, e.g. "2026-11-15". */
+const isoDate = z
+  .string()
+  .regex(
+    /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/,
+    'Use the format YYYY-MM-DD, e.g. 2026-11-15',
+  );
+
 const profile = defineCollection({
   loader: file('src/content/profile.yaml'),
   schema: z.object({
@@ -128,4 +136,17 @@ const skills = defineCollection({
   }),
 });
 
-export const collections = { profile, experience, projects, certifications, skills };
+const blog = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
+  schema: z.object({
+    title: z.string().min(1),
+    slug: z.string().min(1),
+    date: isoDate,
+    summary: z.string().min(1),
+    tags: z.array(z.string()).default([]),
+    repoUrl: z.url().optional(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { profile, experience, projects, certifications, skills, blog };

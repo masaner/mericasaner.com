@@ -11,6 +11,15 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 const homePath = lang === 'tr' ? '/tr' : '/';
+const currentPath = Astro.url.pathname;
+const isHomePage = currentPath === '/' || currentPath === '/tr' || currentPath === '/tr/';
+const anchorBase = isHomePage ? '' : lang === 'tr' ? '/tr/' : '/';
+const blogPath = lang === 'tr' ? '/tr/blog' : '/blog';
+const isBlogActive =
+  currentPath === '/blog' ||
+  currentPath.startsWith('/blog/') ||
+  currentPath === '/tr/blog' ||
+  currentPath.startsWith('/tr/blog/');
 ---
 
 <header class="site-header">
@@ -27,32 +36,37 @@ const homePath = lang === 'tr' ? '/tr' : '/';
     <nav class="desktop-nav" aria-label="Main Navigation">
       <ul class="nav-list">
         <li>
-          <a href="#experience" class="nav-link">
+          <a href={`${anchorBase}#experience`} class="nav-link">
             {t('nav.experience')}
           </a>
         </li>
         <li>
-          <a href="#projects" class="nav-link">
+          <a href={`${anchorBase}#projects`} class="nav-link">
             {t('nav.projects')}
           </a>
         </li>
         <li>
-          <a href="#certifications" class="nav-link">
+          <a href={`${anchorBase}#certifications`} class="nav-link">
             {t('nav.certifications')}
           </a>
         </li>
         <li>
-          <a href="#skills" class="nav-link">
+          <a href={`${anchorBase}#skills`} class="nav-link">
             {t('nav.skills')}
           </a>
         </li>
         <li>
-          <a href="#about" class="nav-link">
+          <a href={blogPath} class="nav-link" aria-current={isBlogActive ? 'page' : undefined}>
+            {t('nav.blog')}
+          </a>
+        </li>
+        <li>
+          <a href={`${anchorBase}#about`} class="nav-link">
             {t('nav.about')}
           </a>
         </li>
         <li>
-          <a href="#contact" class="nav-link">
+          <a href={`${anchorBase}#contact`} class="nav-link">
             {t('nav.contact')}
           </a>
         </li>
@@ -63,7 +77,7 @@ const homePath = lang === 'tr' ? '/tr' : '/';
     <div class="header-controls">
       <LangSwitch currentLang={lang} />
       <ThemeToggle lang={lang} />
-      <a href="#contact" class="btn btn-primary header-cta">
+      <a href={`${anchorBase}#contact`} class="btn btn-primary header-cta">
         {t('hero.cta.contact')}
       </a>
 
@@ -118,38 +132,47 @@ const homePath = lang === 'tr' ? '/tr' : '/';
       <nav class="mobile-nav" aria-label="Mobile Navigation">
         <ul class="mobile-nav-list">
           <li>
-            <a href="#experience" class="mobile-nav-link">
+            <a href={`${anchorBase}#experience`} class="mobile-nav-link">
               {t('nav.experience')}
             </a>
           </li>
           <li>
-            <a href="#projects" class="mobile-nav-link">
+            <a href={`${anchorBase}#projects`} class="mobile-nav-link">
               {t('nav.projects')}
             </a>
           </li>
           <li>
-            <a href="#certifications" class="mobile-nav-link">
+            <a href={`${anchorBase}#certifications`} class="mobile-nav-link">
               {t('nav.certifications')}
             </a>
           </li>
           <li>
-            <a href="#skills" class="mobile-nav-link">
+            <a href={`${anchorBase}#skills`} class="mobile-nav-link">
               {t('nav.skills')}
             </a>
           </li>
           <li>
-            <a href="#about" class="mobile-nav-link">
+            <a
+              href={blogPath}
+              class="mobile-nav-link"
+              aria-current={isBlogActive ? 'page' : undefined}
+            >
+              {t('nav.blog')}
+            </a>
+          </li>
+          <li>
+            <a href={`${anchorBase}#about`} class="mobile-nav-link">
               {t('nav.about')}
             </a>
           </li>
           <li>
-            <a href="#contact" class="mobile-nav-link">
+            <a href={`${anchorBase}#contact`} class="mobile-nav-link">
               {t('nav.contact')}
             </a>
           </li>
         </ul>
         <div class="mobile-drawer-footer">
-          <a href="#contact" class="btn btn-primary" style="width: 100%">
+          <a href={`${anchorBase}#contact`} class="btn btn-primary" style="width: 100%">
             {t('hero.cta.contact')}
           </a>
         </div>
@@ -205,19 +228,39 @@ const homePath = lang === 'tr' ? '/tr' : '/';
   .nav-list {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1.25rem;
     list-style: none;
   }
 
   .nav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
     font-size: 0.9375rem;
     font-weight: 500;
     color: var(--text-secondary);
+    white-space: nowrap;
+    padding-block: 0.25rem;
     transition: color 0.15s ease;
   }
 
   .nav-link:hover {
     color: var(--brand-color);
+  }
+
+  .nav-link[aria-current='page'] {
+    color: var(--brand-color);
+    font-weight: 700;
+  }
+
+  .nav-link[aria-current='page']::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: -0.25rem;
+    block-size: 2px;
+    border-radius: var(--slds-g-radius-pill);
+    background: currentColor;
   }
 
   /* Header controls */
@@ -310,7 +353,24 @@ const homePath = lang === 'tr' ? '/tr' : '/';
     color: var(--brand-color);
   }
 
-  @media (min-width: 860px) {
+  .mobile-nav-link[aria-current='page'] {
+    color: var(--brand-color);
+    font-weight: 700;
+    padding-inline-start: 0.75rem;
+    border-inline-start: 3px solid currentColor;
+  }
+
+  @media (forced-colors: active) {
+    .nav-link[aria-current='page']::after {
+      background: LinkText;
+    }
+
+    .mobile-nav-link[aria-current='page'] {
+      border-inline-start-color: LinkText;
+    }
+  }
+
+  @media (min-width: 960px) {
     .desktop-nav {
       display: block;
     }

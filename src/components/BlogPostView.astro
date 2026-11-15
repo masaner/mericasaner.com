@@ -1,0 +1,721 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import { useTranslations, formatFullDate, calculateReadingTime } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  lang: Lang;
+}
+
+const { post, lang } = Astro.props;
+const t = useTranslations(lang);
+const { Content } = await render(post);
+
+const minutes = calculateReadingTime(post.body);
+const readingTimeLabel = t('blog.readingTime').replace('{min}', String(minutes));
+const formattedDate = formatFullDate(post.data.date, lang);
+const blogBasePath = lang === 'tr' ? '/tr/blog' : '/blog';
+---
+
+<article class="section blog-post-section">
+  <div class="container blog-post-container">
+    <nav class="article-breadcrumb" aria-label="Breadcrumb">
+      <a href={blogBasePath} class="back-link">
+        <svg
+          aria-hidden="true"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        <span>{t('blog.backToBlog')}</span>
+      </a>
+    </nav>
+
+    <header class="article-header">
+      <div class="article-meta">
+        <time datetime={post.data.date} class="article-date">
+          {formattedDate}
+        </time>
+        <span class="meta-dot" aria-hidden="true">
+          ·
+        </span>
+        <span class="article-reading-time">{readingTimeLabel}</span>
+      </div>
+
+      <h1 class="article-title">{post.data.title}</h1>
+      <p class="article-summary">{post.data.summary}</p>
+
+      <div class="article-actions-row">
+        <ul class="tags" aria-label="Topics">
+          {post.data.tags.map((tag) => (
+            <li class="tag">{tag}</li>
+          ))}
+        </ul>
+
+        {post.data.repoUrl && (
+          <a
+            href={post.data.repoUrl}
+            class="btn btn-primary github-source-btn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+            </svg>
+            <span>{t('blog.viewSource')}</span>
+          </a>
+        )}
+      </div>
+    </header>
+
+    <div
+      class="blog-prose"
+      data-copied-text={t('blog.copied')}
+      data-failed-text={t('blog.copyFailed')}
+      data-copy-label={t('blog.copyCode')}
+      data-table-label={t('blog.tableRegion')}
+    >
+      <Content />
+    </div>
+
+    <footer class="article-footer">
+      <a href={blogBasePath} class="btn btn-secondary">
+        <svg
+          aria-hidden="true"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        <span>{t('blog.backToBlog')}</span>
+      </a>
+    </footer>
+  </div>
+</article>
+
+<style>
+  .blog-post-section {
+    padding-block: clamp(2rem, 5vw, 4rem);
+  }
+
+  .blog-post-container {
+    max-width: 840px;
+  }
+
+  .article-breadcrumb {
+    margin-bottom: 1.75rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    transition: color 0.15s ease;
+  }
+
+  .back-link:hover {
+    color: var(--brand-color);
+  }
+
+  .back-link svg {
+    transition: transform 0.18s ease;
+  }
+
+  .back-link:hover svg {
+    transform: translateX(-3px);
+  }
+
+  .article-header {
+    padding-bottom: 2rem;
+    margin-bottom: 2.25rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .article-meta {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+    margin-bottom: 0.85rem;
+  }
+
+  .article-date {
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  .article-title {
+    font-size: clamp(1.85rem, 1.25rem + 2.4vw, 2.75rem);
+    line-height: 1.18;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+  }
+
+  .article-summary {
+    font-size: clamp(1.05rem, 0.98rem + 0.35vw, 1.2rem);
+    line-height: 1.65;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+  }
+
+  .article-actions-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .github-source-btn {
+    flex-shrink: 0;
+  }
+
+  /* Prose typography & rendered Markdown styles */
+  .blog-prose {
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--text-secondary);
+  }
+
+  .blog-prose :global(h2) {
+    font-size: clamp(1.45rem, 1.15rem + 1.2vw, 1.85rem);
+    margin-block: 2.75rem 1rem;
+    padding-bottom: 0.45rem;
+    border-bottom: 1px solid var(--border-color);
+    scroll-margin-top: calc(var(--header-height) + 1.5rem);
+  }
+
+  .blog-prose :global(h3) {
+    font-size: clamp(1.18rem, 1.05rem + 0.6vw, 1.4rem);
+    margin-block: 2rem 0.75rem;
+    scroll-margin-top: calc(var(--header-height) + 1.5rem);
+  }
+
+  .blog-prose :global(h4) {
+    font-size: 1.0625rem;
+    margin-block: 1.5rem 0.5rem;
+  }
+
+  .blog-prose :global(p) {
+    margin-block: 1.15rem;
+    line-height: 1.75;
+    color: var(--text-secondary);
+  }
+
+  .blog-prose :global(strong) {
+    color: var(--text-primary);
+    font-weight: 700;
+  }
+
+  .blog-prose :global(a) {
+    color: var(--brand-color);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1.5px;
+  }
+
+  .blog-prose :global(a:hover) {
+    color: var(--brand-hover);
+  }
+
+  .blog-prose :global(ul),
+  .blog-prose :global(ol) {
+    margin-block: 1.15rem;
+    padding-inline-start: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .blog-prose :global(li) {
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+
+  .blog-prose :global(li::marker) {
+    color: var(--brand-color);
+    font-weight: 600;
+  }
+
+  .blog-prose :global(hr) {
+    border: 0;
+    border-top: 1px solid var(--border-color);
+    margin-block: 2.5rem;
+  }
+
+  .blog-prose :global(:not(pre) > code) {
+    font-family: var(--font-mono);
+    font-size: 0.86em;
+    padding: 0.14em 0.42em;
+    border-radius: var(--slds-g-radius-1);
+    background: var(--bg-surface-subtle);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    word-break: break-word;
+  }
+
+  .blog-prose :global(blockquote) {
+    margin-block: 1.75rem;
+    padding: 0.95rem 1.25rem;
+    border-inline-start: 4px solid var(--brand-color);
+    background: var(--bg-surface-subtle);
+    border-radius: 0 var(--slds-g-radius-2) var(--slds-g-radius-2) 0;
+    border-top: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .blog-prose :global(blockquote p) {
+    margin-block: 0.35rem;
+    color: var(--text-primary);
+  }
+
+  /* Responsive Tables (per modern-web-guidance responsive-table) */
+  .blog-prose :global(.table-wrapper) {
+    margin-block: 1.75rem;
+    overflow: auto;
+    max-inline-size: 100%;
+    max-block-size: min(540px, 80dvh);
+    container-type: inline-size;
+    border: 1px solid var(--border-color);
+    border-radius: var(--slds-g-radius-3);
+    background: var(--bg-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .blog-prose :global(.table-wrapper table) {
+    inline-size: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.9375rem;
+    text-align: start;
+  }
+
+  .blog-prose :global(.table-wrapper thead) {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 1;
+    background: var(--bg-surface-subtle);
+  }
+
+  .blog-prose :global(.table-wrapper th),
+  .blog-prose :global(.table-wrapper td) {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: top;
+    line-height: 1.55;
+  }
+
+  .blog-prose :global(.table-wrapper thead th) {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-color-strong);
+    white-space: nowrap;
+  }
+
+  .blog-prose :global(.table-wrapper tbody tr:last-child td),
+  .blog-prose :global(.table-wrapper tbody tr:last-child th) {
+    border-bottom: 0;
+  }
+
+  .blog-prose :global(.table-wrapper tbody th) {
+    position: sticky;
+    inset-inline-start: 0;
+    background: var(--bg-surface);
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  @container (width < 600px) {
+    .blog-prose :global(.table-wrapper table),
+    .blog-prose :global(.table-wrapper thead),
+    .blog-prose :global(.table-wrapper tbody),
+    .blog-prose :global(.table-wrapper tr),
+    .blog-prose :global(.table-wrapper th),
+    .blog-prose :global(.table-wrapper td) {
+      display: block;
+    }
+
+    .blog-prose :global(.table-wrapper thead) {
+      display: none;
+    }
+
+    .blog-prose :global(.table-wrapper tbody tr) {
+      margin: 0.75rem;
+      border: 1px solid var(--border-color);
+      border-radius: var(--slds-g-radius-2);
+      background: var(--bg-surface-subtle);
+      overflow: hidden;
+    }
+
+    .blog-prose :global(.table-wrapper tbody th) {
+      position: sticky;
+      inset-block-start: 0;
+      z-index: 2;
+      background: var(--bg-surface-raised);
+    }
+
+    .blog-prose :global(.table-wrapper tbody td) {
+      display: grid;
+      grid-template-columns: minmax(7.5rem, 36%) 1fr;
+      gap: 0.5rem;
+      padding: 0.65rem 0.85rem;
+    }
+
+    .blog-prose :global(.table-wrapper tbody td:last-child) {
+      border-bottom: 0;
+    }
+
+    .blog-prose :global(.table-wrapper tbody td[data-label]::before) {
+      content: attr(data-label) ': ';
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: var(--text-muted);
+    }
+  }
+
+  /* Syntax-highlighted Code Blocks & Copy Button (per modern-web-guidance copy-button) */
+  .blog-prose :global(.code-frame) {
+    margin-block: 1.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--slds-g-radius-3);
+    overflow: hidden;
+    background: var(--bg-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .blog-prose :global(.code-frame-bar) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.45rem 0.95rem;
+    background: var(--bg-surface-subtle);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .blog-prose :global(.code-lang) {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+  }
+
+  /* Touch devices (no hover): keep copy button visible in flow so it cannot cover code */
+  .blog-prose :global(.copyable) {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .blog-prose :global(.copyable > pre) {
+    flex: 1;
+    min-inline-size: 0;
+    margin: 0;
+    padding: 1rem 1.15rem;
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    tab-size: 4;
+  }
+
+  .blog-prose :global(.copyable .copy) {
+    position: relative;
+    flex: none;
+    order: 1;
+    margin: 0.55rem 0.55rem 0 0;
+  }
+
+  .blog-prose :global(.copy-button) {
+    min-inline-size: 34px;
+    min-block-size: 34px;
+    padding: 0.35rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--slds-g-radius-2);
+    background: color-mix(in srgb, var(--bg-surface) 92%, transparent);
+    border: 1px solid var(--border-color-strong);
+    color: var(--text-secondary);
+    box-shadow: var(--shadow-sm);
+    transition:
+      opacity 0.15s ease,
+      color 0.15s ease,
+      border-color 0.15s ease,
+      background-color 0.15s ease;
+  }
+
+  .blog-prose :global(.copy-button:hover) {
+    color: var(--brand-color);
+    border-color: var(--brand-color);
+    background: var(--bg-surface);
+  }
+
+  .blog-prose :global(.copy-button .copy-icon-check) {
+    display: none;
+  }
+
+  .blog-prose :global(.copy-button[data-copied]) {
+    color: #04844b;
+    border-color: #04844b;
+  }
+
+  .blog-prose :global(.copy-button[data-copied] .copy-icon-copy) {
+    display: none;
+  }
+
+  .blog-prose :global(.copy-button[data-copied] .copy-icon-check) {
+    display: block;
+  }
+
+  .blog-prose :global(.copy-button[data-failed]) {
+    color: #dc2626;
+    border-color: #dc2626;
+  }
+
+  .blog-prose :global(.copy .tip) {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-end: calc(100% + 0.45rem);
+    transform: translateY(-50%);
+    padding: 0.25rem 0.55rem;
+    border-radius: var(--slds-g-radius-1);
+    background: var(--text-primary);
+    color: var(--bg-surface);
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .blog-prose :global(.copy-button[data-copied] + .tip),
+  .blog-prose :global(.copy-button[data-failed] + .tip) {
+    opacity: 1;
+  }
+
+  /* Only hide where hover exists; reveal on hover, focus-within, focus-visible, or feedback */
+  @media (hover: hover) {
+    .blog-prose :global(.copyable) {
+      display: block;
+      position: relative;
+    }
+
+    .blog-prose :global(.copyable > pre) {
+      padding-inline-end: 3.5rem;
+    }
+
+    .blog-prose :global(.copyable .copy) {
+      position: absolute;
+      inset-block-start: 0.55rem;
+      inset-inline-end: 0.55rem;
+      margin: 0;
+    }
+
+    .blog-prose :global(.copyable .copy-button) {
+      opacity: 0;
+    }
+
+    .blog-prose :global(.copyable:hover .copy-button),
+    .blog-prose :global(.copyable:focus-within .copy-button),
+    .blog-prose :global(.copyable .copy-button:focus-visible),
+    .blog-prose :global(.copyable .copy-button[data-copied]),
+    .blog-prose :global(.copyable .copy-button[data-failed]) {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .blog-prose :global(.copy-button),
+    .blog-prose :global(.copy .tip),
+    .back-link svg {
+      transition: opacity 0.15s ease;
+    }
+  }
+
+  /* Shiki Dual Theme Support synced with site Light / Dark / System mode */
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not(:has(> head > meta[name='color-scheme'][content='light'])))
+      .blog-prose
+      :global(.astro-code) {
+      color: var(--shiki-dark) !important;
+      background-color: var(--shiki-dark-bg) !important;
+    }
+
+    :global(:root:not(:has(> head > meta[name='color-scheme'][content='light'])))
+      .blog-prose
+      :global(.astro-code span) {
+      color: var(--shiki-dark) !important;
+    }
+  }
+
+  :global(:root:has(> head > meta[name='color-scheme'][content='dark']))
+    .blog-prose
+    :global(.astro-code) {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+  }
+
+  :global(:root:has(> head > meta[name='color-scheme'][content='dark']))
+    .blog-prose
+    :global(.astro-code span) {
+    color: var(--shiki-dark) !important;
+  }
+
+  .article-footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+  }
+</style>
+
+<script>
+  const timers = new WeakMap<Element, ReturnType<typeof setTimeout>>();
+  let lastMessage = '';
+  let initialized = false;
+
+  function getProseLabels() {
+    const prose = document.querySelector<HTMLElement>('.blog-prose');
+    return {
+      copied: prose?.dataset.copiedText || 'Copied',
+      failed: prose?.dataset.failedText || 'Copy failed',
+      copyLabel: prose?.dataset.copyLabel || '',
+      tableLabel: prose?.dataset.tableLabel || '',
+    };
+  }
+
+  function report(button: Element, ok: boolean) {
+    const tip = button.nextElementSibling;
+    if (!(tip instanceof HTMLElement)) return;
+
+    const existingTimer = timers.get(button);
+    if (existingTimer) clearTimeout(existingTimer);
+
+    button.removeAttribute('data-copied');
+    button.removeAttribute('data-failed');
+
+    const labels = getProseLabels();
+    let message = ok ? labels.copied : labels.failed;
+    if (message === lastMessage) message += '\u00A0';
+    lastMessage = message;
+
+    tip.textContent = '';
+    void (button as HTMLElement).offsetWidth;
+    button.setAttribute(ok ? 'data-copied' : 'data-failed', '');
+    requestAnimationFrame(() => {
+      tip.textContent = message;
+    });
+
+    timers.set(
+      button,
+      setTimeout(() => {
+        button.removeAttribute('data-copied');
+        button.removeAttribute('data-failed');
+        tip.textContent = '';
+      }, 2000),
+    );
+  }
+
+  async function copy(button: Element, target: HTMLElement) {
+    const text =
+      target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement
+        ? target.value
+        : target.innerText.trim();
+    if (!text) return;
+
+    try {
+      await navigator.clipboard.writeText(text);
+      report(button, true);
+    } catch {
+      report(button, false);
+    }
+  }
+
+  function localizeAttributes() {
+    if (document.documentElement.lang !== 'tr') return;
+    const labels = getProseLabels();
+    if (labels.tableLabel) {
+      document.querySelectorAll('.blog-prose .table-wrapper').forEach((el) => {
+        el.setAttribute('aria-label', labels.tableLabel);
+      });
+    }
+    if (labels.copyLabel) {
+      document.querySelectorAll('.blog-prose .copy-button').forEach((btn) => {
+        const lang = btn.closest('.code-frame')?.querySelector('.code-lang')?.textContent?.trim();
+        btn.setAttribute('aria-label', lang ? `${labels.copyLabel} (${lang})` : labels.copyLabel);
+      });
+    }
+  }
+
+  function setupBlogCopy() {
+    localizeAttributes();
+    if (initialized) return;
+    initialized = true;
+
+    if ('CommandEvent' in window) {
+      document.addEventListener(
+        'command',
+        (event: Event) => {
+          const cmdEvent = event as Event & {
+            command?: string;
+            source?: Element | null;
+            target: EventTarget | null;
+          };
+          if (
+            cmdEvent.command?.startsWith('--copy') &&
+            cmdEvent.source &&
+            cmdEvent.target instanceof HTMLElement
+          ) {
+            copy(cmdEvent.source, cmdEvent.target);
+          }
+        },
+        true,
+      );
+    } else {
+      document.addEventListener('click', (event) => {
+        const targetEl = event.target;
+        if (!(targetEl instanceof Element)) return;
+        const button = targetEl.closest('button[command^="--copy"]');
+        if (!button) return;
+        const targetId = button.getAttribute('commandfor');
+        if (!targetId) return;
+        const target = document.getElementById(targetId);
+        if (target) copy(button, target);
+      });
+    }
+  }
+
+  setupBlogCopy();
+  document.addEventListener('astro:page-load', setupBlogCopy);
+</script>
