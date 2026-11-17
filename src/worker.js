@@ -21,6 +21,118 @@ function sanitizeEvent(raw) {
   return event;
 }
 
+function parseByteRange(rangeHeader, total) {
+  const match = rangeHeader?.match(/^bytes=(\d*)-(\d*)$/i);
+  if (!match || (!match[1] && !match[2])) return null;
+
+  let start;
+  let end;
+  if (!match[1]) {
+    const suffix = Number(match[2]);
+    if (!Number.isFinite(suffix) || suffix <= 0) return null;
+    start = Math.max(0, total - suffix);
+    end = total - 1;
+  } else {
+    start = Number(match[1]);
+    end = match[2] ? Math.min(Number(match[2]), total - 1) : total - 1;
+  }
+
+  if (
+    !Number.isInteger(start) ||
+    !Number.isInteger(end) ||
+    start < 0 ||
+    start > end ||
+    start >= total
+  ) {
+    return 'invalid';
+  }
+
+  return { start, end };
+}
+
+function sliceStream(body, start, end) {
+  const reader = body.getReader();
+  let pos = 0;
+
+  return new ReadableStream({
+    async pull(controller) {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) {
+          controller.close();
+          return;
+        }
+        if (!value || value.byteLength === 0) continue;
+
+        const chunkStart = pos;
+        const chunkEnd = pos + value.byteLength - 1;
+        pos += value.byteLength;
+
+        if (chunkEnd < start) continue;
+        if (chunkStart > end) {
+          await reader.cancel();
+          controller.close();
+          return;
+        }
+
+        const sliceStart = Math.max(0, start - chunkStart);
+        const sliceEnd = Math.min(value.byteLength, end - chunkStart + 1);
+        controller.enqueue(value.subarray(sliceStart, sliceEnd));
+
+        if (chunkEnd >= end) {
+          await reader.cancel();
+          controller.close();
+          return;
+        }
+        return;
+      }
+    },
+    cancel(reason) {
+      return reader.cancel(reason);
+    },
+  });
+}
+
+async function handleMediaAsset(request, env) {
+  const rangeHeader = request.headers.get('range');
+  if (!rangeHeader || request.method === 'HEAD') {
+    const res = await env.ASSETS.fetch(request);
+    const headers = new Headers(res.headers);
+    headers.set('accept-ranges', 'bytes');
+    return new Response(request.method === 'HEAD' ? null : res.body, {
+      status: res.status,
+      headers,
+    });
+  }
+
+  const assetRes = await env.ASSETS.fetch(new Request(request.url, { method: 'GET' }));
+  const total = Number(assetRes.headers.get('content-length') || '0');
+  const headers = new Headers(assetRes.headers);
+  headers.set('accept-ranges', 'bytes');
+
+  if (!assetRes.ok || !assetRes.body || !total) {
+    return new Response(assetRes.body, { status: assetRes.status, headers });
+  }
+
+  const range = parseByteRange(rangeHeader, total);
+  if (range === 'invalid') {
+    await assetRes.body.cancel();
+    headers.set('content-range', `bytes */${total}`);
+    headers.delete('content-length');
+    return new Response(null, { status: 416, headers });
+  }
+  if (!range) {
+    return new Response(assetRes.body, { status: 200, headers });
+  }
+
+  headers.set('content-range', `bytes ${range.start}-${range.end}/${total}`);
+  headers.set('content-length', String(range.end - range.start + 1));
+  return new Response(sliceStream(assetRes.body, range.start, range.end), {
+    status: 206,
+    headers,
+  });
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -87,6 +199,13 @@ export default {
         status: 204,
         headers: { 'cache-control': 'no-store' },
       });
+    }
+
+    if (
+      url.pathname.startsWith('/media/') &&
+      (request.method === 'GET' || request.method === 'HEAD')
+    ) {
+      return handleMediaAsset(request, env);
     }
 
     return env.ASSETS.fetch(request);
