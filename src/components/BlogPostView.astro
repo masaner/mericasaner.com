@@ -414,15 +414,41 @@ const blogBasePath = lang === 'tr' ? '/tr/blog' : '/blog';
     color: #d97706;
   }
 
+  .blog-prose :global(.video-figure) {
+    margin-block: 1.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--slds-g-radius-3);
+    overflow: hidden;
+    background: var(--bg-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
   .blog-prose :global(video) {
     display: block;
     width: 100%;
     height: auto;
+    aspect-ratio: 16 / 9;
     margin-block: 1.5rem;
     border-radius: var(--slds-g-radius-3);
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-sm);
     background: #000;
+  }
+
+  .blog-prose :global(.video-figure video) {
+    margin-block: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .blog-prose :global(.video-figure figcaption) {
+    padding: 0.7rem 1rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+    background: var(--bg-surface-subtle);
+    border-top: 1px solid var(--border-color);
   }
 
   /* Disclosure / Accordion blocks inside Markdown (modern-web-guidance accordion) */

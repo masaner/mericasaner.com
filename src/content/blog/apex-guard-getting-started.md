@@ -21,7 +21,23 @@ Enterprise Apex codebases quickly accumulate defensive `if/else` pyramids (the *
 
 **ApexGuard**—inspired by Microsoft's `.NET CommunityToolkit.Diagnostics.Guard`—replaces boilerplate defensive branching with a single, positive-assertion `Guard` facade featuring **zero external dependencies**, **zero SOQL/DML**, and **universal runtime awareness**.
 
-<video controls preload="metadata" width="100%" src="https://github.com/user-attachments/assets/60c4c015-3dba-4304-bfbf-4325bcb816db"></video>
+<figure class="video-figure">
+  <video
+    controls
+    loading="lazy"
+    playsinline
+    width="1920"
+    height="1080"
+    poster="/media/apexguard-demo-poster.webp"
+    preload="metadata"
+  >
+    <source src="/media/apexguard-demo.mp4" type="video/mp4" />
+  </video>
+  <figcaption>
+    45-second HD walkthrough with audio: eliminating the Arrow Anti-Pattern across Apex services,
+    LWC controllers, Triggers, and Flows.
+  </figcaption>
+</figure>
 
 #### Before: The Arrow Anti-Pattern (29 Lines, 4 Nesting Levels)
 
