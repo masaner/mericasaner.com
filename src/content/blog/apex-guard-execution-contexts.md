@@ -1,14 +1,15 @@
 ---
-title: 'ApexGuard Execution Contexts, Quiddity & Custom Exceptions'
+title: 'Runtime Detection, Quiddity & Custom Exceptions'
 slug: 'apex-guard-execution-contexts'
 date: '2026-11-16'
 summary: 'Deep dive into System.Quiddity runtime resolution, AuraHandledException.setMessage(), Screen vs. Record-Triggered Flows, SObject.isSet() safety, custom Exception overloads, and Nebula Logger hooks.'
 tags: ['Salesforce', 'Apex', 'Quiddity', 'LWC', 'Flows']
 repoUrl: 'https://github.com/masaner/apex-guard'
 series: 'ApexGuard'
-category: 'ApexGuard · Guides'
-sidebarTitle: 'Execution Contexts & Exceptions'
+category: 'ApexGuard'
+sidebarTitle: 'Runtime & Error Codes'
 order: 4
+showInIndex: false
 ---
 
 Salesforce Apex runs across many heterogeneous runtimes within the same org: synchronous Apex services, Triggers, `@AuraEnabled` LWC controllers, Flows, Agentforce Invocable Actions, `@RestResource` endpoints, and Asynchronous jobs (`Queueable`, `Batchable`, `@future`, `Schedulable`). A single unhandled exception type cannot serve all of them cleanly.
@@ -17,7 +18,7 @@ Salesforce Apex runs across many heterogeneous runtimes within the same org: syn
 
 ---
 
-## How `GuardContext` Resolves the Active Runtime
+## Runtime Resolution
 
 At failure time, `GuardContext` inspects two platform signals without executing SOQL or DML:
 
@@ -36,7 +37,7 @@ At failure time, `GuardContext` inspects two platform signals without executing 
 
 ---
 
-## Platform Edge Cases Handled by `ApexGuard`
+## Platform Edge Cases
 
 ### 1. The `AuraHandledException.setMessage()` Trap
 
@@ -123,7 +124,7 @@ public void authorizeCharge(Decimal availableCredit) {
 
 ---
 
-## Structured `GuardException` Metadata & 30 Error Codes
+## Error Metadata & 30 Codes
 
 When standard `GuardException` is thrown, callers and global error handlers can inspect structured fields without fragile string parsing:
 
@@ -177,7 +178,7 @@ try {
 
 ---
 
-## Global Hooks & Exception Translation (`IGuardFailureHandler`)
+## Global Hooks & Translation
 
 Contributors and enterprise teams can hook into every guard failure in a transaction by implementing [`IGuardFailureHandler.cls`](https://github.com/masaner/apex-guard/blob/main/force-app/main/default/classes/context/IGuardFailureHandler.cls) and registering it via `Guard.setFailureHandler(...)`:
 

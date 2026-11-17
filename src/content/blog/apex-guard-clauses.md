@@ -1,14 +1,15 @@
 ---
-title: 'Eliminating the Arrow Anti-Pattern in Salesforce: Introducing ApexGuard'
+title: 'ApexGuard: Eliminating the Arrow Anti-Pattern in Apex'
 slug: 'apex-guard-clauses'
 date: '2026-11-15'
 summary: "How we built ApexGuard—a zero-dependency, Quiddity-aware guard clause library for Apex services, Triggers, LWC controllers, Flows, and Agentforce inspired by .NET's CommunityToolkit.Diagnostics.Guard."
 tags: ['Salesforce', 'Apex', 'Open Source', 'Clean Code']
 repoUrl: 'https://github.com/masaner/apex-guard'
 series: 'ApexGuard'
-category: 'ApexGuard · Overview'
-sidebarTitle: 'Architecture Deep-Dive'
+category: 'ApexGuard'
+sidebarTitle: 'Overview & Architecture'
 order: 1
+showInIndex: true
 ---
 
 Every mature Salesforce org eventually develops a familiar visual signature inside its Apex codebase: code that marches steadily across the screen to the right before marching back to the left. Before a single line of business logic runs, three to five layers of defensive `if` statements check whether an `Id` is valid, whether a `String` is blank, whether a `Decimal` is positive, whether a `List` has elements, and whether an `SObject` field was actually queried.
@@ -17,7 +18,7 @@ We call this the **Arrow Anti-Pattern**. In this post, we'll look at why defensi
 
 ---
 
-## The Problem: The Arrow Anti-Pattern in Apex
+## The Arrow Anti-Pattern
 
 In a simple backend service, throwing an `IllegalArgumentException` when an input is bad is straightforward. In Salesforce, however, Apex executes across at least half a dozen distinct runtimes within the same org:
 
@@ -93,7 +94,7 @@ Notice the hidden bugs lurking even inside conscientious boilerplate like this:
 
 ---
 
-## The Solution: `ApexGuard` and Positive-Assertion Pass-Throughs
+## Positive-Assertion Pass-Throughs
 
 Rather than writing negative `against...` helpers (`Against.nullOrEmpty(...)`), **ApexGuard** adopts the positive-assertion naming convention of `.NET CommunityToolkit.Diagnostics.Guard`: every method on the public [`Guard.cls`](https://github.com/masaner/apex-guard/blob/main/force-app/main/default/classes/core/Guard.cls) facade is named after the **valid precondition required for execution to proceed**:
 
@@ -171,7 +172,7 @@ Developers write `Guard.isNotEmpty(accountIds, 'accountIds')` or `Guard.contains
 
 ---
 
-## Designing for Every Salesforce Execution Context
+## Execution Context Routing
 
 A guard library that only throws one generic `Exception` falls short the moment you leave a synchronous service class. We structured `ApexGuard` around a single public facade (`Guard.cls`), six modular validator classes, a fluent trigger builder (`GuardRecord.cls`), an invocable Flow action (`GuardFlowAction.cls`), and a central runtime router (`GuardContext.cls`):
 
@@ -296,7 +297,7 @@ Two design details make `GuardFlowAction` work smoothly across every Flow type:
 
 ---
 
-## Security, Sharing & Governor Limits
+## Security & Governor Limits
 
 For a utility library meant to drop into any Salesforce org, correctness around sharing, governor limits, and object/field permissions cannot be an afterthought.
 
@@ -344,11 +345,11 @@ In open-source Salesforce repositories, tests that filter profiles by hardcoded 
 
 In [`GuardTest.cls`](https://github.com/masaner/apex-guard/blob/main/force-app/main/default/classes/tests/GuardTest.cls), `createStandardTestUser()` avoids hardcoded labels completely—querying `SELECT Id FROM Profile WHERE UserType = 'Standard' AND PermissionsModifyAllData = FALSE LIMIT 1` (with a safe fallback to `UserInfo.getProfileId()`), generating collision-free usernames via `System.now().getTime()`, `Crypto.getRandomInteger()`, and `UserInfo.getOrganizationId()`, and exercising both native `DescribeSObjectResult` behavior and deterministic `@TestVisible` overrides (`GuardSchemaValidator.testForceDenyCrud` / `testForceDenyFls`).
 
-All 4 test classes are bundled into an official Salesforce `ApexTestSuite` ([`ApexGuard.testSuite-meta.xml`](https://github.com/masaner/apex-guard/blob/main/force-app/main/default/testSuites/ApexGuard.testSuite-meta.xml)) verified via `sf apex run test --suite-names ApexGuard` (**25/25 tests passing**, **100% pass rate** on API `v62.0`, with GitHub Actions CI automatically checking that every `*Test.cls` file belongs to the suite).
+All 4 test classes are bundled into an official Salesforce `ApexTestSuite` ([`ApexGuard.testSuite-meta.xml`](https://github.com/masaner/apex-guard/blob/main/force-app/main/default/testSuites/ApexGuard.testSuite-meta.xml)) using modern `Assert.*` assertions and native `System.StubProvider` (`Test.createStub`) mocking with zero DML—verified via `sf apex run test --suite-names ApexGuard` (**26/26 tests passing**, **100% pass rate** on API `v62.0`, with GitHub Actions CI automatically checking that every `*Test.cls` file belongs to the suite).
 
 ---
 
-## Trade-Offs & What's Next
+## Trade-Offs & Roadmap
 
 Every architectural choice comes with boundaries. Knowing when **not** to use throw-based guards is just as important as using them everywhere else:
 
@@ -366,18 +367,18 @@ Phase 1 delivers the core zero-dependency SFDX library, context routing, schema 
 
 ---
 
-## Get Involved
+## Install & Get Involved
 
-`ApexGuard` is MIT-licensed, open source, and published as a promoted Second-Generation Unlocked Package (`ApexGuard@1.0.0-1`, `94%` package code coverage validated on Salesforce packaging build servers) with zero third-party dependencies:
+`ApexGuard` is MIT-licensed, open source, and published as a promoted Second-Generation Unlocked Package (`ApexGuard@1.0.1-1`, Subscriber Version ID `04td2000000WkULAA0`, `94%` package code coverage validated) with zero third-party dependencies:
 
-- **1-Click Install (Production / Developer Edition):** [Unlocked Package Installation (Production)](https://login.salesforce.com/packaging/installPackage.apexp?p0=04td2000000WiM5AAK)
-- **1-Click Install (Sandbox / Scratch Org):** [Unlocked Package Installation (Sandbox)](https://test.salesforce.com/packaging/installPackage.apexp?p0=04td2000000WiM5AAK)
+- **1-Click Install (Production / Developer Edition):** [Unlocked Package Installation (Production)](https://login.salesforce.com/packaging/installPackage.apexp?p0=04td2000000WkULAA0)
+- **1-Click Install (Sandbox / Scratch Org):** [Unlocked Package Installation (Sandbox)](https://test.salesforce.com/packaging/installPackage.apexp?p0=04td2000000WkULAA0)
 
 Or install / deploy / equip your AI coding agents via CLI:
 
 ```bash
-# Install Released Unlocked Package v1.0.0-1
-sf package install --package 04td2000000WiM5AAK --security-type AllUsers --apex-compile package --wait 10 --target-org my-org
+# Install Released Unlocked Package v1.0.1-1
+sf package install --package 04td2000000WkULAA0 --security-type AllUsers --apex-compile package --wait 10 --target-org my-org
 
 # Add ApexGuard AI Agent Skills (Antigravity, Claude Code, Cursor, Copilot, Codex)
 npx skills add masaner/apex-guard

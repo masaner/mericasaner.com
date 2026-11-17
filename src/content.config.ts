@@ -149,6 +149,7 @@ const blog = defineCollection({
     category: z.string().optional(),
     sidebarTitle: z.string().optional(),
     order: z.number().int().optional(),
+    showInIndex: z.boolean().default(true),
     draft: z.boolean().default(false),
   }),
 });

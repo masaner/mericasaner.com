@@ -1,8 +1,7 @@
 ---
 import { useTranslations, formatFullDate, calculateReadingTime } from '@/i18n/utils';
 import type { Lang } from '@/i18n/ui';
-import BlogSidebar from '@/components/BlogSidebar.astro';
-import { getBlogSidebarEntries } from '@/utils/blog';
+import { getBlogIndexPosts } from '@/utils/blog';
 
 interface Props {
   lang: Lang;
@@ -11,133 +10,107 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
-const sidebarEntries = await getBlogSidebarEntries();
+const posts = await getBlogIndexPosts();
 const blogBasePath = lang === 'tr' ? '/tr/blog' : '/blog';
 ---
 
 <section class="section blog-index-section">
-  <div class="container blog-index-shell">
-    <BlogSidebar entries={sidebarEntries} lang={lang} />
+  <div class="container blog-index-container">
+    <header class="section-head blog-index-head">
+      <span class="eyebrow">{t('blog.eyebrow')}</span>
+      <h1>{t('blog.title')}</h1>
+      <p class="section-sub">{t('blog.sub')}</p>
+    </header>
 
-    <div class="blog-index-main">
-      <header class="section-head blog-index-head">
-        <span class="eyebrow">{t('blog.eyebrow')}</span>
-        <h1>{t('blog.title')}</h1>
-        <p class="section-sub">{t('blog.sub')}</p>
-      </header>
+    {posts.length === 0 ? (
+      <div class="card blog-empty-card">
+        <p>{t('blog.empty')}</p>
+      </div>
+    ) : (
+      <div class="blog-list">
+        {posts.map((post) => {
+          const postUrl = `${blogBasePath}/${post.data.slug}`;
+          const minutes = calculateReadingTime(post.body);
+          const readingTimeLabel = t('blog.readingTime').replace('{min}', String(minutes));
+          const formattedDate = formatFullDate(post.data.date, lang);
 
-      {sidebarEntries.length === 0 ? (
-        <div class="card blog-empty-card">
-          <p>{t('blog.empty')}</p>
-        </div>
-      ) : (
-        <div class="blog-list">
-          {sidebarEntries.map((entry) => {
-            const post = entry.post;
-            const postUrl = `${blogBasePath}/${post.data.slug}`;
-            const minutes = calculateReadingTime(post.body);
-            const readingTimeLabel = t('blog.readingTime').replace('{min}', String(minutes));
-            const formattedDate = formatFullDate(post.data.date, lang);
-            const h2Sections = entry.headings.filter((h) => h.depth === 2);
-
-            return (
-              <article
-                class="blog-card card"
-                data-track-hover={`blog-card:${post.data.slug}`}
-                data-track-context={`Blog Card · ${post.data.title}`}
-              >
-                <div class="blog-card-meta">
-                  <div class="blog-card-meta-left">
-                    <time datetime={post.data.date} class="blog-date">
-                      {formattedDate}
-                    </time>
-                    <span class="meta-dot" aria-hidden="true">
-                      ·
-                    </span>
-                    <span class="blog-reading-time">{readingTimeLabel}</span>
-                    {post.data.category && (
-                      <>
-                        <span class="meta-dot" aria-hidden="true">
-                          ·
-                        </span>
-                        <span class="blog-category-label">{post.data.category}</span>
-                      </>
-                    )}
-                  </div>
-
-                  {post.data.repoUrl && (
-                    <a
-                      href={post.data.repoUrl}
-                      class="blog-repo-pill"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${post.data.title} — GitHub`}
-                    >
-                      <svg
-                        aria-hidden="true"
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                      >
-                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                      </svg>
-                      <span>GitHub</span>
-                    </a>
-                  )}
+          return (
+            <article
+              class="blog-card card"
+              data-track-hover={`blog-card:${post.data.slug}`}
+              data-track-context={`Blog Card · ${post.data.title}`}
+            >
+              <div class="blog-card-meta">
+                <div class="blog-card-meta-left">
+                  <time datetime={post.data.date} class="blog-date">
+                    {formattedDate}
+                  </time>
+                  <span class="meta-dot" aria-hidden="true">
+                    ·
+                  </span>
+                  <span class="blog-reading-time">{readingTimeLabel}</span>
                 </div>
 
-                <h2 class="blog-card-title">
-                  <a href={postUrl} class="blog-card-link">
-                    {post.data.title}
-                  </a>
-                </h2>
-
-                <p class="blog-card-summary">{post.data.summary}</p>
-
-                {h2Sections.length > 0 && (
-                  <ul class="blog-section-jumps" aria-label={t('blog.sidebar.toggle')}>
-                    {h2Sections.slice(0, 6).map((sec) => (
-                      <li>
-                        <a href={`${postUrl}#${sec.slug}`} class="section-jump-pill">
-                          {sec.text}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-
-                <div class="blog-card-footer">
-                  <ul class="tags" aria-label="Topics">
-                    {post.data.tags.map((tag) => (
-                      <li class="tag">{tag}</li>
-                    ))}
-                  </ul>
-
-                  <a href={postUrl} class="read-more-link">
-                    <span>{t('blog.readArticle')}</span>
+                {post.data.repoUrl && (
+                  <a
+                    href={post.data.repoUrl}
+                    class="blog-repo-pill"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${post.data.title} — GitHub`}
+                  >
                     <svg
                       aria-hidden="true"
-                      width="16"
-                      height="16"
+                      width="14"
+                      height="14"
                       viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      fill="currentColor"
                     >
-                      <line x1="5" y1="12" x2="19" y2="12" />
-                      <polyline points="12 5 19 12 12 19" />
+                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                     </svg>
+                    <span>GitHub</span>
                   </a>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      )}
-    </div>
+                )}
+              </div>
+
+              <h2 class="blog-card-title">
+                <a href={postUrl} class="blog-card-link">
+                  {post.data.title}
+                </a>
+              </h2>
+
+              <p class="blog-card-summary">{post.data.summary}</p>
+
+              <div class="blog-card-footer">
+                <ul class="tags" aria-label="Topics">
+                  {post.data.tags.map((tag) => (
+                    <li class="tag">{tag}</li>
+                  ))}
+                </ul>
+
+                <a href={postUrl} class="read-more-link">
+                  <span>{t('blog.readArticle')}</span>
+                  <svg
+                    aria-hidden="true"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    )}
   </div>
 </section>
 
@@ -146,21 +119,8 @@ const blogBasePath = lang === 'tr' ? '/tr/blog' : '/blog';
     padding-block: clamp(2.5rem, 6vw, 4.5rem);
   }
 
-  .blog-index-shell {
-    max-width: 1200px;
-  }
-
-  .blog-index-main {
-    min-width: 0;
-  }
-
-  @media (min-width: 1024px) {
-    .blog-index-shell {
-      display: grid;
-      grid-template-columns: 280px minmax(0, 1fr);
-      gap: 2.75rem;
-      align-items: start;
-    }
+  .blog-index-container {
+    max-width: 880px;
   }
 
   .blog-index-head h1 {
@@ -255,41 +215,6 @@ const blogBasePath = lang === 'tr' ? '/tr/blog' : '/blog';
     font-size: 0.975rem;
     line-height: 1.65;
     color: var(--text-secondary);
-  }
-
-  .blog-category-label {
-    font-weight: 600;
-    color: var(--brand-color);
-  }
-
-  .blog-section-jumps {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: 0.15rem;
-  }
-
-  .section-jump-pill {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.22rem 0.6rem;
-    border-radius: var(--slds-g-radius-pill);
-    background: var(--bg-surface-subtle);
-    border: 1px solid var(--border-color);
-    font-size: 0.775rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-    transition:
-      border-color 0.15s ease,
-      color 0.15s ease,
-      background-color 0.15s ease;
-  }
-
-  .section-jump-pill:hover {
-    border-color: var(--brand-color);
-    color: var(--brand-color);
-    background: var(--badge-bg);
   }
 
   .blog-card-footer {

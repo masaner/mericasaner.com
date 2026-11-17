@@ -158,11 +158,11 @@ main:
         description:
           en: >-
             Zero-dependency, Quiddity-aware Salesforce Apex guard clause library shipped as a Released
-            2GP Unlocked Package (v1.0.0-1, 97%+ core coverage) with 7 official skills.sh AI Agent
+            2GP Unlocked Package (v1.0.1-1, 97%+ core coverage) with 7 official skills.sh AI Agent
             Skills.
           tr: >-
             Salesforce Apex servisleri, Trigger'lar, LWC, Flow ve Agentforce için sıfır bağımlılıklı,
-            Quiddity uyumlu guard clause kütüphanesi — yayınlanmış 2GP Unlocked Paket (v1.0.0-1) ve 7
+            Quiddity uyumlu guard clause kütüphanesi — yayınlanmış 2GP Unlocked Paket (v1.0.1-1) ve 7
             resmi skills.sh AI Ajan Yeteneği ile.
         tags:
           - Salesforce Apex

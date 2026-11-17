@@ -14,7 +14,10 @@ const { post, lang } = Astro.props;
 const t = useTranslations(lang);
 const { Content } = await render(post);
 
-const sidebarEntries = await getBlogSidebarEntries();
+const allSeriesEntries = post.data.series
+  ? await getBlogSidebarEntries(post.data.series)
+  : (await getBlogSidebarEntries()).filter((entry) => entry.slug === post.data.slug);
+const sidebarEntries = allSeriesEntries;
 const currentIndex = sidebarEntries.findIndex((entry) => entry.slug === post.data.slug);
 const prevEntry = currentIndex > 0 ? sidebarEntries[currentIndex - 1] : null;
 const nextEntry =

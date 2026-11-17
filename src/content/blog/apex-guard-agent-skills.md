@@ -1,14 +1,15 @@
 ---
-title: 'ApexGuard AI Agent Skills (skills.sh) & Spec-Driven Workflows'
+title: 'ApexGuard AI Agent Skills & Spec-Driven Workflows'
 slug: 'apex-guard-agent-skills'
 date: '2026-11-16'
 summary: 'How to equip Antigravity, Claude Code, Cursor, GitHub Copilot, and Codex with the 7 official ApexGuard Agent Skills on skills.sh and pair them with masaner/meric-spec.'
 tags: ['AI Agents', 'Antigravity', 'skills.sh', 'Salesforce', 'Apex']
 repoUrl: 'https://github.com/masaner/apex-guard'
 series: 'ApexGuard'
-category: 'ApexGuard · Guides'
+category: 'ApexGuard'
 sidebarTitle: 'AI Agent Skills (skills.sh)'
 order: 3
+showInIndex: false
 ---
 
 `ApexGuard` publishes **7 official [skills.sh](https://www.skills.sh/docs) agent skills** so **Antigravity** ([skills.sh/agent/antigravity](https://www.skills.sh/agent/antigravity)), Claude Code, Cursor, GitHub Copilot, Codex, Gemini CLI, and other compatible AI coding agents automatically apply ApexGuard's public APIs, Salesforce execution-context patterns, security guarantees, and test helpers.
@@ -21,7 +22,7 @@ order: 3
 
 ---
 
-## Step 1: Add the Skills to Your AI Coding Agent
+## 1. Install Agent Skills
 
 Run inside any Salesforce DX repository root to install all 7 skills at **project scope** (`./.agents/skills/apex-guard-*`), or pass `-g` to install them **globally** (`~/.agents/skills/apex-guard-*`) across every Antigravity workspace:
 
@@ -58,7 +59,7 @@ npx skills remove apex-guard-install
 
 ---
 
-## Step 2: Pair with `masaner/meric-spec` (Spec-Driven Workflow)
+## 2. Pair with `masaner/meric-spec`
 
 Want your agent to always follow a structured **Propose → Explore → Apply → Verify → Archive** specification lifecycle (with multi-round Q&A, zero-hallucination exploration, coding-style preservation, and permanent `specs/archived/` summaries) before editing code? Install [`masaner/meric-spec`](https://github.com/masaner/meric-spec) globally alongside ApexGuard:
 
@@ -79,21 +80,21 @@ You:   "Use meric-spec-propose with ApexGuard patterns to refactor BillingServic
 
 ---
 
-## Step 3: Skill-by-Skill Reference & Example Prompts
+## 3. Skill Reference & Prompts
 
-| Catalog Group                 | Skill                                                                                                                                              | Focus Area                                                                                                                      | Example Antigravity Prompt                                                                                                       |
-| :---------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------- |
-| **Setup**                     | [`apex-guard-install`](https://github.com/masaner/apex-guard/blob/main/skills/apex-guard-install/SKILL.md)                                         | 2GP Unlocked Package (`04td2000000WiM5AAK`), SFDX deploy, install options, `ApexTestSuite`, smoke test                          | _"Install ApexGuard (`04td2000000WiM5AAK`) into my scratch org and run the Execute Anonymous smoke test."_                       |
-| **Usage**                     | [`apex-guard-usage`](https://github.com/masaner/apex-guard/blob/main/skills/apex-guard-usage/SKILL.md)                                             | Pass-through `Guard.*` assertions, `Set`/`Map` overloads, LWC `Quiddity.AURA` & `Guard.forLwc()`, REST `toMap()`                | _"Refactor this deeply nested Apex service method and `@AuraEnabled` controller to use flat `Guard` clauses."_                   |
-| **Usage**                     | [`apex-guard-triggers-and-bulk-dml`](https://github.com/masaner/apex-guard/blob/main/skills/apex-guard-triggers-and-bulk-dml/SKILL.md)             | Non-throwing `Guard.onRecord()`, `addError()` accumulation, partial DML (`allOrNone = false`), `.skipInaccessible()`            | _"Rewrite this `Opportunity` trigger validation loop with `Guard.onRecord()` so partial DML still saves valid rows."_            |
-| **Usage**                     | [`apex-guard-flows-and-agentforce`](https://github.com/masaner/apex-guard/blob/main/skills/apex-guard-flows-and-agentforce/SKILL.md)               | `GuardFlowAction` `@InvocableMethod`, all 18 rules, Fault-path vs. Decision-routing (`throwOnFailure = false`)                  | _"Set up `GuardFlowAction` (`Validate Input (ApexGuard)`) for a Screen Flow using Decision routing instead of throwing."_        |
-| **Usage**                     | [`apex-guard-testing`](https://github.com/masaner/apex-guard/blob/main/skills/apex-guard-testing/SKILL.md)                                         | `GuardException` assertions, `Guard.forLwc()` / `testQuiddityOverride`, DML-free `GuardRecord`, locale-safe `System.runAs`      | _"Write `@IsTest` coverage for our LWC controller and `GuardRecord` trigger handler, resetting `Guard.resetContext()` cleanly."_ |
-| **Governance & Security**     | [`apex-guard-security-and-best-practices`](https://github.com/masaner/apex-guard/blob/main/skills/apex-guard-security-and-best-practices/SKILL.md) | `inherited sharing`, `isSet()` sparse-SOQL / `Security.stripInaccessible()` safety, opt-in CRUD/FLS vs. Triggers, 0 SOQL/DML    | _"Audit this Apex controller for running-user CRUD/FLS guards without breaking Trigger system mode."_                            |
-| **Extending & Observability** | [`apex-guard-extensibility-and-logging`](https://github.com/masaner/apex-guard/blob/main/skills/apex-guard-extensibility-and-logging/SKILL.md)     | `IGuardFailureHandler`, **Nebula Logger** (`EVENT_BUS` survival across rollbacks), custom `Exception` overloads, 30 error codes | _"Connect `ApexGuard` to Nebula Logger via `IGuardFailureHandler` so guard failures log before rolling back."_                   |
+| Catalog Group                 | Skill                                                                                                                                              | Focus Area                                                                                                                     | Example Antigravity Prompt                                                                                                       |
+| :---------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------- |
+| **Setup**                     | [`apex-guard-install`](https://github.com/masaner/apex-guard/blob/main/skills/apex-guard-install/SKILL.md)                                         | 2GP Unlocked Package (`04td2000000WkULAA0`), SFDX deploy, install options, `ApexTestSuite`, smoke test                         | _"Install ApexGuard (`04td2000000WkULAA0`) into my scratch org and run the Execute Anonymous smoke test."_                       |
+| **Usage**                     | [`apex-guard-usage`](https://github.com/masaner/apex-guard/blob/main/skills/apex-guard-usage/SKILL.md)                                             | Pass-through `Guard.*` assertions, `Set`/`Map` overloads, LWC `Quiddity.AURA` & `Guard.forLwc()`, REST `toMap()`               | _"Refactor this deeply nested Apex service method and `@AuraEnabled` controller to use flat `Guard` clauses."_                   |
+| **Usage**                     | [`apex-guard-triggers-and-bulk-dml`](https://github.com/masaner/apex-guard/blob/main/skills/apex-guard-triggers-and-bulk-dml/SKILL.md)             | Non-throwing `Guard.onRecord()`, `addError()` accumulation, partial DML (`allOrNone = false`), `.skipInaccessible()`           | _"Rewrite this `Opportunity` trigger validation loop with `Guard.onRecord()` so partial DML still saves valid rows."_            |
+| **Usage**                     | [`apex-guard-flows-and-agentforce`](https://github.com/masaner/apex-guard/blob/main/skills/apex-guard-flows-and-agentforce/SKILL.md)               | `GuardFlowAction` `@InvocableMethod`, all 18 rules, Fault-path vs. Decision-routing (`throwOnFailure = false`)                 | _"Set up `GuardFlowAction` (`Validate Input (ApexGuard)`) for a Screen Flow using Decision routing instead of throwing."_        |
+| **Usage**                     | [`apex-guard-testing`](https://github.com/masaner/apex-guard/blob/main/skills/apex-guard-testing/SKILL.md)                                         | Modern `Assert.*`, Stub API (`Test.createStub`) / Apex Mockery, `Guard.forLwc()`, DML-free `GuardRecord`, locale-safe `runAs`  | _"Write `@IsTest` coverage for our LWC controller and `GuardRecord` trigger handler, resetting `Guard.resetContext()` cleanly."_ |
+| **Governance & Security**     | [`apex-guard-security-and-best-practices`](https://github.com/masaner/apex-guard/blob/main/skills/apex-guard-security-and-best-practices/SKILL.md) | `inherited sharing`, `isSet()` sparse-SOQL / `Security.stripInaccessible()` safety, opt-in CRUD/FLS vs. Triggers, 0 SOQL/DML   | _"Audit this Apex controller for running-user CRUD/FLS guards without breaking Trigger system mode."_                            |
+| **Extending & Observability** | [`apex-guard-extensibility-and-logging`](https://github.com/masaner/apex-guard/blob/main/skills/apex-guard-extensibility-and-logging/SKILL.md)     | `IGuardFailureHandler`, **Nebula Logger** (`PublishImmediately` rollback safety), custom `Exception` overloads, 30 error codes | _"Connect `ApexGuard` to Nebula Logger via `IGuardFailureHandler` so guard failures log before rolling back."_                   |
 
 ---
 
-## How `skills.sh.json` Organizes the Catalog
+## Catalog & CI Validation
 
 The repository root [`skills.sh.json`](https://github.com/masaner/apex-guard/blob/main/skills.sh.json) configures how [skills.sh/masaner/apex-guard](https://www.skills.sh/masaner/apex-guard) groups all 7 skills (`Setup`, `Usage`, `Governance & Security`, `Extending & Observability`) using the official `skills.sh` JSON schema.
 
