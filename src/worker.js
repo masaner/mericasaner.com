@@ -106,28 +106,41 @@ async function handleMediaAsset(request, env) {
   }
 
   const assetRes = await env.ASSETS.fetch(new Request(request.url, { method: 'GET' }));
-  const total = Number(assetRes.headers.get('content-length') || '0');
   const headers = new Headers(assetRes.headers);
   headers.set('accept-ranges', 'bytes');
 
-  if (!assetRes.ok || !assetRes.body || !total) {
+  if (!assetRes.ok || !assetRes.body) {
     return new Response(assetRes.body, { status: assetRes.status, headers });
+  }
+
+  let total = Number(assetRes.headers.get('content-length') || '0');
+  let buffered = null;
+  if (!total) {
+    buffered = await assetRes.arrayBuffer();
+    total = buffered.byteLength;
+  }
+
+  if (!total) {
+    return new Response(buffered, { status: assetRes.status, headers });
   }
 
   const range = parseByteRange(rangeHeader, total);
   if (range === 'invalid') {
-    await assetRes.body.cancel();
+    if (!buffered) await assetRes.body.cancel();
     headers.set('content-range', `bytes */${total}`);
     headers.delete('content-length');
     return new Response(null, { status: 416, headers });
   }
   if (!range) {
-    return new Response(assetRes.body, { status: 200, headers });
+    return new Response(buffered ?? assetRes.body, { status: 200, headers });
   }
 
   headers.set('content-range', `bytes ${range.start}-${range.end}/${total}`);
   headers.set('content-length', String(range.end - range.start + 1));
-  return new Response(sliceStream(assetRes.body, range.start, range.end), {
+  const body = buffered
+    ? buffered.slice(range.start, range.end + 1)
+    : sliceStream(assetRes.body, range.start, range.end);
+  return new Response(body, {
     status: 206,
     headers,
   });
