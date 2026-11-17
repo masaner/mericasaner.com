@@ -150,6 +150,25 @@ main:
         Kurumsal mühendislik kariyerimin yanı sıra, boş zamanlarımda bir hobi olarak mobil uygulamalar
         ve bağımsız yazılım ürünleri geliştiriyorum.
     items:
+      - name: ApexGuard
+        url: https://github.com/masaner/apex-guard
+        badge:
+          en: Open Source · 2GP Package & AI Skills
+          tr: Açık Kaynak · 2GP Paket & AI Yetenekleri
+        description:
+          en: >-
+            Zero-dependency, Quiddity-aware Salesforce Apex guard clause library shipped as a Released
+            2GP Unlocked Package (v1.0.0-1, 97%+ core coverage) with 7 official skills.sh AI Agent
+            Skills.
+          tr: >-
+            Salesforce Apex servisleri, Trigger'lar, LWC, Flow ve Agentforce için sıfır bağımlılıklı,
+            Quiddity uyumlu guard clause kütüphanesi — yayınlanmış 2GP Unlocked Paket (v1.0.0-1) ve 7
+            resmi skills.sh AI Ajan Yeteneği ile.
+        tags:
+          - Salesforce Apex
+          - 2GP Package
+          - AI Agent Skills
+          - Open Source
       - name: Runapy
         url: https://runapyhub.com
         badge:

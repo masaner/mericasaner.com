@@ -1,0 +1,664 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+import type { SidebarEntry } from '@/utils/blog';
+
+interface Props {
+  entries: SidebarEntry[];
+  currentSlug?: string;
+  lang: Lang;
+}
+
+const { entries, currentSlug, lang } = Astro.props;
+const t = useTranslations(lang);
+const blogBasePath = lang === 'tr' ? '/tr/blog' : '/blog';
+
+// Preserve insertion order of categories based on sorted entries
+const groupsMap = new Map<string, SidebarEntry[]>();
+for (const entry of entries) {
+  const list = groupsMap.get(entry.category) ?? [];
+  list.push(entry);
+  groupsMap.set(entry.category, list);
+}
+const groups = Array.from(groupsMap.entries());
+---
+
+<aside class="blog-sidebar" aria-label={t('blog.sidebar.label')}>
+  <details class="mobile-sidebar-disclosure">
+    <summary class="mobile-sidebar-summary">
+      <span class="summary-label">{t('blog.sidebar.toggle')}</span>
+    </summary>
+
+    <div class="sidebar-panel card">
+      <div class="sidebar-search-wrap">
+        <svg
+          class="sidebar-search-icon"
+          aria-hidden="true"
+          width="15"
+          height="15"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input
+          type="search"
+          class="sidebar-search-input"
+          placeholder={t('blog.sidebar.search')}
+          aria-label={t('blog.sidebar.search')}
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="sidebar-all-wrap">
+        <a
+          href={blogBasePath}
+          class:list={['sidebar-all-link', { active: !currentSlug }]}
+          aria-current={!currentSlug ? 'page' : undefined}
+        >
+          <svg
+            aria-hidden="true"
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+          </svg>
+          <span>{t('blog.sidebar.allArticles')}</span>
+        </a>
+      </div>
+
+      <p class="sidebar-no-results" hidden>
+        {t('blog.sidebar.noResults')}
+      </p>
+
+      <div class="sidebar-groups">
+        {groups.map(([category, groupEntries]) => (
+          <div class="sidebar-group">
+            <div class="sidebar-group-title">{category}</div>
+            <ul class="sidebar-page-list">
+              {groupEntries.map((entry) => {
+                const isCurrent = entry.slug === currentSlug;
+                const pageUrl = `${blogBasePath}/${entry.slug}`;
+                const searchText = [
+                  entry.title,
+                  entry.sidebarTitle,
+                  entry.category,
+                  entry.series || '',
+                  ...entry.post.data.tags,
+                ]
+                  .join(' ')
+                  .toLowerCase();
+                const defaultOpen = !currentSlug && entry.order === 1;
+
+                return (
+                  <li class="sidebar-page-item" data-search-text={searchText}>
+                    <a
+                      href={pageUrl}
+                      class:list={['sidebar-page-link', { active: isCurrent }]}
+                      aria-current={isCurrent ? 'page' : undefined}
+                    >
+                      <span class="sidebar-page-dot" aria-hidden="true" />
+                      <span>{entry.sidebarTitle}</span>
+                    </a>
+
+                    {entry.headings.length > 0 &&
+                      (isCurrent ? (
+                        <nav class="toc-nav" aria-label={t('blog.sidebar.onThisPage')}>
+                          <ul class="toc-list">
+                            {entry.headings.map((h) => (
+                              <li>
+                                <a
+                                  href={`#${h.slug}`}
+                                  class:list={['toc-link', `depth-${h.depth}`]}
+                                >
+                                  {h.text}
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </nav>
+                      ) : (
+                        <details
+                          class="sidebar-sub-details"
+                          open={defaultOpen}
+                          data-default-open={defaultOpen ? 'true' : 'false'}
+                        >
+                          <summary class="sidebar-sub-summary">
+                            {t('blog.sidebar.sections').replace(
+                              '{count}',
+                              String(entry.headings.length),
+                            )}
+                          </summary>
+                          <ul class="sidebar-sec-list">
+                            {entry.headings.map((h) => (
+                              <li>
+                                <a
+                                  href={`${pageUrl}#${h.slug}`}
+                                  class:list={['sidebar-sec-link', `depth-${h.depth}`]}
+                                >
+                                  {h.text}
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </details>
+                      ))}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </details>
+</aside>
+
+<script is:inline>
+  (() => {
+    const sidebar = document.currentScript?.previousElementSibling;
+    const details = sidebar?.querySelector('.mobile-sidebar-disclosure');
+    if (details instanceof HTMLDetailsElement && window.matchMedia('(min-width: 1024px)').matches) {
+      details.open = true;
+    }
+  })();
+</script>
+
+<style>
+  .blog-sidebar {
+    width: 100%;
+  }
+
+  @media (min-width: 1024px) {
+    .blog-sidebar {
+      position: sticky;
+      top: calc(var(--header-height) + 1.25rem);
+      max-height: calc(100dvh - var(--header-height) - 2rem);
+    }
+
+    .mobile-sidebar-summary {
+      display: none !important;
+    }
+
+    .mobile-sidebar-disclosure::details-content {
+      display: block;
+      content-visibility: visible;
+      block-size: auto;
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .blog-sidebar {
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  .mobile-sidebar-summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5ch;
+    padding: 0.75rem 1rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color-strong);
+    border-radius: var(--slds-g-radius-3);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 0.75rem;
+  }
+
+  .mobile-sidebar-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .mobile-sidebar-summary::before,
+  .sidebar-sub-summary::before {
+    content: '';
+    inline-size: 1em;
+    block-size: 1em;
+    flex-shrink: 0;
+    background-color: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")
+      no-repeat center / contain;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")
+      no-repeat center / contain;
+    rotate: -90deg;
+  }
+
+  :is(.mobile-sidebar-summary, .sidebar-sub-summary):dir(rtl)::before {
+    rotate: 90deg;
+  }
+
+  details[open] > .mobile-sidebar-summary::before,
+  details[open] > .sidebar-sub-summary::before {
+    rotate: 0deg;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .mobile-sidebar-summary::before,
+    .sidebar-sub-summary::before {
+      transition: rotate 0.2s ease;
+    }
+  }
+
+  /* Smooth native disclosure animation (modern-web-guidance accordion) */
+  .sidebar-sub-details::details-content,
+  .mobile-sidebar-disclosure::details-content {
+    interpolate-size: allow-keywords;
+    overflow: clip;
+    contain: layout;
+  }
+
+  .sidebar-sub-details:not([open])::details-content {
+    block-size: 0;
+  }
+
+  @media (max-width: 1023px) {
+    .mobile-sidebar-disclosure:not([open])::details-content {
+      block-size: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .sidebar-sub-details::details-content,
+    .mobile-sidebar-disclosure::details-content {
+      transition: block-size, content-visibility, display;
+      transition-duration: 0.25s;
+      transition-timing-function: ease-in-out;
+      transition-behavior: allow-discrete;
+    }
+  }
+
+  .sidebar-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 1rem;
+    border-radius: var(--slds-g-radius-3);
+  }
+
+  @media (min-width: 1024px) {
+    .sidebar-panel {
+      max-height: calc(100dvh - var(--header-height) - 2.25rem);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+  }
+
+  .sidebar-search-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .sidebar-search-icon {
+    position: absolute;
+    inset-inline-start: 0.7rem;
+    color: var(--text-muted);
+    pointer-events: none;
+  }
+
+  .sidebar-search-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem 0.5rem 2.1rem;
+    font-size: 0.875rem;
+    border-radius: var(--slds-g-radius-2);
+    border: 1px solid var(--border-color-strong);
+    background: var(--bg-surface-subtle);
+    color: var(--text-primary);
+    transition: border-color 0.15s ease;
+  }
+
+  .sidebar-search-input::placeholder {
+    color: var(--text-muted);
+  }
+
+  .sidebar-search-input:focus {
+    outline: 2px solid var(--brand-color);
+    outline-offset: 1px;
+    border-color: var(--brand-color);
+  }
+
+  .sidebar-all-wrap {
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .sidebar-all-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.6rem;
+    border-radius: var(--slds-g-radius-2);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .sidebar-all-link:hover {
+    background: var(--bg-surface-subtle);
+    color: var(--brand-color);
+  }
+
+  .sidebar-all-link.active {
+    background: var(--badge-bg);
+    color: var(--brand-color);
+  }
+
+  .sidebar-no-results {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    padding: 0.4rem 0.5rem;
+    text-align: center;
+  }
+
+  .sidebar-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+  }
+
+  .sidebar-group-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-muted);
+    padding-inline: 0.5rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .sidebar-page-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .sidebar-page-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.42rem 0.55rem;
+    border-radius: var(--slds-g-radius-2);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--text-primary);
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .sidebar-page-link:hover {
+    background: var(--bg-surface-subtle);
+    color: var(--brand-color);
+  }
+
+  .sidebar-page-link.active {
+    background: var(--badge-bg);
+    color: var(--brand-color);
+  }
+
+  .sidebar-page-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: var(--border-color-strong);
+  }
+
+  .sidebar-page-link.active .sidebar-page-dot {
+    background: var(--brand-color);
+  }
+
+  /* Scrollspy container on the active article (modern-web-guidance scrollspy) */
+  .toc-nav {
+    scroll-target-group: auto;
+    margin-top: 0.25rem;
+    margin-inline-start: 0.55rem;
+    padding-inline-start: 0.65rem;
+    border-inline-start: 1px solid var(--border-color);
+  }
+
+  .toc-list,
+  .sidebar-sec-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.12rem;
+  }
+
+  .toc-link,
+  .sidebar-sec-link {
+    display: block;
+    padding: 0.28rem 0.55rem;
+    border-radius: var(--slds-g-radius-1);
+    border-inline-start: 2px solid transparent;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: var(--text-secondary);
+    transition:
+      color 0.15s ease,
+      background-color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .toc-link.depth-3,
+  .sidebar-sec-link.depth-3 {
+    padding-inline-start: 1.15rem;
+    font-size: 0.775rem;
+    color: var(--text-muted);
+  }
+
+  .toc-link:hover,
+  .sidebar-sec-link:hover {
+    color: var(--brand-color);
+    background: var(--bg-surface-subtle);
+  }
+
+  /* Combine native :target-current with JS IntersectionObserver fallback using :is() */
+  .toc-nav a:is(:target-current, .target-current) {
+    color: var(--brand-color);
+    font-weight: 700;
+    border-inline-start-color: var(--brand-color);
+    background: var(--badge-bg);
+  }
+
+  .sidebar-sub-details {
+    margin-top: 0.15rem;
+    margin-inline-start: 0.65rem;
+  }
+
+  .sidebar-sub-summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.45ch;
+    padding: 0.22rem 0.45rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-radius: var(--slds-g-radius-1);
+  }
+
+  .sidebar-sub-summary:hover {
+    color: var(--text-primary);
+    background: var(--bg-surface-subtle);
+  }
+
+  .sidebar-sub-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .sidebar-sec-list {
+    margin-top: 0.15rem;
+    padding-inline-start: 0.55rem;
+    border-inline-start: 1px solid var(--border-color);
+  }
+</style>
+
+<script>
+  function setupBlogSidebar() {
+    const sidebars = document.querySelectorAll<HTMLElement>('.blog-sidebar');
+    if (sidebars.length === 0) return;
+
+    const mq = window.matchMedia('(min-width: 1024px)');
+
+    sidebars.forEach((sidebar) => {
+      if (sidebar.dataset.initialized === 'true') return;
+      sidebar.dataset.initialized = 'true';
+
+      const disclosure = sidebar.querySelector<HTMLDetailsElement>('.mobile-sidebar-disclosure');
+      if (disclosure) {
+        disclosure.open = mq.matches;
+        mq.addEventListener('change', (ev) => {
+          disclosure.open = ev.matches;
+        });
+      }
+
+      // Live search filter
+      const searchInput = sidebar.querySelector<HTMLInputElement>('.sidebar-search-input');
+      const noResults = sidebar.querySelector<HTMLElement>('.sidebar-no-results');
+      const groups = Array.from(sidebar.querySelectorAll<HTMLElement>('.sidebar-group'));
+      const pageItems = Array.from(sidebar.querySelectorAll<HTMLElement>('.sidebar-page-item'));
+
+      if (searchInput) {
+        searchInput.addEventListener('input', () => {
+          const query = searchInput.value.trim().toLowerCase();
+          let visiblePages = 0;
+
+          for (const item of pageItems) {
+            const subDetails = item.querySelector<HTMLDetailsElement>('.sidebar-sub-details');
+            const secLinks = Array.from(
+              item.querySelectorAll<HTMLAnchorElement>('.toc-link, .sidebar-sec-link'),
+            );
+
+            if (!query) {
+              item.hidden = false;
+              secLinks.forEach((link) => {
+                if (link.parentElement) link.parentElement.hidden = false;
+              });
+              if (subDetails) {
+                subDetails.open = subDetails.dataset.defaultOpen === 'true';
+              }
+              visiblePages += 1;
+              continue;
+            }
+
+            const pageMatches = (item.dataset.searchText || '').includes(query);
+            let matchingSections = 0;
+
+            for (const link of secLinks) {
+              const secMatches = (link.textContent || '').toLowerCase().includes(query);
+              if (secMatches) matchingSections += 1;
+              if (link.parentElement) {
+                link.parentElement.hidden = !(pageMatches || secMatches);
+              }
+            }
+
+            const showItem = pageMatches || matchingSections > 0;
+            item.hidden = !showItem;
+            if (showItem) visiblePages += 1;
+            if (subDetails && matchingSections > 0) {
+              subDetails.open = true;
+            }
+          }
+
+          for (const group of groups) {
+            const items = Array.from(group.querySelectorAll<HTMLElement>('.sidebar-page-item'));
+            group.hidden = !items.some((li) => !li.hidden);
+          }
+
+          if (noResults) {
+            noResults.hidden = visiblePages > 0;
+          }
+        });
+      }
+
+      // Scrollspy setup for active page TOC (modern-web-guidance scrollspy)
+      const tocNav = sidebar.querySelector<HTMLElement>('.toc-nav');
+      if (!tocNav) return;
+
+      const tocLinks = Array.from(tocNav.querySelectorAll<HTMLAnchorElement>('a[href^="#"]'));
+      if (tocLinks.length === 0) return;
+
+      const supportsScrollTargetGroup =
+        typeof CSS !== 'undefined' && CSS.supports('scroll-target-group: auto');
+
+      if (supportsScrollTargetGroup) {
+        const syncAriaCurrent = () => {
+          const currentLink = tocNav.querySelector('a:target-current');
+          tocLinks.forEach((link) => {
+            link.setAttribute('aria-current', link === currentLink ? 'true' : 'false');
+          });
+        };
+
+        syncAriaCurrent();
+        document.addEventListener('scrollend', syncAriaCurrent, { passive: true });
+        tocNav.addEventListener('click', () => {
+          setTimeout(syncAriaCurrent, 80);
+        });
+      } else {
+        const idToLink = new Map<string, HTMLAnchorElement>();
+        for (const link of tocLinks) {
+          const rawId = link.getAttribute('href')?.slice(1) || '';
+          try {
+            idToLink.set(decodeURIComponent(rawId), link);
+          } catch {
+            idToLink.set(rawId, link);
+          }
+        }
+
+        const sections = Array.from(
+          document.querySelectorAll<HTMLElement>('.blog-prose h2[id], .blog-prose h3[id]'),
+        ).filter((el) => idToLink.has(el.id));
+
+        if (sections.length > 0) {
+          const setActive = (id: string) => {
+            for (const [secId, link] of idToLink.entries()) {
+              const isActive = secId === id;
+              link.classList.toggle('target-current', isActive);
+              link.setAttribute('aria-current', isActive ? 'true' : 'false');
+            }
+          };
+
+          const observer = new IntersectionObserver(
+            (entries) => {
+              const visible = entries
+                .filter((e) => e.isIntersecting)
+                .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+              if (visible[0]?.target.id) {
+                setActive(visible[0].target.id);
+              }
+            },
+            { rootMargin: '-20% 0px -65% 0px', threshold: 0 },
+          );
+
+          sections.forEach((section) => observer.observe(section));
+        }
+      }
+    });
+  }
+
+  setupBlogSidebar();
+  document.addEventListener('astro:page-load', setupBlogSidebar);
+</script>

@@ -101,6 +101,15 @@ export const ui = {
     'blog.copyFailed': 'Copy failed',
     'blog.empty': 'No articles published yet.',
     'blog.tableRegion': 'Article data table',
+    'blog.sidebar.label': 'Documentation & Articles navigation',
+    'blog.sidebar.toggle': 'Pages & Sections',
+    'blog.sidebar.search': 'Filter pages & sections...',
+    'blog.sidebar.noResults': 'No matching pages or sections.',
+    'blog.sidebar.onThisPage': 'On this page',
+    'blog.sidebar.allArticles': 'All Articles & Guides',
+    'blog.sidebar.sections': 'Sections ({count})',
+    'blog.pagination.prev': 'Previous',
+    'blog.pagination.next': 'Next',
 
     // Resume
     'resume.eyebrow': 'Curriculum Vitae · Engineering Track Record',
@@ -203,6 +212,15 @@ export const ui = {
     'blog.copyFailed': 'Kopyalanamadı',
     'blog.empty': 'Henüz yayınlanmış yazı bulunmuyor.',
     'blog.tableRegion': 'Yazı veri tablosu',
+    'blog.sidebar.label': 'Dokümantasyon ve Yazı Gezgini',
+    'blog.sidebar.toggle': 'Sayfalar ve Bölümler',
+    'blog.sidebar.search': 'Sayfa veya bölüm ara...',
+    'blog.sidebar.noResults': 'Eşleşen sayfa veya bölüm bulunamadı.',
+    'blog.sidebar.onThisPage': 'Bu sayfada',
+    'blog.sidebar.allArticles': 'Tüm Yazılar ve Rehberler',
+    'blog.sidebar.sections': 'Bölümler ({count})',
+    'blog.pagination.prev': 'Önceki',
+    'blog.pagination.next': 'Sonraki',
 
     // Resume
     'resume.eyebrow': 'Özgeçmiş · Mühendislik Kariyeri',

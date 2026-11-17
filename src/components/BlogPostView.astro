@@ -2,6 +2,8 @@
 import { render, type CollectionEntry } from 'astro:content';
 import { useTranslations, formatFullDate, calculateReadingTime } from '@/i18n/utils';
 import type { Lang } from '@/i18n/ui';
+import BlogSidebar from '@/components/BlogSidebar.astro';
+import { getBlogSidebarEntries } from '@/utils/blog';
 
 interface Props {
   post: CollectionEntry<'blog'>;
@@ -12,6 +14,14 @@ const { post, lang } = Astro.props;
 const t = useTranslations(lang);
 const { Content } = await render(post);
 
+const sidebarEntries = await getBlogSidebarEntries();
+const currentIndex = sidebarEntries.findIndex((entry) => entry.slug === post.data.slug);
+const prevEntry = currentIndex > 0 ? sidebarEntries[currentIndex - 1] : null;
+const nextEntry =
+  currentIndex >= 0 && currentIndex < sidebarEntries.length - 1
+    ? sidebarEntries[currentIndex + 1]
+    : null;
+
 const minutes = calculateReadingTime(post.body);
 const readingTimeLabel = t('blog.readingTime').replace('{min}', String(minutes));
 const formattedDate = formatFullDate(post.data.date, lang);
@@ -19,93 +29,161 @@ const blogBasePath = lang === 'tr' ? '/tr/blog' : '/blog';
 ---
 
 <article class="section blog-post-section">
-  <div class="container blog-post-container">
-    <nav class="article-breadcrumb" aria-label="Breadcrumb">
-      <a href={blogBasePath} class="back-link">
-        <svg
-          aria-hidden="true"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <line x1="19" y1="12" x2="5" y2="12"></line>
-          <polyline points="12 19 5 12 12 5"></polyline>
-        </svg>
-        <span>{t('blog.backToBlog')}</span>
-      </a>
-    </nav>
+  <div class="container blog-post-shell">
+    <BlogSidebar entries={sidebarEntries} currentSlug={post.data.slug} lang={lang} />
 
-    <header class="article-header">
-      <div class="article-meta">
-        <time datetime={post.data.date} class="article-date">
-          {formattedDate}
-        </time>
-        <span class="meta-dot" aria-hidden="true">
-          ·
-        </span>
-        <span class="article-reading-time">{readingTimeLabel}</span>
-      </div>
-
-      <h1 class="article-title">{post.data.title}</h1>
-      <p class="article-summary">{post.data.summary}</p>
-
-      <div class="article-actions-row">
-        <ul class="tags" aria-label="Topics">
-          {post.data.tags.map((tag) => (
-            <li class="tag">{tag}</li>
-          ))}
-        </ul>
-
-        {post.data.repoUrl && (
-          <a
-            href={post.data.repoUrl}
-            class="btn btn-primary github-source-btn"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div class="blog-post-main">
+      <nav class="article-breadcrumb" aria-label="Breadcrumb">
+        <a href={blogBasePath} class="back-link">
+          <svg
+            aria-hidden="true"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
           >
-            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-            </svg>
-            <span>{t('blog.viewSource')}</span>
-          </a>
-        )}
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>{t('blog.backToBlog')}</span>
+        </a>
+      </nav>
+
+      <header class="article-header">
+        <div class="article-meta">
+          <time datetime={post.data.date} class="article-date">
+            {formattedDate}
+          </time>
+          <span class="meta-dot" aria-hidden="true">
+            ·
+          </span>
+          <span class="article-reading-time">{readingTimeLabel}</span>
+        </div>
+
+        <h1 class="article-title">{post.data.title}</h1>
+        <p class="article-summary">{post.data.summary}</p>
+
+        <div class="article-actions-row">
+          <ul class="tags" aria-label="Topics">
+            {post.data.tags.map((tag) => (
+              <li class="tag">{tag}</li>
+            ))}
+          </ul>
+
+          {post.data.repoUrl && (
+            <a
+              href={post.data.repoUrl}
+              class="btn btn-primary github-source-btn"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg
+                aria-hidden="true"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+              </svg>
+              <span>{t('blog.viewSource')}</span>
+            </a>
+          )}
+        </div>
+      </header>
+
+      <div
+        class="blog-prose"
+        data-copied-text={t('blog.copied')}
+        data-failed-text={t('blog.copyFailed')}
+        data-copy-label={t('blog.copyCode')}
+        data-table-label={t('blog.tableRegion')}
+      >
+        <Content />
       </div>
-    </header>
 
-    <div
-      class="blog-prose"
-      data-copied-text={t('blog.copied')}
-      data-failed-text={t('blog.copyFailed')}
-      data-copy-label={t('blog.copyCode')}
-      data-table-label={t('blog.tableRegion')}
-    >
-      <Content />
+      {(prevEntry || nextEntry) && (
+        <nav class="article-pagination" aria-label={t('blog.sidebar.label')}>
+          {prevEntry ? (
+            <a
+              href={`${blogBasePath}/${prevEntry.slug}`}
+              class="pagination-card pagination-prev card"
+            >
+              <span class="pagination-dir">
+                <svg
+                  aria-hidden="true"
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="19" y1="12" x2="5" y2="12"></line>
+                  <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>{t('blog.pagination.prev')}</span>
+              </span>
+              <span class="pagination-title">{prevEntry.sidebarTitle}</span>
+            </a>
+          ) : (
+            <div />
+          )}
+
+          {nextEntry && (
+            <a
+              href={`${blogBasePath}/${nextEntry.slug}`}
+              class="pagination-card pagination-next card"
+            >
+              <span class="pagination-dir">
+                <span>{t('blog.pagination.next')}</span>
+                <svg
+                  aria-hidden="true"
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </span>
+              <span class="pagination-title">{nextEntry.sidebarTitle}</span>
+            </a>
+          )}
+        </nav>
+      )}
+
+      <footer class="article-footer">
+        <a href={blogBasePath} class="btn btn-secondary">
+          <svg
+            aria-hidden="true"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>{t('blog.backToBlog')}</span>
+        </a>
+      </footer>
     </div>
-
-    <footer class="article-footer">
-      <a href={blogBasePath} class="btn btn-secondary">
-        <svg
-          aria-hidden="true"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <line x1="19" y1="12" x2="5" y2="12"></line>
-          <polyline points="12 19 5 12 12 5"></polyline>
-        </svg>
-        <span>{t('blog.backToBlog')}</span>
-      </a>
-    </footer>
   </div>
 </article>
 
@@ -114,8 +192,21 @@ const blogBasePath = lang === 'tr' ? '/tr/blog' : '/blog';
     padding-block: clamp(2rem, 5vw, 4rem);
   }
 
-  .blog-post-container {
-    max-width: 840px;
+  .blog-post-shell {
+    max-width: 1200px;
+  }
+
+  .blog-post-main {
+    min-width: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .blog-post-shell {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 2.75rem;
+      align-items: start;
+    }
   }
 
   .article-breadcrumb {
@@ -290,6 +381,116 @@ const blogBasePath = lang === 'tr' ? '/tr/blog' : '/blog';
   .blog-prose :global(blockquote p) {
     margin-block: 0.35rem;
     color: var(--text-primary);
+  }
+
+  .blog-prose :global(blockquote[data-callout='tip']) {
+    border-inline-start-color: var(--color-salesforce-teal);
+  }
+
+  .blog-prose :global(blockquote[data-callout='important']) {
+    border-inline-start-color: var(--color-salesforce-purple);
+  }
+
+  .blog-prose :global(blockquote[data-callout='warning']) {
+    border-inline-start-color: #d97706;
+  }
+
+  .blog-prose :global(.callout-badge) {
+    font-size: 0.85em;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--brand-color);
+  }
+
+  .blog-prose :global(blockquote[data-callout='tip'] .callout-badge) {
+    color: var(--color-salesforce-teal);
+  }
+
+  .blog-prose :global(blockquote[data-callout='important'] .callout-badge) {
+    color: var(--color-salesforce-purple);
+  }
+
+  .blog-prose :global(blockquote[data-callout='warning'] .callout-badge) {
+    color: #d97706;
+  }
+
+  .blog-prose :global(video) {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-block: 1.5rem;
+    border-radius: var(--slds-g-radius-3);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    background: #000;
+  }
+
+  /* Disclosure / Accordion blocks inside Markdown (modern-web-guidance accordion) */
+  .blog-prose :global(details) {
+    margin-block: 1.5rem;
+    padding: 0.85rem 1.15rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--slds-g-radius-3);
+    background: var(--bg-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .blog-prose :global(details > summary) {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5ch;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .blog-prose :global(details > summary::-webkit-details-marker) {
+    display: none;
+  }
+
+  .blog-prose :global(details > summary::before) {
+    content: '';
+    inline-size: 1em;
+    block-size: 1em;
+    flex-shrink: 0;
+    background-color: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")
+      no-repeat center / contain;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")
+      no-repeat center / contain;
+    rotate: -90deg;
+  }
+
+  .blog-prose :global(details > summary:dir(rtl)::before) {
+    rotate: 90deg;
+  }
+
+  .blog-prose :global(details[open] > summary::before) {
+    rotate: 0deg;
+  }
+
+  .blog-prose :global(details::details-content) {
+    interpolate-size: allow-keywords;
+    overflow: clip;
+    contain: layout;
+  }
+
+  .blog-prose :global(details:not([open])::details-content) {
+    block-size: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .blog-prose :global(details > summary::before) {
+      transition: rotate 0.2s ease;
+    }
+
+    .blog-prose :global(details::details-content) {
+      transition: block-size, content-visibility, display;
+      transition-duration: 0.3s;
+      transition-timing-function: ease-in-out;
+      transition-behavior: allow-discrete;
+    }
   }
 
   /* Responsive Tables (per modern-web-guidance responsive-table) */
@@ -593,10 +794,58 @@ const blogBasePath = lang === 'tr' ? '/tr/blog' : '/blog';
     color: var(--shiki-dark) !important;
   }
 
-  .article-footer {
+  .article-pagination {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
     margin-top: 3rem;
     padding-top: 2rem;
     border-top: 1px solid var(--border-color);
+  }
+
+  @media (min-width: 640px) {
+    .article-pagination {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .pagination-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1rem 1.25rem;
+    text-decoration: none;
+  }
+
+  .pagination-next {
+    align-items: flex-end;
+    text-align: end;
+  }
+
+  .pagination-dir {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+  }
+
+  .pagination-title {
+    font-size: 0.975rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: color 0.15s ease;
+  }
+
+  .pagination-card:hover .pagination-title {
+    color: var(--brand-color);
+  }
+
+  .article-footer {
+    margin-top: 1.75rem;
   }
 </style>
 

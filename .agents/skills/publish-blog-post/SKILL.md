@@ -28,19 +28,27 @@ date: '2026-11-15'
 summary: '1-2 sentence technical overview used on /blog cards and SEO meta descriptions.'
 tags: ['Salesforce', 'Apex', 'Open Source']
 repoUrl: 'https://github.com/masaner/example-repo' # Optional
+series: 'ApexGuard' # Optional: series identifier
+category: 'ApexGuard · Overview' # Optional: groups pages in the left sidebar
+sidebarTitle: 'Short Sidebar Title' # Optional: concise label in left sidebar & pagination
+order: 1 # Optional integer: controls explicit order within the sidebar
 draft: false # Optional (defaults to false; set true to hide from build)
 ---
 ```
 
-| Field     | Type       | Required | Validation / Behavior                                                                                                    |
-| --------- | ---------- | -------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `title`   | `string`   | Yes      | Non-empty. Rendered as `<h1>` on `/blog/[slug]` and `<title>` / `og:title`.                                              |
-| `slug`    | `string`   | Yes      | Non-empty kebab-case URL segment. Route becomes `/blog/<slug>` and `/tr/blog/<slug>`.                                    |
-| `date`    | `string`   | Yes      | Must match `YYYY-MM-DD` (e.g. `2026-11-15`). Posts on `/blog` are sorted newest-first.                                   |
-| `summary` | `string`   | Yes      | Non-empty. Shown on `/blog` cards, under the post `<h1>`, and in SEO `description` / `og:description`.                   |
-| `tags`    | `string[]` | No       | Defaults to `[]`. Displayed as pills on `/blog` and `/blog/[slug]`, and emitted as `article:tag` meta tags.              |
-| `repoUrl` | `URL`      | No       | Must be a valid URL. Renders the **"View Source on GitHub"** CTA button in the post header and `codeRepository` JSON-LD. |
-| `draft`   | `boolean`  | No       | Defaults to `false`. Draft posts (`draft: true`) are excluded from `/blog` and static route generation.                  |
+| Field          | Type       | Required | Validation / Behavior                                                                                                    |
+| -------------- | ---------- | -------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `title`        | `string`   | Yes      | Non-empty. Rendered as `<h1>` on `/blog/[slug]` and `<title>` / `og:title`.                                              |
+| `slug`         | `string`   | Yes      | Non-empty kebab-case URL segment. Route becomes `/blog/<slug>` and `/tr/blog/<slug>`.                                    |
+| `date`         | `string`   | Yes      | Must match `YYYY-MM-DD` (e.g. `2026-11-15`). Posts on `/blog` are sorted newest-first when `order` is unset.             |
+| `summary`      | `string`   | Yes      | Non-empty. Shown on `/blog` cards, under the post `<h1>`, and in SEO `description` / `og:description`.                   |
+| `tags`         | `string[]` | No       | Defaults to `[]`. Displayed as pills on `/blog` and `/blog/[slug]`, and emitted as `article:tag` meta tags.              |
+| `repoUrl`      | `URL`      | No       | Must be a valid URL. Renders the **"View Source on GitHub"** CTA button in the post header and `codeRepository` JSON-LD. |
+| `series`       | `string`   | No       | Optional series identifier for multi-part documentation or article series.                                               |
+| `category`     | `string`   | No       | Optional left-sidebar group heading (defaults to `'Articles'`).                                                          |
+| `sidebarTitle` | `string`   | No       | Optional shorter title rendered in the left sidebar navigation and Previous/Next pagination cards.                       |
+| `order`        | `number`   | No       | Optional integer sort key (`order` ascending first, then `date` descending) for sidebar & index ordering.                |
+| `draft`        | `boolean`  | No       | Defaults to `false`. Draft posts (`draft: true`) are excluded from `/blog` and static route generation.                  |
 
 ## 3. Markdown Formatting Conventions
 

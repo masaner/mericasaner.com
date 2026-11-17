@@ -145,6 +145,10 @@ const blog = defineCollection({
     summary: z.string().min(1),
     tags: z.array(z.string()).default([]),
     repoUrl: z.url().optional(),
+    series: z.string().optional(),
+    category: z.string().optional(),
+    sidebarTitle: z.string().optional(),
+    order: z.number().int().optional(),
     draft: z.boolean().default(false),
   }),
 });

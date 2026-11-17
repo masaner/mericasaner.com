@@ -5,6 +5,10 @@ date: '2026-11-15'
 summary: "How we built ApexGuard—a zero-dependency, Quiddity-aware guard clause library for Apex services, Triggers, LWC controllers, Flows, and Agentforce inspired by .NET's CommunityToolkit.Diagnostics.Guard."
 tags: ['Salesforce', 'Apex', 'Open Source', 'Clean Code']
 repoUrl: 'https://github.com/masaner/apex-guard'
+series: 'ApexGuard'
+category: 'ApexGuard · Overview'
+sidebarTitle: 'Architecture Deep-Dive'
+order: 1
 ---
 
 Every mature Salesforce org eventually develops a familiar visual signature inside its Apex codebase: code that marches steadily across the screen to the right before marching back to the left. Before a single line of business logic runs, three to five layers of defensive `if` statements check whether an `Id` is valid, whether a `String` is blank, whether a `Decimal` is positive, whether a `List` has elements, and whether an `SObject` field was actually queried.
@@ -364,9 +368,21 @@ Phase 1 delivers the core zero-dependency SFDX library, context routing, schema 
 
 ## Get Involved
 
-`ApexGuard` is MIT-licensed, open source, and ready to deploy cleanly into any Salesforce DX project with zero third-party packages:
+`ApexGuard` is MIT-licensed, open source, and published as a promoted Second-Generation Unlocked Package (`ApexGuard@1.0.0-1`, `94%` package code coverage validated on Salesforce packaging build servers) with zero third-party dependencies:
+
+- **1-Click Install (Production / Developer Edition):** [Unlocked Package Installation (Production)](https://login.salesforce.com/packaging/installPackage.apexp?p0=04td2000000WiM5AAK)
+- **1-Click Install (Sandbox / Scratch Org):** [Unlocked Package Installation (Sandbox)](https://test.salesforce.com/packaging/installPackage.apexp?p0=04td2000000WiM5AAK)
+
+Or install / deploy / equip your AI coding agents via CLI:
 
 ```bash
+# Install Released Unlocked Package v1.0.0-1
+sf package install --package 04td2000000WiM5AAK --security-type AllUsers --apex-compile package --wait 10 --target-org my-org
+
+# Add ApexGuard AI Agent Skills (Antigravity, Claude Code, Cursor, Copilot, Codex)
+npx skills add masaner/apex-guard
+
+# Or clone and deploy from source
 git clone https://github.com/masaner/apex-guard.git
 cd apex-guard
 sf project deploy start --source-dir force-app --target-org my-org
@@ -376,5 +392,6 @@ sf apex run test --suite-names ApexGuard --code-coverage --result-format human -
 If you care about clean, readable, governor-safe Salesforce architecture:
 
 - **Star & watch the repository** on GitHub: [github.com/masaner/apex-guard](https://github.com/masaner/apex-guard)
+- **Equip your AI coding agent** using [`skills/README.md`](https://github.com/masaner/apex-guard/blob/main/skills/README.md) (`npx skills add masaner/apex-guard`)
 - **Deploy it to a scratch org** and run the `ApexGuard` test suite
 - **Contribute a validator or adapter**—start with [`CONTRIBUTING.md`](https://github.com/masaner/apex-guard/blob/main/CONTRIBUTING.md) and [`ROADMAP.md`](https://github.com/masaner/apex-guard/blob/main/ROADMAP.md) to pick up a Phase 2 domain validator (such as `GuardDateValidator`) or logging recipe!

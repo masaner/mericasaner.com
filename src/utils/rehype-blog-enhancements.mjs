@@ -133,6 +133,13 @@ function buildCodeFrame(preNode, index) {
   };
 }
 
+const CALLOUT_LABELS = {
+  tip: 'Tip',
+  note: 'Note',
+  important: 'Important',
+  warning: 'Warning',
+};
+
 export default function satteriBlogEnhancements() {
   return () => {
     let codeCount = 0;
@@ -140,6 +147,50 @@ export default function satteriBlogEnhancements() {
     return {
       name: 'satteri-blog-enhancements',
       element: [
+        {
+          filter: ['h2', 'h3', 'h4'],
+          visit(node, ctx) {
+            const props = node.properties || {};
+            if (props.tabindex == null && props.tabIndex == null) {
+              ctx.setProperty(node, 'tabIndex', -1);
+            }
+          },
+        },
+        {
+          filter: ['blockquote'],
+          visit(node, ctx) {
+            const firstP = (node.children || []).find(
+              (c) => c.type === 'element' && c.tagName === 'p',
+            );
+            const firstChild = firstP?.children?.[0];
+            if (!firstChild || firstChild.type !== 'text' || typeof firstChild.value !== 'string') {
+              return;
+            }
+            const match = firstChild.value.match(
+              /^\[!(TIP|NOTE|IMPORTANT|WARNING)\](?:\r?\n|\s+)?/i,
+            );
+            if (!match) return;
+
+            const kind = match[1].toLowerCase();
+            const label = CALLOUT_LABELS[kind] || match[1];
+            ctx.setProperty(node, 'data-callout', kind);
+
+            const remainder = firstChild.value.slice(match[0].length);
+            const badge = {
+              type: 'element',
+              tagName: 'strong',
+              properties: { className: ['callout-badge'] },
+              children: [{ type: 'text', value: `${label}: ` }],
+            };
+
+            ctx.insertBefore(firstChild, badge);
+            if (remainder.length > 0) {
+              ctx.replaceNode(firstChild, { type: 'text', value: remainder });
+            } else {
+              ctx.removeNode(firstChild);
+            }
+          },
+        },
         {
           filter: ['pre'],
           visit(node, ctx) {
